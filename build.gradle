@@ -1,0 +1,150 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
+plugins {
+    id 'java-library'
+    id 'distribution'
+    id 'maven-publish'
+    id 'com.jfrog.bintray' version '1.8.4'
+}
+
+group 'org.citygml4j'
+version '0.9'
+
+sourceCompatibility = 1.8
+
+ext {
+    date = new Date()
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    api 'com.google.code.gson:gson:2.8.5'
+}
+
+javadoc {
+    options {
+        overview "$buildDir/tmp/javadoc/overview.html"
+        header "citygml4j $project.version"
+        bottom """
+            <a target="_blank" href="https://github.com/citygml4j/citygson/issues">Report a bug or suggest an enhancement</a><br>
+            citygson is open source and licensed under the <a target="_blank" href="http://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a><br>
+            Official website and more information at: <a target="_blank" href="https://github.com/citygml4j/citygson">https://github.com/citygml4j/citygson</a><br>
+            Copyright &copy; 2013-${date.format('yyyy')}<br>
+            Claus Nagel &lt;claus.nagel@gmail.com&gt;
+            """.replaceAll("[\r|\n]+", "")
+        addStringOption('doctitle', project.name + ' - ' + project.description)
+    }
+
+    doFirst {
+        copy {
+            from 'resources/javadoc/overview.html'
+            into "$buildDir/tmp/javadoc"
+            filter(ReplaceTokens, tokens: [
+                    version: project.version
+            ])
+        }
+    }
+}
+
+jar {
+    manifest {
+        attributes('Implementation-Title': project.name,
+                'Implementation-Version': project.version
+        )
+    }
+    into('META-INF') {
+        from 'LICENSE'
+    }
+}
+
+distributions.main.contents {
+    from('resources/doc/README') {
+        filter(ReplaceTokens, tokens: [
+                version: project.version,
+                date: date.format('yyyy-MM-dd'),
+                copyright: date.format('yyyy'),
+                javaCompatibility: sourceCompatibility.toString(),
+                jar: jar.archiveFileName.get(),
+                groupId: project.group,
+                artifactId: project.name
+        ])
+    }
+    into('lib') {
+        from jar
+        from configurations.compileClasspath
+    }
+    into('javadoc') {
+        from javadoc
+    }
+    into('license') {
+        from 'LICENSE'
+    }
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    archiveClassifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    archiveClassifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+            pom {
+                name = project.name
+                description = project.description
+                url = 'https://github.com/citygml4j/citygson'
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'https://www.apache.org/licenses/LICENSE-2.0.txt'
+                        distribution = 'repo'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'clausnagel'
+                        name = 'Claus Nagel'
+                        email = 'claus.nagel@gmail.com'
+                        roles = ['architect', 'developer']
+                        timezone = '+1'
+                    }
+                }
+                scm {
+                    url = 'https://github.com/citygml4j/citygson'
+                    connection = 'scm:git:https://github.com/citygml4j/citygson.git'
+                }
+            }
+        }
+    }
+}
+
+bintray {
+    user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
+    key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
+
+    publications = ['mavenJava']
+    pkg {
+        repo = 'maven'
+        name = project.name
+        desc = project.description
+        websiteUrl = 'https://github.com/citygml4j/citygson'
+        vcsUrl = 'https://github.com/citygml4j/citygson.git'
+        issueTrackerUrl = 'https://github.com/citygml4j/citygson/issues'
+        labels = ['cityjson', 'gson', 'java', 'json', 'parsing', 'writing', 'citygml']
+        licenses = ['Apache-2.0']
+        version {
+            name = project.version
+        }
+    }
+}
