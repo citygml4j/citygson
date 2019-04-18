@@ -1,6 +1,8 @@
 # citygson
 citygson is a [Gson](https://github.com/google/gson) based library for parsing and serializing [CityJSON](http://www.cityjson.org/) files. citygson provides a lightweight and easy-to-use object-based interface to CityJSON data.
 
+citygson defines Java objects for all JSON elements in CityJSON version 0.9.0. Moreover, it offers a simple mechanism to register additional user-defined Java objects for mapping CityJSON Extensions. 
+
 License
 -------
 citygson is licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0). See the `LICENSE` file for more details.
