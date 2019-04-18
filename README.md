@@ -1,5 +1,5 @@
 # citygson
-citygson is a Gson based library for parsing and serializing [CityJSON](http://www.cityjson.org/) files. citygson provides a lightweight and easy-to-use object-based interface to CityJSON data.
+citygson is a [Gson](https://github.com/google/gson) based library for parsing and serializing [CityJSON](http://www.cityjson.org/) files. citygson provides a lightweight and easy-to-use object-based interface to CityJSON data.
 
 License
 -------
