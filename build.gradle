@@ -9,6 +9,7 @@ plugins {
 
 group 'org.citygml4j'
 version '0.9.0'
+description 'A Gson based library for parsing and serializing CityJSON'
 
 sourceCompatibility = 1.8
 
