@@ -47,6 +47,13 @@ public abstract class AbstractCityObjectType implements ExtensibleType, Extensio
 	private transient Map<String, Object> extensionProperties;
 	private transient HashMap<String, Object> localProperties;
 
+	public AbstractCityObjectType() {
+	}
+
+	public AbstractCityObjectType(String gmlId) {
+		setGmlId(gmlId);
+	}
+
 	public abstract Attributes newAttributes();
 	public abstract boolean isValidGeometryType(GeometryTypeName type);
 
@@ -65,13 +72,6 @@ public abstract class AbstractCityObjectType implements ExtensibleType, Extensio
 
 	public final void unsetAttributes() {
 		attributes = null;
-	}
-	
-	public AbstractCityObjectType() {
-	}
-	
-	public AbstractCityObjectType(String gmlId) {
-		setGmlId(gmlId);
 	}
 
 	public boolean isSetGmlId() {

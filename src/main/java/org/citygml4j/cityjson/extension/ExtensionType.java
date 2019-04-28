@@ -25,6 +25,19 @@ public class ExtensionType {
     private String url;
     private String version;
 
+    public ExtensionType() {
+    }
+
+    public ExtensionType(String url, String version) {
+        this.url = url;
+        this.version = version;
+    }
+
+    public ExtensionType(String url, int major, int minor) {
+        this.url = url;
+        setVersion(major, minor);
+    }
+
     public boolean isSetUrl() {
         return url != null;
     }
@@ -41,25 +54,15 @@ public class ExtensionType {
         return version != null;
     }
 
-    public boolean isValidVersion(String version) {
-        return version != null && version.matches("^\\d\\.\\d$");
-    }
-
-    public boolean isValidVersion(int major, int minor) {
-        return major >= 0 && major < 10 && minor >= 0 && minor < 10;
-    }
-
     public String getVersion() {
         return version;
     }
 
     public void setVersion(String version) {
-        if (isValidVersion(version))
-            this.version = version;
+        this.version = version;
     }
 
     public void setVersion(int major, int minor) {
-        if (isValidVersion(major, minor))
-            this.version = major + "." + minor;
+        this.version = major + "." + minor;
     }
 }
