@@ -24,6 +24,7 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import org.citygml4j.cityjson.appearance.AppearanceType;
 import org.citygml4j.cityjson.extension.ExtensibleType;
+import org.citygml4j.cityjson.extension.ExtensionType;
 import org.citygml4j.cityjson.feature.AbstractCityObjectType;
 import org.citygml4j.cityjson.feature.CityJSONAdapter;
 import org.citygml4j.cityjson.feature.CityObjectsAdapter;
@@ -47,9 +48,9 @@ import java.util.stream.Collectors;
 @JsonAdapter(CityJSONAdapter.class)
 public class CityJSON implements ExtensibleType {
 	private final String type = "CityJSON";
-	private final String version = "0.9";
+	private final String version = "1.0";
 	private MetadataType metadata;
-	private Map<String, String> extensions;
+	private Map<String, ExtensionType> extensions;
 	@SerializedName("CityObjects")
 	@JsonAdapter(CityObjectsAdapter.class)
 	private Map<String, AbstractCityObjectType> cityObjects = new HashMap<>();
@@ -93,18 +94,18 @@ public class CityJSON implements ExtensibleType {
 		return extensions != null && !extensions.isEmpty();
 	}
 
-	public void addExtension(String identifier, String uri) {
+	public void addExtension(String identifier, ExtensionType extension) {
 		if (extensions == null)
 			extensions = new HashMap<>();
 
-		extensions.put(identifier, uri);
+		extensions.put(identifier, extension);
 	}
 
-	public Map<String, String> getExtensions() {
+	public Map<String, ExtensionType> getExtensions() {
 		return extensions;
 	}
 
-	public void setExtensions(Map<String, String> extensions) {
+	public void setExtensions(Map<String, ExtensionType> extensions) {
 		if (extensions != null && !extensions.isEmpty())
 			this.extensions = extensions;
 	}
