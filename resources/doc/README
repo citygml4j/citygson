@@ -45,7 +45,7 @@ citygson is a Java library that provides Java objects for parsing and
 serializing CityJSON files. It uses Gson as JSON binding framework.
 
 Feature list:
-* Full support for CityJSON version 0.9
+* Full support for CityJSON version 1.0
 * Support for CityJSON extensions
 
 CityJSON is a format for encoding a subset of the CityGML 2.0 data model
