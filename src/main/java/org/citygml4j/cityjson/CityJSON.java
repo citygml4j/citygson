@@ -40,6 +40,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -53,7 +54,7 @@ public class CityJSON implements ExtensibleType {
 	private Map<String, ExtensionType> extensions;
 	@SerializedName("CityObjects")
 	@JsonAdapter(CityObjectsAdapter.class)
-	private Map<String, AbstractCityObjectType> cityObjects = new HashMap<>();
+	private Map<String, AbstractCityObjectType> cityObjects = new LinkedHashMap<>();
 	private VerticesList vertices = new VerticesList();
 	private TransformType transform;
 	private AppearanceType appearance;

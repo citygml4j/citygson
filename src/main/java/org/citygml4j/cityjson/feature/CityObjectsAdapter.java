@@ -30,6 +30,7 @@ import com.google.gson.JsonSerializer;
 import com.google.gson.internal.LinkedTreeMap;
 
 import java.lang.reflect.Type;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -49,7 +50,7 @@ public class CityObjectsAdapter implements JsonSerializer<Map<String, AbstractCi
 
 	@Override
 	public Map<String, AbstractCityObjectType> deserialize(JsonElement json, Type typeOfSrc, JsonDeserializationContext context) throws JsonParseException {
-		Map<String, AbstractCityObjectType> cityObjects = new LinkedTreeMap<>();
+		Map<String, AbstractCityObjectType> cityObjects = new LinkedHashMap<>();
 
 		for (Entry<String, JsonElement> entry : json.getAsJsonObject().entrySet()) {
 			JsonObject object = entry.getValue().getAsJsonObject();
