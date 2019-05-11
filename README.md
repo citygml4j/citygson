@@ -9,7 +9,7 @@ citygson is licensed under the [Apache License, Version 2.0](http://www.apache.o
 
 Latest release
 --------------
-The latest stable release of citygml4j is 1.0.0.
+The latest stable release of citygson is 1.0.0.
 
 Download the citygson 1.0.0 release binaries [here](https://github.com/citygml4j/citygson/releases/download/v1.0.0/citygson-1.0.0.zip). Previous releases are available from the [releases section](https://github.com/citygml4j/citygson/releases).
 
