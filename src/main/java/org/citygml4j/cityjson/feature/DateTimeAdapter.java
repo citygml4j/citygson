@@ -21,15 +21,11 @@
 
 package org.citygml4j.cityjson.feature;
 
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParseException;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
+import com.google.gson.TypeAdapter;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 
-import java.lang.reflect.Type;
+import java.io.IOException;
 import java.time.LocalTime;
 import java.time.ZonedDateTime;
 import java.time.chrono.IsoChronology;
@@ -39,7 +35,7 @@ import java.time.format.DateTimeParseException;
 import java.time.format.ResolverStyle;
 import java.time.temporal.ChronoField;
 
-public class DateTimeAdapter implements JsonSerializer<ZonedDateTime>, JsonDeserializer<ZonedDateTime> {
+public class DateTimeAdapter extends TypeAdapter<ZonedDateTime> {
     // formatter to parse both "full-date" and "date-time" according to RFC 3339, Section 5.6
     private DateTimeFormatter formatter = new DateTimeFormatterBuilder()
             .parseCaseInsensitive()
@@ -60,24 +56,19 @@ public class DateTimeAdapter implements JsonSerializer<ZonedDateTime>, JsonDeser
             .withChronology(IsoChronology.INSTANCE);
 
     @Override
-    public JsonElement serialize(ZonedDateTime src, Type typeOfSrc, JsonSerializationContext context) {
+    public void write(JsonWriter out, ZonedDateTime value) throws IOException {
         // return "date-time" only if the time is not set to start of day
-        DateTimeFormatter formatter = src.toLocalTime().equals(LocalTime.MIN) ?
+        DateTimeFormatter formatter = value.toLocalTime().equals(LocalTime.MIN) ?
                 DateTimeFormatter.ISO_LOCAL_DATE : DateTimeFormatter.ISO_OFFSET_DATE_TIME;
-        return new JsonPrimitive(src.format(formatter));
+        out.value(value.format(formatter));
     }
 
     @Override
-    public ZonedDateTime deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        if (json.isJsonPrimitive()) {
-            try {
-                return ZonedDateTime.parse(json.getAsString(), formatter);
-            } catch (DateTimeParseException e) {
-                //
-            }
+    public ZonedDateTime read(JsonReader in) throws IOException {
+        try {
+            return ZonedDateTime.parse(in.nextString(), formatter);
+        } catch (DateTimeParseException e) {
+            return null;
         }
-
-        return null;
     }
-
 }
