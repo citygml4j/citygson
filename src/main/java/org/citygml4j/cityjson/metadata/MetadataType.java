@@ -24,7 +24,6 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import org.citygml4j.cityjson.feature.DateAdapter;
 import org.citygml4j.cityjson.metadata.feature.AbstractFeatureDataType;
-import org.citygml4j.cityjson.metadata.feature.FeatureDataTypeAdapter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -69,7 +68,6 @@ public class MetadataType {
 	private PresenceType textures;
 	private PresenceType materials;
 	private Map<LoDType, Integer> presentLoDs;
-	@JsonAdapter(FeatureDataTypeAdapter.class)
 	private Map<ThematicModelType, AbstractFeatureDataType> cityfeatureMetadata;
 
 	public boolean isSetCitymodelIdentifier() {

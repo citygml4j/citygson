@@ -22,11 +22,9 @@
 package org.citygml4j.cityjson.metadata.feature;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.TypeAdapter;
-import com.google.gson.internal.LinkedTreeMap;
 import com.google.gson.internal.Streams;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
@@ -35,6 +33,7 @@ import org.citygml4j.cityjson.metadata.LoDType;
 import org.citygml4j.cityjson.metadata.ThematicModelType;
 
 import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class CityObjectGroupDataTypeAdapter extends TypeAdapter<CityObjectGroupDataType> {
@@ -68,24 +67,25 @@ public class CityObjectGroupDataTypeAdapter extends TypeAdapter<CityObjectGroupD
     @Override
     public CityObjectGroupDataType read(JsonReader in) throws IOException {
         CityObjectGroupDataType featureMetadata = new CityObjectGroupDataType();
-        JsonObject object = Streams.parse(in).getAsJsonObject();
+        Map<ThematicModelType, AbstractFeatureDataType> memberMetadata = new LinkedHashMap<>();
+        in.beginObject();
 
-        Map<ThematicModelType, AbstractFeatureDataType> memberMetadata = new LinkedTreeMap<>();
-        for (Map.Entry<String, JsonElement> entry : object.entrySet()) {
-            switch (entry.getKey()) {
+        while (in.hasNext()) {
+            String name = in.nextName();
+            switch (name) {
                 case "uniqueFeatureCount":
-                    featureMetadata.setUniqueFeatureCount(entry.getValue().getAsInt());
+                    featureMetadata.setUniqueFeatureCount(in.nextInt());
                     break;
                 case "aggregateFeatureCount":
-                    featureMetadata.setAggregateFeatureCount(entry.getValue().getAsInt());
+                    featureMetadata.setAggregateFeatureCount(in.nextInt());
                     break;
                 case "presentLoDs":
-                    featureMetadata.setPresentLoDs(gson.fromJson(entry.getValue(), new TypeToken<Map<LoDType, Integer>>() {}.getType()));
+                    featureMetadata.setPresentLoDs(gson.fromJson(in, new TypeToken<Map<LoDType, Integer>>() {}.getType()));
                     break;
                 default:
-                    ThematicModelType type = ThematicModelType.fromValue(entry.getKey());
+                    ThematicModelType type = ThematicModelType.fromValue(name);
                     if (type != null) {
-                        AbstractFeatureDataType value = gson.fromJson(entry.getValue(), type.getMetadataClass());
+                        AbstractFeatureDataType value = gson.fromJson(in, type.getMetadataClass());
                         if (value != null)
                             memberMetadata.put(type, value);
                     }
@@ -95,6 +95,7 @@ public class CityObjectGroupDataTypeAdapter extends TypeAdapter<CityObjectGroupD
         if (!memberMetadata.isEmpty())
             featureMetadata.memberMetadata = memberMetadata;
 
+        in.endObject();
         return featureMetadata;
     }
 }

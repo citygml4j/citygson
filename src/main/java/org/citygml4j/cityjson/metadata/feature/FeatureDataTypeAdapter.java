@@ -21,39 +21,44 @@
 
 package org.citygml4j.cityjson.metadata.feature;
 
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParseException;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
-import com.google.gson.internal.LinkedTreeMap;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.internal.Streams;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import org.citygml4j.cityjson.metadata.ThematicModelType;
 
-import java.lang.reflect.Type;
+import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class FeatureDataTypeAdapter implements JsonSerializer<Map<ThematicModelType, AbstractFeatureDataType>>, JsonDeserializer<Map<ThematicModelType, AbstractFeatureDataType>> {
+public class FeatureDataTypeAdapter extends TypeAdapter<Map<ThematicModelType, AbstractFeatureDataType>> {
+    private final Gson gson;
 
-    @Override
-    public JsonElement serialize(Map<ThematicModelType, AbstractFeatureDataType> featureMetadata, Type typeOfSrc, JsonSerializationContext context) {
-        return context.serialize(featureMetadata);
+    public FeatureDataTypeAdapter(Gson gson) {
+        this.gson = gson;
     }
 
     @Override
-    public Map<ThematicModelType, AbstractFeatureDataType> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        Map<ThematicModelType, AbstractFeatureDataType> featureMetadata = new LinkedTreeMap<>();
+    public void write(JsonWriter out, Map<ThematicModelType, AbstractFeatureDataType> value) throws IOException {
+        Streams.write(gson.toJsonTree(value), out);
+    }
 
-        for (Map.Entry<String, JsonElement> entry : json.getAsJsonObject().entrySet()) {
-            ThematicModelType type = ThematicModelType.fromValue(entry.getKey());
+    @Override
+    public Map<ThematicModelType, AbstractFeatureDataType> read(JsonReader in) throws IOException {
+        Map<ThematicModelType, AbstractFeatureDataType> featureMetadata = new LinkedHashMap<>();
+        in.beginObject();
+
+        while (in.hasNext()) {
+            ThematicModelType type = ThematicModelType.fromValue(in.nextName());
             if (type != null) {
-                AbstractFeatureDataType value = context.deserialize(entry.getValue(), type.getMetadataClass());
+                AbstractFeatureDataType value = gson.fromJson(in, type.getMetadataClass());
                 if (value != null)
                     featureMetadata.put(type, value);
             }
-
         }
 
-        return !featureMetadata.isEmpty() ? featureMetadata : null;
+        in.endObject();
+        return featureMetadata;
     }
 }
