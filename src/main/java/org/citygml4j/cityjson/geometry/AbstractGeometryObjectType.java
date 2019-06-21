@@ -20,9 +20,6 @@
  */
 package org.citygml4j.cityjson.geometry;
 
-import com.google.gson.annotations.JsonAdapter;
-
-@JsonAdapter(GeometryTypeAdapter.class)
 public abstract class AbstractGeometryObjectType extends AbstractGeometryType {
 	private Number lod = 0;
 

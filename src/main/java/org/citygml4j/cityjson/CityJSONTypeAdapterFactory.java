@@ -35,6 +35,8 @@ import org.citygml4j.cityjson.appearance.SurfaceCollectionMaterialAdapter;
 import org.citygml4j.cityjson.appearance.SurfaceCollectionMaterialObject;
 import org.citygml4j.cityjson.appearance.SurfaceCollectionTextureAdapter;
 import org.citygml4j.cityjson.appearance.SurfaceCollectionTextureObject;
+import org.citygml4j.cityjson.geometry.AbstractGeometryType;
+import org.citygml4j.cityjson.geometry.GeometryTypeAdapter;
 
 import java.util.Map;
 
@@ -51,7 +53,10 @@ public class CityJSONTypeAdapterFactory implements TypeAdapterFactory {
     @SuppressWarnings("unchecked")
     @Override
     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-        if (type.equals(surfaceCollectionTexture))
+        if (AbstractGeometryType.class.isAssignableFrom(type.getRawType()))
+            return (TypeAdapter<T>) new GeometryTypeAdapter(gson, this);
+
+        else if (type.equals(surfaceCollectionTexture))
             return (TypeAdapter<T>) new SurfaceCollectionTextureAdapter(gson);
 
         else if (type.equals(solidTexture))

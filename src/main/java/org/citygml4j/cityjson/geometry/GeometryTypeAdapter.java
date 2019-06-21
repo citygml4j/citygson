@@ -20,37 +20,49 @@
  */
 package org.citygml4j.cityjson.geometry;
 
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
+import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
+import com.google.gson.TypeAdapter;
+import com.google.gson.TypeAdapterFactory;
+import com.google.gson.internal.Streams;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 
-import java.lang.reflect.Type;
+import java.io.IOException;
 
-public class GeometryTypeAdapter implements JsonSerializer<AbstractGeometryType>, JsonDeserializer<AbstractGeometryType> {
+public class GeometryTypeAdapter extends TypeAdapter<AbstractGeometryType> {
+	private final Gson gson;
+	private final TypeAdapterFactory factory;
 
+	public GeometryTypeAdapter(Gson gson, TypeAdapterFactory factory) {
+		this.gson = gson;
+		this.factory = factory;
+	}
+
+	@SuppressWarnings("unchecked")
 	@Override
-	public JsonElement serialize(AbstractGeometryType geometry, Type typeOfSrc, JsonSerializationContext context) {
-		return context.serialize(geometry);
+	public void write(JsonWriter out, AbstractGeometryType value) throws IOException {
+		if (value != null) {
+			TypeAdapter<AbstractGeometryType> delegate = (TypeAdapter<AbstractGeometryType>) gson.getDelegateAdapter(factory, TypeToken.get(value.getClass()));
+			Streams.write(delegate.toJsonTree(value), out);
+		} else
+			out.nullValue();
 	}
 
 	@Override
-	public AbstractGeometryType deserialize(JsonElement json, Type typeOfSrc, JsonDeserializationContext context) throws JsonParseException {
-		AbstractGeometryType geometry = null;
-		JsonObject object = json.getAsJsonObject();
-		JsonPrimitive type = object.getAsJsonPrimitive("type");
+	public AbstractGeometryType read(JsonReader in) throws IOException {
+		JsonObject object = Streams.parse(in).getAsJsonObject();
+		JsonElement type = object.get("type");
 
-		if (type != null && type.isString()) {
-			GeometryTypeName geometryType = GeometryTypeName.fromValue(type.getAsString());
-			if (geometryType != null)
-				geometry = context.deserialize(json, geometryType.getTypeClass());
+		if (type != null) {
+			GeometryTypeName name = GeometryTypeName.fromValue(type.getAsString());
+			if (name != null)
+				return gson.getDelegateAdapter(factory, TypeToken.get(name.getTypeClass())).fromJsonTree(object);
 		}
 
-		return geometry;
+		throw new JsonParseException("Failed to parse geometry element.");
 	}
-
 }
