@@ -21,47 +21,70 @@
 
 package org.citygml4j.cityjson.geometry;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParseException;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
-import com.google.gson.reflect.TypeToken;
+import com.google.gson.TypeAdapter;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
+import com.google.gson.stream.JsonWriter;
 
-import java.lang.reflect.Type;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
-public class VerticesListAdapter implements JsonSerializer<VerticesList>, JsonDeserializer<VerticesList> {
+public class VerticesListAdapter extends TypeAdapter<VerticesList> {
 	private boolean asInteger;
 	
 	public VerticesListAdapter serializeAsInteger(boolean asInteger) {
 		this.asInteger = asInteger;
 		return this;
 	}
-	
+
 	@Override
-	public JsonElement serialize(VerticesList verticesList, Type typeOfSrc, JsonSerializationContext context) {
-		if (!asInteger)
-			return context.serialize(verticesList.getVertices());
-		else {
-			JsonArray vertices = new JsonArray();
-			for (List<Double> vertex : verticesList.getVertices()) {
-				JsonArray values = new JsonArray();
-				for (double value : vertex)
-					values.add((int)value);
-				
-				vertices.add(values);
-			}
-			
-			return vertices;
+	public void write(JsonWriter out, VerticesList value) throws IOException {
+		out.beginArray();
+
+		for (List<Double> vertex : value.getVertices()) {
+			if (vertex != null) {
+				out.beginArray();
+				for (double coordinate : vertex) {
+					if (asInteger)
+						out.value((int) coordinate);
+					else
+						out.value(coordinate);
+				}
+
+				out.endArray();
+			} else
+				out.nullValue();
 		}
+
+		out.endArray();
 	}
 
 	@Override
-	public VerticesList deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-		return new VerticesList(context.deserialize(json, new TypeToken<List<List<Double>>>(){}.getType()));
+	public VerticesList read(JsonReader in) throws IOException {
+		VerticesList vertices = new VerticesList();
+		in.beginArray();
+
+		while (in.hasNext()) {
+			if (in.peek() == JsonToken.NULL) {
+				vertices.addVertex(null);
+				in.nextNull();
+				continue;
+			}
+
+			List<Double> vertex = new ArrayList<>();
+			in.beginArray();
+			if (in.peek() == JsonToken.NUMBER) {
+				vertex.add(in.nextDouble());
+				vertex.add(in.nextDouble());
+				vertex.add(in.nextDouble());
+			}
+
+			vertices.addVertex(vertex);
+			in.endArray();
+		}
+
+		in.endArray();
+		return vertices;
 	}
-	
 }
