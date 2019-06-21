@@ -20,11 +20,8 @@
  */
 package org.citygml4j.cityjson.geometry;
 
-import com.google.gson.annotations.JsonAdapter;
-import org.citygml4j.cityjson.appearance.MaterialAdapter;
 import org.citygml4j.cityjson.appearance.SolidMaterialObject;
 import org.citygml4j.cityjson.appearance.SolidTextureObject;
-import org.citygml4j.cityjson.appearance.TextureAdapter;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -37,9 +34,7 @@ implements GeometryWithAppearance<SolidMaterialObject, SolidTextureObject> {
 	private final GeometryTypeName type = GeometryTypeName.SOLID;
 	private List<List<List<List<Integer>>>> boundaries = new ArrayList<>();	
 	private SolidSemanticsObject semantics;
-	@JsonAdapter(MaterialAdapter.class)
 	private Map<String, SolidMaterialObject> material;
-	@JsonAdapter(TextureAdapter.class)
 	private Map<String, SolidTextureObject> texture;
 	
 	@Override
