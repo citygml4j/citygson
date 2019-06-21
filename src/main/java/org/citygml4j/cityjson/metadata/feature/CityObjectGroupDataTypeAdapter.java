@@ -21,22 +21,83 @@
 
 package org.citygml4j.cityjson.metadata.feature;
 
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
+import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
+import com.google.gson.TypeAdapter;
 import com.google.gson.internal.LinkedTreeMap;
+import com.google.gson.internal.Streams;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import org.citygml4j.cityjson.metadata.LoDType;
 import org.citygml4j.cityjson.metadata.ThematicModelType;
 
-import java.lang.reflect.Type;
+import java.io.IOException;
 import java.util.Map;
 
-public class CityObjectGroupDataTypeAdapter implements JsonSerializer<CityObjectGroupDataType>, JsonDeserializer<CityObjectGroupDataType> {
+public class CityObjectGroupDataTypeAdapter extends TypeAdapter<CityObjectGroupDataType> {
+    private final Gson gson;
 
+    public CityObjectGroupDataTypeAdapter(Gson gson) {
+        this.gson = gson;
+    }
+
+    @Override
+    public void write(JsonWriter out, CityObjectGroupDataType value) throws IOException {
+        JsonObject object = new JsonObject();
+
+        if (value.isSetUniqueFeatureCount())
+            object.add("uniqueFeatureCount", new JsonPrimitive(value.getUniqueFeatureCount()));
+
+        if (value.isSetAggregateFeatureCount())
+            object.add("aggregateFeatureCount", new JsonPrimitive(value.getAggregateFeatureCount()));
+
+        if (value.isSetPresentLoDs())
+            object.add("presentLoDs", gson.toJsonTree(value.getPresentLoDs()));
+
+        if (value.isSetMemberMetadata()) {
+            for (Map.Entry<ThematicModelType, AbstractFeatureDataType> entry : value.memberMetadata.entrySet())
+                object.add(entry.getKey().getValue(), gson.toJsonTree(entry.getValue()));
+        }
+
+        Streams.write(object, out);
+    }
+
+    @Override
+    public CityObjectGroupDataType read(JsonReader in) throws IOException {
+        CityObjectGroupDataType featureMetadata = new CityObjectGroupDataType();
+        JsonObject object = Streams.parse(in).getAsJsonObject();
+
+        Map<ThematicModelType, AbstractFeatureDataType> memberMetadata = new LinkedTreeMap<>();
+        for (Map.Entry<String, JsonElement> entry : object.entrySet()) {
+            switch (entry.getKey()) {
+                case "uniqueFeatureCount":
+                    featureMetadata.setUniqueFeatureCount(entry.getValue().getAsInt());
+                    break;
+                case "aggregateFeatureCount":
+                    featureMetadata.setAggregateFeatureCount(entry.getValue().getAsInt());
+                    break;
+                case "presentLoDs":
+                    featureMetadata.setPresentLoDs(gson.fromJson(entry.getValue(), new TypeToken<Map<LoDType, Integer>>() {}.getType()));
+                    break;
+                default:
+                    ThematicModelType type = ThematicModelType.fromValue(entry.getKey());
+                    if (type != null) {
+                        AbstractFeatureDataType value = gson.fromJson(entry.getValue(), type.getMetadataClass());
+                        if (value != null)
+                            memberMetadata.put(type, value);
+                    }
+            }
+        }
+
+        if (!memberMetadata.isEmpty())
+            featureMetadata.memberMetadata = memberMetadata;
+
+        return featureMetadata;
+    }
+/*
     @Override
     public JsonElement serialize(CityObjectGroupDataType featureMetadata, Type typeOfSrc, JsonSerializationContext context) {
         JsonObject object = new JsonObject();
@@ -58,36 +119,5 @@ public class CityObjectGroupDataTypeAdapter implements JsonSerializer<CityObject
         return object;
     }
 
-    @Override
-    public CityObjectGroupDataType deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        CityObjectGroupDataType featureMetadata = new CityObjectGroupDataType();
-        JsonObject object = json.getAsJsonObject();
-
-        Map<ThematicModelType, AbstractFeatureDataType> memberMetadata = new LinkedTreeMap<>();
-        for (Map.Entry<String, JsonElement> entry : object.entrySet()) {
-            switch (entry.getKey()) {
-                case "uniqueFeatureCount":
-                    featureMetadata.setUniqueFeatureCount(context.deserialize(entry.getValue(), Integer.class));
-                    break;
-                case "aggregateFeatureCount":
-                    featureMetadata.setAggregateFeatureCount(context.deserialize(entry.getValue(), Integer.class));
-                    break;
-                case "presentLoDs":
-                    featureMetadata.setPresentLoDs(context.deserialize(entry.getValue(), Map.class));
-                    break;
-                default:
-                    ThematicModelType type = ThematicModelType.fromValue(entry.getKey());
-                    if (type != null) {
-                        AbstractFeatureDataType value = context.deserialize(entry.getValue(), type.getMetadataClass());
-                        if (value != null)
-                            memberMetadata.put(type, value);
-                    }
-            }
-        }
-
-        if (!memberMetadata.isEmpty())
-            featureMetadata.memberMetadata = memberMetadata;
-
-        return featureMetadata;
-    }
+ */
 }

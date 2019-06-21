@@ -35,6 +35,8 @@ import org.citygml4j.cityjson.geometry.AbstractGeometryType;
 import org.citygml4j.cityjson.geometry.GeometryTypeAdapter;
 import org.citygml4j.cityjson.geometry.SemanticsType;
 import org.citygml4j.cityjson.geometry.SemanticsTypeAdapter;
+import org.citygml4j.cityjson.metadata.feature.CityObjectGroupDataType;
+import org.citygml4j.cityjson.metadata.feature.CityObjectGroupDataTypeAdapter;
 
 import java.util.Map;
 
@@ -73,6 +75,9 @@ public class CityJSONTypeAdapterFactory implements TypeAdapterFactory {
 
         else if (type.equals(solidCollectionMaterial))
             return (TypeAdapter<T>) new MaterialAdapter<>(gson, SolidCollectionMaterialObject.class, this);
+
+        else if (CityObjectGroupDataType.class.isAssignableFrom(type.getRawType()))
+            return (TypeAdapter<T>) new CityObjectGroupDataTypeAdapter(gson);
 
         return null;
     }

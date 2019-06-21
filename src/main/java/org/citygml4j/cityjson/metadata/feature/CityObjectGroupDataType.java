@@ -21,13 +21,11 @@
 
 package org.citygml4j.cityjson.metadata.feature;
 
-import com.google.gson.annotations.JsonAdapter;
 import org.citygml4j.cityjson.metadata.ThematicModelType;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@JsonAdapter(CityObjectGroupDataTypeAdapter.class)
 public class CityObjectGroupDataType extends AbstractFeatureDataType {
     transient Map<ThematicModelType, AbstractFeatureDataType> memberMetadata;
 
