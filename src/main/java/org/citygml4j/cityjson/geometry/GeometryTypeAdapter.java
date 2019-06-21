@@ -63,6 +63,6 @@ public class GeometryTypeAdapter extends TypeAdapter<AbstractGeometryType> {
 				return gson.getDelegateAdapter(factory, TypeToken.get(name.getTypeClass())).fromJsonTree(object);
 		}
 
-		throw new JsonParseException("Failed to parse geometry element.");
+		return null;
 	}
 }
