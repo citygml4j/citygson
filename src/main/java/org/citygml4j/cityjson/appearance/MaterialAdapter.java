@@ -29,11 +29,11 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AbstractTextureAdapter<T extends AbstractTextureObject> extends TypeAdapter<Map<String, T>> {
+public class MaterialAdapter<T extends AbstractMaterialObject> extends TypeAdapter<Map<String, T>> {
     private final Gson gson;
     private final Class<T> typeOfT;
 
-    public AbstractTextureAdapter(Gson gson, Class<T> typeOfT) {
+    public MaterialAdapter(Gson gson, Class<T> typeOfT) {
         this.gson = gson;
         this.typeOfT = typeOfT;
     }
