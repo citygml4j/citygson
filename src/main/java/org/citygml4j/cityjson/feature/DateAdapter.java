@@ -23,6 +23,7 @@ package org.citygml4j.cityjson.feature;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 
 import java.io.IOException;
@@ -34,15 +35,22 @@ public class DateAdapter extends TypeAdapter<LocalDate> {
 
     @Override
     public void write(JsonWriter out, LocalDate value) throws IOException {
-        out.value(value.format(DateTimeFormatter.ISO_LOCAL_DATE));
+        if (value != null)
+            out.value(value.format(DateTimeFormatter.ISO_LOCAL_DATE));
+        else
+            out.nullValue();
     }
 
     @Override
     public LocalDate read(JsonReader in) throws IOException {
-        try {
-            return LocalDate.parse(in.nextString());
-        } catch (DateTimeParseException e) {
-            return null;
+        if (in.peek() != JsonToken.NULL) {
+            try {
+                return LocalDate.parse(in.nextString());
+            } catch (DateTimeParseException e) {
+                //
+            }
         }
+
+        return null;
     }
 }

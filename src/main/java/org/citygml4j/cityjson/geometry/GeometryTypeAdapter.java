@@ -23,12 +23,12 @@ package org.citygml4j.cityjson.geometry;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.internal.Streams;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 
 import java.io.IOException;
@@ -54,13 +54,15 @@ public class GeometryTypeAdapter extends TypeAdapter<AbstractGeometryType> {
 
 	@Override
 	public AbstractGeometryType read(JsonReader in) throws IOException {
-		JsonObject object = Streams.parse(in).getAsJsonObject();
-		JsonElement type = object.get("type");
+		if (in.peek() != JsonToken.NULL) {
+			JsonObject object = Streams.parse(in).getAsJsonObject();
+			JsonElement type = object.get("type");
 
-		if (type != null) {
-			GeometryTypeName name = GeometryTypeName.fromValue(type.getAsString());
-			if (name != null)
-				return gson.getDelegateAdapter(factory, TypeToken.get(name.getTypeClass())).fromJsonTree(object);
+			if (type != null) {
+				GeometryTypeName name = GeometryTypeName.fromValue(type.getAsString());
+				if (name != null)
+					return gson.getDelegateAdapter(factory, TypeToken.get(name.getTypeClass())).fromJsonTree(object);
+			}
 		}
 
 		return null;

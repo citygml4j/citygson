@@ -25,6 +25,7 @@ import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.internal.Streams;
 import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import org.citygml4j.cityjson.metadata.ThematicModelType;
 
@@ -41,24 +42,33 @@ public class FeatureDataTypeAdapter extends TypeAdapter<Map<ThematicModelType, A
 
     @Override
     public void write(JsonWriter out, Map<ThematicModelType, AbstractFeatureDataType> value) throws IOException {
-        Streams.write(gson.toJsonTree(value), out);
+        if (value != null)
+            Streams.write(gson.toJsonTree(value), out);
+        else
+            out.nullValue();
     }
 
     @Override
     public Map<ThematicModelType, AbstractFeatureDataType> read(JsonReader in) throws IOException {
-        Map<ThematicModelType, AbstractFeatureDataType> featureMetadata = new LinkedHashMap<>();
-        in.beginObject();
+        Map<ThematicModelType, AbstractFeatureDataType> featureMetadata = null;
 
-        while (in.hasNext()) {
-            ThematicModelType type = ThematicModelType.fromValue(in.nextName());
-            if (type != null) {
-                AbstractFeatureDataType value = gson.fromJson(in, type.getMetadataClass());
-                if (value != null)
-                    featureMetadata.put(type, value);
+        if (in.peek() != JsonToken.NULL) {
+            featureMetadata = new LinkedHashMap<>();
+            in.beginObject();
+
+            while (in.hasNext()) {
+                ThematicModelType type = ThematicModelType.fromValue(in.nextName());
+                if (type != null) {
+                    AbstractFeatureDataType value = gson.fromJson(in, type.getMetadataClass());
+                    if (value != null)
+                        featureMetadata.put(type, value);
+                }
             }
-        }
 
-        in.endObject();
+            in.endObject();
+        } else
+            in.nextNull();
+
         return featureMetadata;
     }
 }

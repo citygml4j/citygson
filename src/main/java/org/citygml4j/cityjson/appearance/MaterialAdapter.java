@@ -23,6 +23,7 @@ import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.internal.Streams;
 import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 
 import java.io.IOException;
@@ -55,17 +56,24 @@ public class MaterialAdapter<T extends AbstractMaterialObject> extends TypeAdapt
 
     @Override
     public Map<String, T> read(JsonReader in) throws IOException {
-        Map<String, T> materials = new HashMap<>();
-        in.beginObject();
+        Map<String, T> materials = null;
 
-        while (in.hasNext()) {
-            String theme = in.nextName();
-            T material = gson.fromJson(in, typeOfT);
-            material.theme = theme;
-            materials.put(theme, material);
-        }
+        if (in.peek() != JsonToken.NULL) {
+            materials = new HashMap<>();
+            in.beginObject();
 
-        in.endObject();
+            while (in.hasNext()) {
+                String theme = in.nextName();
+                T material = gson.fromJson(in, typeOfT);
+                material.theme = theme;
+                materials.put(theme, material);
+            }
+
+            in.endObject();
+        } else
+            in.nextNull();
+
         return materials;
+
     }
 }

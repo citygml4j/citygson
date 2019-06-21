@@ -40,51 +40,59 @@ public class VerticesListAdapter extends TypeAdapter<VerticesList> {
 
 	@Override
 	public void write(JsonWriter out, VerticesList value) throws IOException {
-		out.beginArray();
+		if (value != null) {
+			out.beginArray();
 
-		for (List<Double> vertex : value.getVertices()) {
-			if (vertex != null) {
-				out.beginArray();
-				for (double coordinate : vertex) {
-					if (asInteger)
-						out.value((int) coordinate);
-					else
-						out.value(coordinate);
-				}
+			for (List<Double> vertex : value.getVertices()) {
+				if (vertex != null) {
+					out.beginArray();
+					for (double coordinate : vertex) {
+						if (asInteger)
+							out.value((int) coordinate);
+						else
+							out.value(coordinate);
+					}
 
-				out.endArray();
-			} else
-				out.nullValue();
-		}
+					out.endArray();
+				} else
+					out.nullValue();
+			}
 
-		out.endArray();
+			out.endArray();
+		} else
+			out.nullValue();
 	}
 
 	@Override
 	public VerticesList read(JsonReader in) throws IOException {
-		VerticesList vertices = new VerticesList();
-		in.beginArray();
+		VerticesList vertices = null;
 
-		while (in.hasNext()) {
-			if (in.peek() == JsonToken.NULL) {
-				vertices.addVertex(null);
-				in.nextNull();
-				continue;
-			}
-
-			List<Double> vertex = new ArrayList<>();
+		if (in.peek() != JsonToken.NULL) {
+			vertices = new VerticesList();
 			in.beginArray();
-			if (in.peek() == JsonToken.NUMBER) {
-				vertex.add(in.nextDouble());
-				vertex.add(in.nextDouble());
-				vertex.add(in.nextDouble());
+
+			while (in.hasNext()) {
+				if (in.peek() == JsonToken.NULL) {
+					vertices.addVertex(null);
+					in.nextNull();
+					continue;
+				}
+
+				List<Double> vertex = new ArrayList<>();
+				in.beginArray();
+				if (in.peek() == JsonToken.NUMBER) {
+					vertex.add(in.nextDouble());
+					vertex.add(in.nextDouble());
+					vertex.add(in.nextDouble());
+				}
+
+				vertices.addVertex(vertex);
+				in.endArray();
 			}
 
-			vertices.addVertex(vertex);
 			in.endArray();
 		}
 
-		in.endArray();
 		return vertices;
 	}
 }

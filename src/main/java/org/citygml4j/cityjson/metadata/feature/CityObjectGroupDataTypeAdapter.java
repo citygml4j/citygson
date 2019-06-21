@@ -28,6 +28,7 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.internal.Streams;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import org.citygml4j.cityjson.metadata.LoDType;
 import org.citygml4j.cityjson.metadata.ThematicModelType;
@@ -45,57 +46,67 @@ public class CityObjectGroupDataTypeAdapter extends TypeAdapter<CityObjectGroupD
 
     @Override
     public void write(JsonWriter out, CityObjectGroupDataType value) throws IOException {
-        JsonObject object = new JsonObject();
+        if (value != null) {
+            JsonObject object = new JsonObject();
 
-        if (value.isSetUniqueFeatureCount())
-            object.add("uniqueFeatureCount", new JsonPrimitive(value.getUniqueFeatureCount()));
+            if (value.isSetUniqueFeatureCount())
+                object.add("uniqueFeatureCount", new JsonPrimitive(value.getUniqueFeatureCount()));
 
-        if (value.isSetAggregateFeatureCount())
-            object.add("aggregateFeatureCount", new JsonPrimitive(value.getAggregateFeatureCount()));
+            if (value.isSetAggregateFeatureCount())
+                object.add("aggregateFeatureCount", new JsonPrimitive(value.getAggregateFeatureCount()));
 
-        if (value.isSetPresentLoDs())
-            object.add("presentLoDs", gson.toJsonTree(value.getPresentLoDs()));
+            if (value.isSetPresentLoDs())
+                object.add("presentLoDs", gson.toJsonTree(value.getPresentLoDs()));
 
-        if (value.isSetMemberMetadata()) {
-            for (Map.Entry<ThematicModelType, AbstractFeatureDataType> entry : value.memberMetadata.entrySet())
-                object.add(entry.getKey().getValue(), gson.toJsonTree(entry.getValue()));
-        }
+            if (value.isSetMemberMetadata()) {
+                for (Map.Entry<ThematicModelType, AbstractFeatureDataType> entry : value.memberMetadata.entrySet())
+                    object.add(entry.getKey().getValue(), gson.toJsonTree(entry.getValue()));
+            }
 
-        Streams.write(object, out);
+            Streams.write(object, out);
+        } else
+            out.nullValue();
     }
 
     @Override
     public CityObjectGroupDataType read(JsonReader in) throws IOException {
-        CityObjectGroupDataType featureMetadata = new CityObjectGroupDataType();
-        Map<ThematicModelType, AbstractFeatureDataType> memberMetadata = new LinkedHashMap<>();
-        in.beginObject();
+        CityObjectGroupDataType featureMetadata = null;
 
-        while (in.hasNext()) {
-            String name = in.nextName();
-            switch (name) {
-                case "uniqueFeatureCount":
-                    featureMetadata.setUniqueFeatureCount(in.nextInt());
-                    break;
-                case "aggregateFeatureCount":
-                    featureMetadata.setAggregateFeatureCount(in.nextInt());
-                    break;
-                case "presentLoDs":
-                    featureMetadata.setPresentLoDs(gson.fromJson(in, new TypeToken<Map<LoDType, Integer>>() {}.getType()));
-                    break;
-                default:
-                    ThematicModelType type = ThematicModelType.fromValue(name);
-                    if (type != null) {
-                        AbstractFeatureDataType value = gson.fromJson(in, type.getMetadataClass());
-                        if (value != null)
-                            memberMetadata.put(type, value);
-                    }
+        if (in.peek() != JsonToken.NULL) {
+            featureMetadata = new CityObjectGroupDataType();
+            Map<ThematicModelType, AbstractFeatureDataType> memberMetadata = new LinkedHashMap<>();
+            in.beginObject();
+
+            while (in.hasNext()) {
+                String name = in.nextName();
+                switch (name) {
+                    case "uniqueFeatureCount":
+                        featureMetadata.setUniqueFeatureCount(in.nextInt());
+                        break;
+                    case "aggregateFeatureCount":
+                        featureMetadata.setAggregateFeatureCount(in.nextInt());
+                        break;
+                    case "presentLoDs":
+                        featureMetadata.setPresentLoDs(gson.fromJson(in, new TypeToken<Map<LoDType, Integer>>() {
+                        }.getType()));
+                        break;
+                    default:
+                        ThematicModelType type = ThematicModelType.fromValue(name);
+                        if (type != null) {
+                            AbstractFeatureDataType value = gson.fromJson(in, type.getMetadataClass());
+                            if (value != null)
+                                memberMetadata.put(type, value);
+                        }
+                }
             }
-        }
 
-        if (!memberMetadata.isEmpty())
-            featureMetadata.memberMetadata = memberMetadata;
+            if (!memberMetadata.isEmpty())
+                featureMetadata.memberMetadata = memberMetadata;
 
-        in.endObject();
+            in.endObject();
+        } else
+            in.nextNull();
+
         return featureMetadata;
     }
 }

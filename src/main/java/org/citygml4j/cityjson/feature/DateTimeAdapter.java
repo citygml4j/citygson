@@ -23,6 +23,7 @@ package org.citygml4j.cityjson.feature;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 
 import java.io.IOException;
@@ -57,18 +58,25 @@ public class DateTimeAdapter extends TypeAdapter<ZonedDateTime> {
 
     @Override
     public void write(JsonWriter out, ZonedDateTime value) throws IOException {
-        // return "date-time" only if the time is not set to start of day
-        DateTimeFormatter formatter = value.toLocalTime().equals(LocalTime.MIN) ?
-                DateTimeFormatter.ISO_LOCAL_DATE : DateTimeFormatter.ISO_OFFSET_DATE_TIME;
-        out.value(value.format(formatter));
+        if (value != null) {
+            // return "date-time" only if the time is not set to start of day
+            DateTimeFormatter formatter = value.toLocalTime().equals(LocalTime.MIN) ?
+                    DateTimeFormatter.ISO_LOCAL_DATE : DateTimeFormatter.ISO_OFFSET_DATE_TIME;
+            out.value(value.format(formatter));
+        } else
+            out.nullValue();
     }
 
     @Override
     public ZonedDateTime read(JsonReader in) throws IOException {
-        try {
-            return ZonedDateTime.parse(in.nextString(), formatter);
-        } catch (DateTimeParseException e) {
-            return null;
+        if (in.peek() != JsonToken.NULL) {
+            try {
+                return ZonedDateTime.parse(in.nextString(), formatter);
+            } catch (DateTimeParseException e) {
+                //
+            }
         }
+
+        return null;
     }
 }
