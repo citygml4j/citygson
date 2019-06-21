@@ -59,22 +59,22 @@ public class CityJSONTypeAdapterFactory implements TypeAdapterFactory {
             return (TypeAdapter<T>) new SemanticsTypeAdapter(gson, this);
 
         else if (type.equals(surfaceCollectionTexture))
-            return (TypeAdapter<T>) new TextureAdapter<>(gson, SurfaceCollectionTextureObject.class, this);
+            return (TypeAdapter<T>) new TextureAdapter<>(gson, SurfaceCollectionTextureObject.class);
 
         else if (type.equals(solidTexture))
-            return (TypeAdapter<T>) new TextureAdapter<>(gson, SolidTextureObject.class, this);
+            return (TypeAdapter<T>) new TextureAdapter<>(gson, SolidTextureObject.class);
 
         else if (type.equals(solidCollectionTexture))
-            return (TypeAdapter<T>) new TextureAdapter<>(gson, SolidCollectionTextureObject.class, this);
+            return (TypeAdapter<T>) new TextureAdapter<>(gson, SolidCollectionTextureObject.class);
 
         else if (type.equals(surfaceCollectionMaterial))
-            return (TypeAdapter<T>) new MaterialAdapter<>(gson, SurfaceCollectionMaterialObject.class, this);
+            return (TypeAdapter<T>) new MaterialAdapter<>(gson, SurfaceCollectionMaterialObject.class);
 
         else if (type.equals(solidMaterial))
-            return (TypeAdapter<T>) new MaterialAdapter<>(gson, SolidMaterialObject.class, this);
+            return (TypeAdapter<T>) new MaterialAdapter<>(gson, SolidMaterialObject.class);
 
         else if (type.equals(solidCollectionMaterial))
-            return (TypeAdapter<T>) new MaterialAdapter<>(gson, SolidCollectionMaterialObject.class, this);
+            return (TypeAdapter<T>) new MaterialAdapter<>(gson, SolidCollectionMaterialObject.class);
 
         else if (CityObjectGroupDataType.class.isAssignableFrom(type.getRawType()))
             return (TypeAdapter<T>) new CityObjectGroupDataTypeAdapter(gson);

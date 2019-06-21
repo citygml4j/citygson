@@ -97,27 +97,4 @@ public class CityObjectGroupDataTypeAdapter extends TypeAdapter<CityObjectGroupD
 
         return featureMetadata;
     }
-/*
-    @Override
-    public JsonElement serialize(CityObjectGroupDataType featureMetadata, Type typeOfSrc, JsonSerializationContext context) {
-        JsonObject object = new JsonObject();
-
-        if (featureMetadata.isSetUniqueFeatureCount())
-            object.add("uniqueFeatureCount", new JsonPrimitive(featureMetadata.getUniqueFeatureCount()));
-
-        if (featureMetadata.isSetAggregateFeatureCount())
-            object.add("aggregateFeatureCount", new JsonPrimitive(featureMetadata.getAggregateFeatureCount()));
-
-        if (featureMetadata.isSetPresentLoDs())
-            object.add("presentLoDs", context.serialize(featureMetadata.getPresentLoDs()));
-
-        if (featureMetadata.isSetMemberMetadata()) {
-            for (Map.Entry<ThematicModelType, AbstractFeatureDataType> entry : featureMetadata.memberMetadata.entrySet())
-                object.add(entry.getKey().getValue(), context.serialize(entry.getValue()));
-        }
-
-        return object;
-    }
-
- */
 }
