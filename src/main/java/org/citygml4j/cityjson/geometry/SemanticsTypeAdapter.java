@@ -20,67 +20,81 @@
  */
 package org.citygml4j.cityjson.geometry;
 
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
+import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
+import com.google.gson.TypeAdapter;
+import com.google.gson.TypeAdapterFactory;
+import com.google.gson.internal.Streams;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import org.citygml4j.cityjson.CityJSONRegistry;
 import org.citygml4j.cityjson.util.PropertyHelper;
 
-import java.lang.reflect.Type;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
-public class SemanticsTypeAdapter implements JsonSerializer<SemanticsType>, JsonDeserializer<SemanticsType> {
+public class SemanticsTypeAdapter extends TypeAdapter<SemanticsType> {
+	private final Gson gson;
+	private final TypeAdapterFactory factory;
+
 	private final CityJSONRegistry registry = CityJSONRegistry.getInstance();
 	private final Map<String, List<String>> predefinedAttributes = new HashMap<>();
 	private final PropertyHelper propertyHelper = new PropertyHelper();
 
+	public SemanticsTypeAdapter(Gson gson, TypeAdapterFactory factory) {
+		this.gson = gson;
+		this.factory = factory;
+	}
+
+	@SuppressWarnings("unchecked")
 	@Override
-	public JsonElement serialize(SemanticsType semantics, Type typeOfSrc, JsonSerializationContext context) {
-		if (semantics == null)
-			return null;
+	public void write(JsonWriter out, SemanticsType value) throws IOException {
+		if (value == null) {
+			out.nullValue();
+			return;
+		}
 
-		if (semantics.type == null)
-			semantics.type = registry.getSemanticSurfaceType(semantics);
+		if (value.type == null)
+			value.type = registry.getSemanticSurfaceType(value);
 
-		Class<?> semanticsTypeClass = registry.getSemanticSurfaceClass(semantics.type);
-		JsonElement element = context.serialize(semantics, semanticsTypeClass);
+		Class<?> typeOf = registry.getSemanticSurfaceClass(value.type);
+		TypeAdapter<SemanticsType> delegate = (TypeAdapter<SemanticsType>) gson.getDelegateAdapter(factory, TypeToken.get(typeOf));
+
+		JsonElement element = delegate.toJsonTree(value);
 		if (element != null && element.isJsonObject()) {
 			JsonObject object = element.getAsJsonObject();
 
 			// serialize extension properties
-			if (semantics.isSetAttributes()) {
-				JsonObject properties = context.serialize(semantics.getAttributes()).getAsJsonObject();
-				for (Entry<String, JsonElement> entry : properties.entrySet())
+			if (value.isSetAttributes()) {
+				JsonObject properties = gson.toJsonTree(value.getAttributes()).getAsJsonObject();
+				for (Map.Entry<String, JsonElement> entry : properties.entrySet())
 					object.add(entry.getKey(), entry.getValue());
 			}
 		}
 
-		return element;
+		Streams.write(element, out);
 	}
 
 	@Override
-	public SemanticsType deserialize(JsonElement json, Type typeOfSrc, JsonDeserializationContext context) throws JsonParseException {
-		JsonObject object = json.getAsJsonObject();
+	public SemanticsType read(JsonReader in) throws IOException {
+		JsonObject object = Streams.parse(in).getAsJsonObject();
 		JsonPrimitive type = object.getAsJsonPrimitive("type");
 
-		if (type != null && type.isString()) {
-			Class<?> semanticsTypeClass = registry.getSemanticSurfaceClass(type.getAsString());
-			if (semanticsTypeClass != null) {
-				SemanticsType semantics = context.deserialize(object, semanticsTypeClass);
+		if (type != null) {
+			Class<? extends SemanticsType> typeOf = registry.getSemanticSurfaceClass(type.getAsString());
+			if (typeOf != null) {
+				SemanticsType semantics = gson.getDelegateAdapter(factory, TypeToken.get(typeOf)).fromJsonTree(object);
 
 				// deserialize extension properties
 				List<String> predefined = predefinedAttributes.computeIfAbsent(semantics.getClass().getTypeName(),
 						v -> propertyHelper.getDeclaredProperties(semantics.getClass()));
 
-				for (Entry<String, JsonElement> entry : object.entrySet()) {
+				for (Map.Entry<String, JsonElement> entry : object.entrySet()) {
 					String key = entry.getKey();
 					if (predefined.contains(key))
 						continue;

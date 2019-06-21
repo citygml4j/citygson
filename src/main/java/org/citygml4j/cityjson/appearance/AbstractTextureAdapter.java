@@ -40,14 +40,17 @@ public class AbstractTextureAdapter<T extends AbstractTextureObject> extends Typ
 
     @Override
     public void write(JsonWriter out, Map<String, T> value) throws IOException {
-        out.beginObject();
+        if (value != null) {
+            out.beginObject();
 
-        for (Map.Entry<String, T> entry : value.entrySet()) {
-            out.name(entry.getKey());
-            Streams.write(gson.getAdapter(typeOfT).toJsonTree(entry.getValue()), out);
-        }
+            for (Map.Entry<String, T> entry : value.entrySet()) {
+                out.name(entry.getKey());
+                Streams.write(gson.getAdapter(typeOfT).toJsonTree(entry.getValue()), out);
+            }
 
-        out.endObject();
+            out.endObject();
+        } else
+            out.nullValue();
     }
 
     @Override

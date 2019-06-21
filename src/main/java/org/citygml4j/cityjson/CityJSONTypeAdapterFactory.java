@@ -37,24 +37,31 @@ import org.citygml4j.cityjson.appearance.SurfaceCollectionTextureAdapter;
 import org.citygml4j.cityjson.appearance.SurfaceCollectionTextureObject;
 import org.citygml4j.cityjson.geometry.AbstractGeometryType;
 import org.citygml4j.cityjson.geometry.GeometryTypeAdapter;
+import org.citygml4j.cityjson.geometry.SemanticsType;
+import org.citygml4j.cityjson.geometry.SemanticsTypeAdapter;
 
 import java.util.Map;
 
 public class CityJSONTypeAdapterFactory implements TypeAdapterFactory {
 
-    private TypeToken solidTexture = new TypeToken<Map<String, SolidTextureObject>>() {};
-    private TypeToken surfaceCollectionTexture = new TypeToken<Map<String, SurfaceCollectionTextureObject>>() {};
-    private TypeToken solidCollectionTexture = new TypeToken<Map<String, SolidCollectionTextureObject>>() {};
+    private TypeToken<?> semantics = TypeToken.get(SemanticsType.class);
 
-    private TypeToken solidMaterial = new TypeToken<Map<String, SolidMaterialObject>>() {};
-    private TypeToken surfaceCollectionMaterial = new TypeToken<Map<String, SurfaceCollectionMaterialObject>>() {};
-    private TypeToken solidCollectionMaterial = new TypeToken<Map<String, SolidCollectionMaterialObject>>() {};
+    private TypeToken<?> solidTexture = new TypeToken<Map<String, SolidTextureObject>>() {};
+    private TypeToken<?> surfaceCollectionTexture = new TypeToken<Map<String, SurfaceCollectionTextureObject>>() {};
+    private TypeToken<?> solidCollectionTexture = new TypeToken<Map<String, SolidCollectionTextureObject>>() {};
+
+    private TypeToken<?> solidMaterial = new TypeToken<Map<String, SolidMaterialObject>>() {};
+    private TypeToken<?> surfaceCollectionMaterial = new TypeToken<Map<String, SurfaceCollectionMaterialObject>>() {};
+    private TypeToken<?> solidCollectionMaterial = new TypeToken<Map<String, SolidCollectionMaterialObject>>() {};
 
     @SuppressWarnings("unchecked")
     @Override
     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
         if (AbstractGeometryType.class.isAssignableFrom(type.getRawType()))
             return (TypeAdapter<T>) new GeometryTypeAdapter(gson, this);
+
+        else if (type.equals(semantics))
+            return (TypeAdapter<T>) new SemanticsTypeAdapter(gson, this);
 
         else if (type.equals(surfaceCollectionTexture))
             return (TypeAdapter<T>) new SurfaceCollectionTextureAdapter(gson);

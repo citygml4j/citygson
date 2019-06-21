@@ -20,14 +20,11 @@
  */
 package org.citygml4j.cityjson.geometry;
 
-import com.google.gson.annotations.JsonAdapter;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@JsonAdapter(SemanticsTypeAdapter.class)
 public class SemanticsType {
 	String type;
 	private Integer parent;
