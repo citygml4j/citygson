@@ -39,13 +39,10 @@ import org.citygml4j.cityjson.geometry.SemanticsTypeAdapter;
 import java.util.Map;
 
 public class CityJSONTypeAdapterFactory implements TypeAdapterFactory {
-
     private TypeToken<?> semantics = TypeToken.get(SemanticsType.class);
-
     private TypeToken<?> solidTexture = new TypeToken<Map<String, SolidTextureObject>>() {};
     private TypeToken<?> surfaceCollectionTexture = new TypeToken<Map<String, SurfaceCollectionTextureObject>>() {};
     private TypeToken<?> solidCollectionTexture = new TypeToken<Map<String, SolidCollectionTextureObject>>() {};
-
     private TypeToken<?> solidMaterial = new TypeToken<Map<String, SolidMaterialObject>>() {};
     private TypeToken<?> surfaceCollectionMaterial = new TypeToken<Map<String, SurfaceCollectionMaterialObject>>() {};
     private TypeToken<?> solidCollectionMaterial = new TypeToken<Map<String, SolidCollectionMaterialObject>>() {};
@@ -60,22 +57,22 @@ public class CityJSONTypeAdapterFactory implements TypeAdapterFactory {
             return (TypeAdapter<T>) new SemanticsTypeAdapter(gson, this);
 
         else if (type.equals(surfaceCollectionTexture))
-            return (TypeAdapter<T>) new TextureAdapter<>(gson, SurfaceCollectionTextureObject.class);
+            return (TypeAdapter<T>) new TextureAdapter<>(gson, SurfaceCollectionTextureObject.class, this);
 
         else if (type.equals(solidTexture))
-            return (TypeAdapter<T>) new TextureAdapter<>(gson, SolidTextureObject.class);
+            return (TypeAdapter<T>) new TextureAdapter<>(gson, SolidTextureObject.class, this);
 
         else if (type.equals(solidCollectionTexture))
-            return (TypeAdapter<T>) new TextureAdapter<>(gson, SolidCollectionTextureObject.class);
+            return (TypeAdapter<T>) new TextureAdapter<>(gson, SolidCollectionTextureObject.class, this);
 
         else if (type.equals(surfaceCollectionMaterial))
-            return (TypeAdapter<T>) new MaterialAdapter<>(gson, SurfaceCollectionMaterialObject.class);
+            return (TypeAdapter<T>) new MaterialAdapter<>(gson, SurfaceCollectionMaterialObject.class, this);
 
         else if (type.equals(solidMaterial))
-            return (TypeAdapter<T>) new MaterialAdapter<>(gson, SolidMaterialObject.class);
+            return (TypeAdapter<T>) new MaterialAdapter<>(gson, SolidMaterialObject.class, this);
 
         else if (type.equals(solidCollectionMaterial))
-            return (TypeAdapter<T>) new MaterialAdapter<>(gson, SolidCollectionMaterialObject.class);
+            return (TypeAdapter<T>) new MaterialAdapter<>(gson, SolidCollectionMaterialObject.class, this);
 
         return null;
     }

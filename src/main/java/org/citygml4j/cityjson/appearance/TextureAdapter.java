@@ -21,7 +21,9 @@ package org.citygml4j.cityjson.appearance;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.internal.Streams;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
@@ -32,10 +34,12 @@ import java.util.Map;
 public class TextureAdapter<T extends AbstractTextureObject> extends TypeAdapter<Map<String, T>> {
     private final Gson gson;
     private final Class<T> typeOfT;
+    private final TypeAdapterFactory factory;
 
-    public TextureAdapter(Gson gson, Class<T> typeOfT) {
+    public TextureAdapter(Gson gson, Class<T> typeOfT, TypeAdapterFactory factory) {
         this.gson = gson;
         this.typeOfT = typeOfT;
+        this.factory = factory;
     }
 
     @Override
@@ -45,7 +49,7 @@ public class TextureAdapter<T extends AbstractTextureObject> extends TypeAdapter
 
             for (Map.Entry<String, T> entry : value.entrySet()) {
                 out.name(entry.getKey());
-                Streams.write(gson.getAdapter(typeOfT).toJsonTree(entry.getValue()), out);
+                Streams.write(gson.getDelegateAdapter(factory, TypeToken.get(typeOfT)).toJsonTree(entry.getValue()), out);
             }
 
             out.endObject();
@@ -60,7 +64,7 @@ public class TextureAdapter<T extends AbstractTextureObject> extends TypeAdapter
 
         while (in.hasNext()) {
             String theme = in.nextName();
-            T material = gson.getAdapter(typeOfT).fromJsonTree(Streams.parse(in));
+            T material = gson.getDelegateAdapter(factory, TypeToken.get(typeOfT)).fromJsonTree(Streams.parse(in));
             material.theme = theme;
             materials.put(theme, material);
         }
