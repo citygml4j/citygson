@@ -20,49 +20,65 @@
  */
 package org.citygml4j.cityjson.feature;
 
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
-import com.google.gson.internal.LinkedTreeMap;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.internal.Streams;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
+import com.google.gson.stream.JsonWriter;
 
-import java.lang.reflect.Type;
-import java.util.LinkedHashMap;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
-public class CityObjectsAdapter implements JsonSerializer<Map<String, AbstractCityObjectType>>, JsonDeserializer<Map<String, AbstractCityObjectType>> {
+public class CityObjectsAdapter extends TypeAdapter<Map<String, AbstractCityObjectType>> {
+	private final Gson gson;
 
-	@Override
-	public JsonElement serialize(Map<String, AbstractCityObjectType> cityObjects, Type typeOfSrc, JsonSerializationContext context) {
-		JsonObject object = new JsonObject();
-		for (Entry<String, AbstractCityObjectType> entry : cityObjects.entrySet()) {
-			JsonElement cityObject = context.serialize(entry.getValue(), AbstractCityObjectType.class);
-			if (cityObject != null)
-				object.add(entry.getKey(), cityObject);
-		}
-
-		return object;
+	public CityObjectsAdapter(Gson gson) {
+		this.gson = gson;
 	}
 
 	@Override
-	public Map<String, AbstractCityObjectType> deserialize(JsonElement json, Type typeOfSrc, JsonDeserializationContext context) throws JsonParseException {
-		Map<String, AbstractCityObjectType> cityObjects = new LinkedHashMap<>();
+	public void write(JsonWriter out, Map<String, AbstractCityObjectType> value) throws IOException {
+		if (value != null) {
+			out.beginObject();
 
-		for (Entry<String, JsonElement> entry : json.getAsJsonObject().entrySet()) {
-			JsonObject object = entry.getValue().getAsJsonObject();
-
-			AbstractCityObjectType cityObject = context.deserialize(object, AbstractCityObjectType.class);
-			if (cityObject != null) {
-				cityObject.setGmlId(entry.getKey());
-				cityObjects.put(entry.getKey(), cityObject);
+			for (Map.Entry<String, AbstractCityObjectType> entry : value.entrySet()) {
+				out.name(entry.getKey());
+				Streams.write(gson.toJsonTree(entry.getValue(), AbstractCityObjectType.class), out);
 			}
+
+			out.endObject();
+		} else
+			out.nullValue();
+	}
+
+	@Override
+	public Map<String, AbstractCityObjectType> read(JsonReader in) throws IOException {
+		Map<String, AbstractCityObjectType> cityObjects = null;
+
+		if (in.peek() != JsonToken.NULL) {
+			cityObjects = new HashMap<>();
+			in.beginObject();
+
+			while (in.hasNext()) {
+				String gmlId = in.nextName();
+
+				if (in.peek() == JsonToken.NULL) {
+					in.nextNull();
+					continue;
+				}
+
+				AbstractCityObjectType cityObject = gson.fromJson(in, AbstractCityObjectType.class);
+				if (cityObject != null) {
+					cityObject.setGmlId(gmlId);
+					cityObjects.put(gmlId, cityObject);
+				}
+			}
+
+			in.endObject();
 		}
 
 		return cityObjects;
 	}
-
 }

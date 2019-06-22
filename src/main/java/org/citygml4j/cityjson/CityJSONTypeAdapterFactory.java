@@ -34,6 +34,7 @@ import org.citygml4j.cityjson.appearance.TextureAdapter;
 import org.citygml4j.cityjson.feature.AbstractCityObjectType;
 import org.citygml4j.cityjson.feature.CityObjectTypeAdapter;
 import org.citygml4j.cityjson.feature.CityObjectTypeFilter;
+import org.citygml4j.cityjson.feature.CityObjectsAdapter;
 import org.citygml4j.cityjson.geometry.AbstractGeometryType;
 import org.citygml4j.cityjson.geometry.GeometryTypeAdapter;
 import org.citygml4j.cityjson.geometry.SemanticsType;
@@ -47,6 +48,7 @@ import org.citygml4j.cityjson.metadata.feature.FeatureDataTypeAdapter;
 import java.util.Map;
 
 public class CityJSONTypeAdapterFactory implements TypeAdapterFactory {
+    private TypeToken<?> cityObjects = new TypeToken<Map<String, AbstractCityObjectType>>() {};
     private TypeToken<?> semantics = TypeToken.get(SemanticsType.class);
     private TypeToken<?> solidTexture = new TypeToken<Map<String, SolidTextureObject>>() {};
     private TypeToken<?> surfaceCollectionTexture = new TypeToken<Map<String, SurfaceCollectionTextureObject>>() {};
@@ -98,6 +100,9 @@ public class CityJSONTypeAdapterFactory implements TypeAdapterFactory {
 
         else if (type.equals(solidCollectionMaterial))
             return (TypeAdapter<T>) new MaterialAdapter<>(gson, SolidCollectionMaterialObject.class);
+
+        else if (type.equals(cityObjects))
+            return (TypeAdapter<T>) new CityObjectsAdapter(gson);
 
         else if (type.equals(featureMetaData))
             return (TypeAdapter<T>) new FeatureDataTypeAdapter(gson);

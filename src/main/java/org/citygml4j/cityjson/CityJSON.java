@@ -53,7 +53,6 @@ public class CityJSON implements ExtensibleType {
 	private MetadataType metadata;
 	private Map<String, ExtensionType> extensions;
 	@SerializedName("CityObjects")
-	@JsonAdapter(CityObjectsAdapter.class)
 	private Map<String, AbstractCityObjectType> cityObjects = new LinkedHashMap<>();
 	private VerticesList vertices = new VerticesList();
 	private TransformType transform;
