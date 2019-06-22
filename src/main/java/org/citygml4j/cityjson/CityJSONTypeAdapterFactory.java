@@ -101,6 +101,9 @@ public class CityJSONTypeAdapterFactory implements TypeAdapterFactory {
         else if (type.equals(solidCollectionMaterial))
             return (TypeAdapter<T>) new MaterialAdapter<>(gson, SolidCollectionMaterialObject.class);
 
+        else if (CityJSON.class.isAssignableFrom(type.getRawType()))
+            return (TypeAdapter<T>) new CityJSONAdapter(gson);
+
         else if (type.equals(cityObjects))
             return (TypeAdapter<T>) new CityObjectsAdapter(gson);
 

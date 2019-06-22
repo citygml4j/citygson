@@ -20,14 +20,11 @@
  */
 package org.citygml4j.cityjson;
 
-import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import org.citygml4j.cityjson.appearance.AppearanceType;
 import org.citygml4j.cityjson.extension.ExtensibleType;
 import org.citygml4j.cityjson.extension.ExtensionType;
 import org.citygml4j.cityjson.feature.AbstractCityObjectType;
-import org.citygml4j.cityjson.feature.CityJSONAdapter;
-import org.citygml4j.cityjson.feature.CityObjectsAdapter;
 import org.citygml4j.cityjson.geometry.AbstractGeometryObjectType;
 import org.citygml4j.cityjson.geometry.AbstractGeometryType;
 import org.citygml4j.cityjson.geometry.GeometryTemplatesType;
@@ -46,19 +43,18 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@JsonAdapter(CityJSONAdapter.class)
 public class CityJSON implements ExtensibleType {
 	private final String type = "CityJSON";
 	private final String version = "1.0";
-	private MetadataType metadata;
-	private Map<String, ExtensionType> extensions;
+	MetadataType metadata;
+	Map<String, ExtensionType> extensions;
 	@SerializedName("CityObjects")
-	private Map<String, AbstractCityObjectType> cityObjects = new LinkedHashMap<>();
-	private VerticesList vertices = new VerticesList();
-	private TransformType transform;
-	private AppearanceType appearance;
+	Map<String, AbstractCityObjectType> cityObjects = new LinkedHashMap<>();
+	VerticesList vertices = new VerticesList();
+	TransformType transform;
+	AppearanceType appearance;
 	@SerializedName("geometry-templates")
-	private GeometryTemplatesType geometryTemplates;
+	GeometryTemplatesType geometryTemplates;
 
 	private transient Map<String, Object> extensionProperties;
 
