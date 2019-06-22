@@ -20,7 +20,6 @@
  */
 package org.citygml4j.cityjson.feature;
 
-import com.google.gson.annotations.JsonAdapter;
 import org.citygml4j.cityjson.extension.ExtensibleType;
 import org.citygml4j.cityjson.extension.Extension;
 import org.citygml4j.cityjson.geometry.AbstractGeometryType;
@@ -34,7 +33,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-@JsonAdapter(CityObjectTypeAdapter.class)
 public abstract class AbstractCityObjectType implements ExtensibleType, Extension {
 	String type;
 	Attributes attributes;

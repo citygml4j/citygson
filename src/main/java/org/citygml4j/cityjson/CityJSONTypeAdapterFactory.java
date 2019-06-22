@@ -31,6 +31,9 @@ import org.citygml4j.cityjson.appearance.SolidTextureObject;
 import org.citygml4j.cityjson.appearance.SurfaceCollectionMaterialObject;
 import org.citygml4j.cityjson.appearance.SurfaceCollectionTextureObject;
 import org.citygml4j.cityjson.appearance.TextureAdapter;
+import org.citygml4j.cityjson.feature.AbstractCityObjectType;
+import org.citygml4j.cityjson.feature.CityObjectTypeAdapter;
+import org.citygml4j.cityjson.feature.CityObjectTypeFilter;
 import org.citygml4j.cityjson.geometry.AbstractGeometryType;
 import org.citygml4j.cityjson.geometry.GeometryTypeAdapter;
 import org.citygml4j.cityjson.geometry.SemanticsType;
@@ -53,10 +56,26 @@ public class CityJSONTypeAdapterFactory implements TypeAdapterFactory {
     private TypeToken<?> solidCollectionMaterial = new TypeToken<Map<String, SolidCollectionMaterialObject>>() {};
     private TypeToken<?> featureMetaData = new TypeToken<Map<ThematicModelType, AbstractFeatureDataType>>() {};
 
+    private CityObjectTypeFilter typeFilter;
+    private boolean processUnknownExtensions;
+
+    public CityJSONTypeAdapterFactory withTypeFilter(CityObjectTypeFilter inputFilter) {
+        this.typeFilter = inputFilter;
+        return this;
+    }
+
+    public CityJSONTypeAdapterFactory processUnknownExtensions(boolean processUnknownExtensions) {
+        this.processUnknownExtensions = processUnknownExtensions;
+        return this;
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-        if (AbstractGeometryType.class.isAssignableFrom(type.getRawType()))
+        if (AbstractCityObjectType.class.isAssignableFrom(type.getRawType()))
+            return (TypeAdapter<T>) new CityObjectTypeAdapter(gson, typeFilter, processUnknownExtensions, this);
+
+        else if (AbstractGeometryType.class.isAssignableFrom(type.getRawType()))
             return (TypeAdapter<T>) new GeometryTypeAdapter(gson, this);
 
         else if (type.equals(semantics))

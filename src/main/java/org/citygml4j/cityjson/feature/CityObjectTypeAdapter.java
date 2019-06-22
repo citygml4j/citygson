@@ -20,129 +20,139 @@
  */
 package org.citygml4j.cityjson.feature;
 
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
+import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
+import com.google.gson.TypeAdapter;
+import com.google.gson.TypeAdapterFactory;
+import com.google.gson.internal.Streams;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
+import com.google.gson.stream.JsonWriter;
 import org.citygml4j.cityjson.CityJSONRegistry;
 import org.citygml4j.cityjson.util.PropertyHelper;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class CityObjectTypeAdapter implements JsonSerializer<AbstractCityObjectType>, JsonDeserializer<AbstractCityObjectType> {
+public class CityObjectTypeAdapter extends TypeAdapter<AbstractCityObjectType> {
 	public static final String UNKNOWN_EXTENSION = "org.citygml4j.unknownExtension";
+
+	private final Gson gson;
+	private final TypeAdapterFactory factory;
+	private final CityObjectTypeFilter typeFilter;
+	private final boolean processUnknownExtensions;
 
 	private final CityJSONRegistry registry = CityJSONRegistry.getInstance();
 	private final Map<String, List<String>> predefinedProperties = new HashMap<>();
 	private final PropertyHelper propertyHelper = new PropertyHelper();
 
-	private CityObjectTypeFilter typeFilter;
-	private boolean processUnknownExtensions;
-
-	public CityObjectTypeAdapter withTypeFilter(CityObjectTypeFilter inputFilter) {
-		this.typeFilter = inputFilter;
-		return this;
-	}
-
-	public CityObjectTypeAdapter processUnknownExtensions(boolean processUnknownExtensions) {
+	public CityObjectTypeAdapter(Gson gson, CityObjectTypeFilter typeFilter, boolean processUnknownExtensions, TypeAdapterFactory factory) {
+		this.gson = gson;
+		this.typeFilter = typeFilter;
 		this.processUnknownExtensions = processUnknownExtensions;
-		return this;
+		this.factory = factory;
 	}
-	
+
+	@SuppressWarnings("unchecked")
 	@Override
-	public JsonElement serialize(AbstractCityObjectType cityObject, Type typeOfSrc, JsonSerializationContext context) {
-		if (typeFilter != null && !typeFilter.accept(cityObject.getType()))
-			return null;
+	public void write(JsonWriter out, AbstractCityObjectType value) throws IOException {
+		if (value != null) {
+			if (value.type == null)
+				value.type = CityJSONRegistry.getInstance().getCityObjectType(value);
 
-		if (cityObject.type == null)
-			cityObject.type = CityJSONRegistry.getInstance().getCityObjectType(cityObject);
+			if (typeFilter != null && !typeFilter.accept(value.type))
+				return;
 
-		JsonElement element = context.serialize(cityObject);
-		if (element != null && element.isJsonObject()) {
-			JsonObject result = element.getAsJsonObject();
+			TypeAdapter<AbstractCityObjectType> delegate = (TypeAdapter<AbstractCityObjectType>) gson.getDelegateAdapter(factory, TypeToken.get(value.getClass()));
+			JsonElement element = delegate.toJsonTree(value);
 
-			// serialize extension properties
-			if (cityObject.isSetExtensionProperties()) {
-				JsonObject properties = context.serialize(cityObject.getExtensionProperties()).getAsJsonObject();
-				for (Map.Entry<String, JsonElement> entry : properties.entrySet())
-					result.add(entry.getKey(), entry.getValue());
-			}
+			if (element != null && element.isJsonObject()) {
+				JsonObject result = element.getAsJsonObject();
 
-			if (cityObject.attributes != null) {
-				JsonObject object = result.getAsJsonObject().getAsJsonObject("attributes");
-
-				// serialize extension attributes
-				if (cityObject.attributes.isSetExtensionAttributes()) {
-					JsonObject attributes = context.serialize(cityObject.attributes.getExtensionAttributes()).getAsJsonObject();
-					for (Map.Entry<String, JsonElement> entry : attributes.entrySet())
-						object.add(entry.getKey(), entry.getValue());
+				// serialize extension properties
+				if (value.isSetExtensionProperties()) {
+					JsonObject properties = gson.toJsonTree(value.getExtensionProperties()).getAsJsonObject();
+					for (Map.Entry<String, JsonElement> entry : properties.entrySet())
+						result.add(entry.getKey(), entry.getValue());
 				}
 
-				// remove empty attributes
-				if (object.entrySet().isEmpty())
-					result.getAsJsonObject().remove("attributes");
+				if (value.attributes != null) {
+					JsonObject object = result.getAsJsonObject().getAsJsonObject("attributes");
+
+					// serialize extension attributes
+					if (value.attributes.isSetExtensionAttributes()) {
+						JsonObject attributes = gson.toJsonTree(value.attributes.getExtensionAttributes()).getAsJsonObject();
+						for (Map.Entry<String, JsonElement> entry : attributes.entrySet())
+							object.add(entry.getKey(), entry.getValue());
+					}
+
+					// remove empty attributes
+					if (object.entrySet().isEmpty())
+						result.getAsJsonObject().remove("attributes");
+				}
+			}
+
+			Streams.write(element, out);
+		} else
+			out.nullValue();
+	}
+
+	@Override
+	public AbstractCityObjectType read(JsonReader in) throws IOException {
+		if (in.peek() != JsonToken.NULL) {
+			JsonObject object = Streams.parse(in).getAsJsonObject();
+			JsonElement type = object.get("type");
+
+			if (type != null) {
+				Class<? extends AbstractCityObjectType> typeOf = registry.getCityObjectClass(type.getAsString());
+
+				// map unknown extensions to generic city objects
+				boolean unknownExtension = false;
+				if (typeOf == null && processUnknownExtensions) {
+					typeOf = GenericCityObjectType.class;
+					unknownExtension = true;
+				}
+
+				if (typeOf != null && (typeFilter == null || typeFilter.accept(type.getAsString()))) {
+					AbstractCityObjectType cityObject = gson.getDelegateAdapter(factory, TypeToken.get(typeOf)).fromJsonTree(object);
+					cityObject.type = type.getAsString();
+
+					// deserialize extension properties
+					Map<String, Object> extensionProperties = deserialize(object.entrySet(), typeOf, cityObject);
+					if (!extensionProperties.isEmpty())
+						cityObject.setExtensionProperties(extensionProperties);
+
+					if (cityObject.attributes != null) {
+						JsonObject attributes = object.get("attributes").getAsJsonObject();
+
+						Class<? extends Attributes> attributesClass = cityObject.getAttributesClass();
+						if (attributesClass != Attributes.class)
+							cityObject.attributes = gson.fromJson(attributes, attributesClass);
+
+						// deserialize extension attributes
+						Map<String, Object> extensionAttributes = deserialize(attributes.entrySet(), attributesClass, cityObject);
+						if (!extensionAttributes.isEmpty())
+							cityObject.attributes.setExtensionAttributes(extensionAttributes);
+					}
+
+					if (unknownExtension)
+						cityObject.setLocalProperty(UNKNOWN_EXTENSION, true);
+
+					return cityObject;
+				}
 			}
 		}
 
-		return element;
-	}
-
-	@Override
-	public AbstractCityObjectType deserialize(JsonElement json, Type typeOfSrc, JsonDeserializationContext context) throws JsonParseException {
-		JsonObject object = json.getAsJsonObject();
-		JsonPrimitive type = object.getAsJsonPrimitive("type");
-
-		if (type != null && type.isString()) {
-			Class<?> typeClass = registry.getCityObjectClass(type.getAsString());
-
-			// map unknown extensions to generic city objects
-			boolean unknownExtension = false;
-			if (typeClass == null && processUnknownExtensions) {
-				typeClass = GenericCityObjectType.class;
-				unknownExtension = true;
-			}
-
-			if (typeClass != null && (typeFilter == null || typeFilter.accept(type.getAsString()))) {
-				AbstractCityObjectType cityObject = context.deserialize(object, typeClass);
-				cityObject.type = type.getAsString();
-
-				// deserialize extension properties
-				Map<String, Object> extensionProperties = deserialize(object.entrySet(), typeClass, cityObject, context);
-				if (!extensionProperties.isEmpty())
-					cityObject.setExtensionProperties(extensionProperties);
-
-				if (cityObject.attributes != null) {
-					JsonObject attributes = object.get("attributes").getAsJsonObject();
-
-					Class<?> attributesClass = cityObject.getAttributesClass();
-					if (attributesClass != Attributes.class)
-						cityObject.attributes = context.deserialize(attributes, attributesClass);
-
-					// deserialize extension attributes
-					Map<String, Object> extensionAttributes = deserialize(attributes.entrySet(), attributesClass, cityObject, context);
-					if (!extensionAttributes.isEmpty())
-						cityObject.attributes.setExtensionAttributes(extensionAttributes);
-				}
-
-				if (unknownExtension)
-					cityObject.setLocalProperty(UNKNOWN_EXTENSION, true);
-
-				return cityObject;
-			}
-		}
-		
 		return null;
 	}
 
-	private Map<String, Object> deserialize(Set<Map.Entry<String, JsonElement>> entrySet, Class<?> typeClass, AbstractCityObjectType cityObject, JsonDeserializationContext context) {
+	private Map<String, Object> deserialize(Set<Map.Entry<String, JsonElement>> entrySet, Class<?> typeClass, AbstractCityObjectType cityObject) {
 		Map<String, Object> properties = new HashMap<>();
 		List<String> predefined = predefinedProperties.computeIfAbsent(
 				typeClass.getTypeName(),
@@ -157,7 +167,7 @@ public class CityObjectTypeAdapter implements JsonSerializer<AbstractCityObjectT
 			// check whether we found a registered extension property
 			Type extensionAttributeType = registry.getExtensionPropertyClass(entry.getKey(), cityObject);
 			Object value = extensionAttributeType != null ?
-					context.deserialize(entry.getValue(), extensionAttributeType) :
+					gson.fromJson(entry.getValue(), extensionAttributeType) :
 					propertyHelper.deserialize(entry.getValue());
 
 			if (value != null)
