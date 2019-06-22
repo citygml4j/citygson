@@ -78,7 +78,7 @@ public class VerticesListAdapter extends TypeAdapter<VerticesList> {
 					continue;
 				}
 
-				List<Double> vertex = new ArrayList<>();
+				List<Double> vertex = new ArrayList<>(3);
 				in.beginArray();
 				if (in.peek() == JsonToken.NUMBER) {
 					vertex.add(in.nextDouble());

@@ -51,29 +51,6 @@ public class CityJSONAdapter extends TypeAdapter<CityJSON> {
         this.gson = gson;
     }
 
-
-
-        /*
-    @Override
-    public JsonElement serialize(CityJSON cityJSON, Type typeOfSrc, JsonSerializationContext context) {
-        JsonElement element = context.serialize(cityJSON, InternalCityJSONType.class);
-        if (element != null && element.isJsonObject()) {
-            JsonObject object = element.getAsJsonObject();
-
-            // serialize extension properties
-            if (cityJSON.isSetExtensionProperties()) {
-                JsonObject properties = context.serialize(cityJSON.getExtensionProperties()).getAsJsonObject();
-                for (Map.Entry<String, JsonElement> entry : properties.entrySet())
-                    object.add(entry.getKey(), entry.getValue());
-            }
-        }
-
-        return element;
-    }
-
-
-     */
-
     @Override
     public void write(JsonWriter out, CityJSON value) throws IOException {
         if (value != null) {
@@ -128,7 +105,6 @@ public class CityJSONAdapter extends TypeAdapter<CityJSON> {
                 out.name("geometry-templates");
                 Streams.write(gson.toJsonTree(value.geometryTemplates, GeometryTemplatesType.class), out);
             }
-
 
             out.endObject();
         } else
