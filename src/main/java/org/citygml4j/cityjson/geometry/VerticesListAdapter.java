@@ -32,10 +32,13 @@ import java.util.List;
 
 public class VerticesListAdapter extends TypeAdapter<VerticesList> {
 	private boolean asInteger;
-	
-	public VerticesListAdapter serializeAsInteger(boolean asInteger) {
+
+	public VerticesListAdapter(boolean asInteger) {
 		this.asInteger = asInteger;
-		return this;
+	}
+
+	public VerticesListAdapter() {
+		this(false);
 	}
 
 	@Override

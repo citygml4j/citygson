@@ -21,12 +21,9 @@
 
 package org.citygml4j.cityjson.geometry;
 
-import com.google.gson.annotations.JsonAdapter;
-
 import java.util.ArrayList;
 import java.util.List;
 
-@JsonAdapter(VerticesListAdapter.class)
 public class VerticesList {
 	private transient List<List<Double>> vertices;
 		

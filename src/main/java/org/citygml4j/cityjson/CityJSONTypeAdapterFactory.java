@@ -39,6 +39,8 @@ import org.citygml4j.cityjson.geometry.AbstractGeometryType;
 import org.citygml4j.cityjson.geometry.GeometryTypeAdapter;
 import org.citygml4j.cityjson.geometry.SemanticsType;
 import org.citygml4j.cityjson.geometry.SemanticsTypeAdapter;
+import org.citygml4j.cityjson.geometry.VerticesList;
+import org.citygml4j.cityjson.geometry.VerticesListAdapter;
 import org.citygml4j.cityjson.metadata.ThematicModelType;
 import org.citygml4j.cityjson.metadata.feature.AbstractFeatureDataType;
 import org.citygml4j.cityjson.metadata.feature.CityObjectGroupDataType;
@@ -60,6 +62,7 @@ public class CityJSONTypeAdapterFactory implements TypeAdapterFactory {
 
     private CityObjectTypeFilter typeFilter;
     private boolean processUnknownExtensions;
+    private boolean serializeVerticesAsInteger;
 
     public CityJSONTypeAdapterFactory withTypeFilter(CityObjectTypeFilter inputFilter) {
         this.typeFilter = inputFilter;
@@ -71,6 +74,11 @@ public class CityJSONTypeAdapterFactory implements TypeAdapterFactory {
         return this;
     }
 
+    public CityJSONTypeAdapterFactory serializeVerticesAsInteger(boolean serializeVerticesAsInteger) {
+        this.serializeVerticesAsInteger = serializeVerticesAsInteger;
+        return this;
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
@@ -79,6 +87,9 @@ public class CityJSONTypeAdapterFactory implements TypeAdapterFactory {
 
         else if (AbstractGeometryType.class.isAssignableFrom(type.getRawType()))
             return (TypeAdapter<T>) new GeometryTypeAdapter(gson, this);
+
+        else if (VerticesList.class.isAssignableFrom(type.getRawType()))
+            return (TypeAdapter<T>) new VerticesListAdapter(serializeVerticesAsInteger);
 
         else if (type.equals(semantics))
             return (TypeAdapter<T>) new SemanticsTypeAdapter(gson, this);

@@ -59,6 +59,10 @@ public class CityObjectTypeAdapter extends TypeAdapter<AbstractCityObjectType> {
 		this.factory = factory;
 	}
 
+	public CityObjectTypeAdapter(Gson gson, TypeAdapterFactory factory) {
+		this(gson, null, false, factory);
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public void write(JsonWriter out, AbstractCityObjectType value) throws IOException {
