@@ -138,7 +138,7 @@ public abstract class AbstractCityObjectType implements ExtensibleType, Extensio
 		children = null;
 	}
 
-	public boolean isSetParent() {
+	public boolean isSetParents() {
 		return parents != null && !parents.isEmpty();
 	}
 
