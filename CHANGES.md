@@ -8,6 +8,12 @@ Change Log
 
 ##### Fixes
 * Reworked type adapters to reduce memory footprint when reading CityJSON files.
+  * As a consequence, you **need to register** the type adapter factory `CityJSONTypeAdapterFactory` with **every** `Gson` instance. Luckily, this is really easy:  
+  ```java
+  Gson gson = new GsonBuilder()
+    .registerTypeAdapterFactory(new CityJSONTypeAdapterFactory())
+    .create();
+  ```
 
 ### 1.0.0 - 2019-04-29
 
