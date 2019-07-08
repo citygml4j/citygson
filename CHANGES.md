@@ -1,6 +1,14 @@
 Change Log
 ==========
 
+### 1.1.0 - 2019-07-08
+
+##### Breaking changes
+* Renamed `getParent()` method of `AbstractCityObjectType` into `getParents()`.
+
+##### Fixes
+* Reworked type adapters to reduce memory footprint when reading CityJSON files.
+
 ### 1.0.0 - 2019-04-29
 
 * Support for CityJSON 1.0.
