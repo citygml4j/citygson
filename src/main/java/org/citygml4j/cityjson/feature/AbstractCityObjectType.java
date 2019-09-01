@@ -163,6 +163,10 @@ public abstract class AbstractCityObjectType implements ExtensibleType, Extensio
 	public void unsetParents() {
 		parents = null;
 	}
+
+	public boolean isSetGeometry() {
+		return !geometry.isEmpty();
+	}
 		
 	public void addGeometry(AbstractGeometryType geometry) {
 		if (geometry != null && isValidGeometryType(geometry.getType()))
