@@ -20,6 +20,12 @@
  */
 package org.citygml4j.cityjson.geometry;
 
+import com.google.gson.annotations.JsonAdapter;
+import org.citygml4j.cityjson.feature.DateAdapter;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +35,13 @@ public class SemanticsType {
 	String type;
 	private Integer parent;
 	private List<Integer> children;
+	private String id;
+	private String description;
+	private String name;
+	@JsonAdapter(DateAdapter.class)
+	private LocalDate creationDate;
+	@JsonAdapter(DateAdapter.class)
+	private LocalDate terminationDate;
 	private transient Map<String, Object> attributes;
 
 	public SemanticsType() {
@@ -81,7 +94,103 @@ public class SemanticsType {
 	public void unsetChildren() {
 		children = null;
 	}
-	
+
+	public boolean isSetId() {
+		return id != null;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public void unsetId() {
+		id = null;
+	}
+
+	public boolean isSetDescription() {
+		return description != null;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public void unsetDescription() {
+		description = null;
+	}
+
+	public boolean isSetName() {
+		return name != null;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void unsetName() {
+		name = null;
+	}
+
+	public boolean isSetCreationDate() {
+		return creationDate != null;
+	}
+
+	public LocalDate getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(ZonedDateTime creationDate) {
+		this.creationDate = creationDate.toLocalDate();
+	}
+
+	public void setCreationDate(LocalDateTime creationDate) {
+		this.creationDate = creationDate.toLocalDate();
+	}
+
+	public void setCreationDate(LocalDate creationDate) {
+		this.creationDate = creationDate;
+	}
+
+	public void unsetCreationDate() {
+		creationDate = null;
+	}
+
+	public boolean isSetTerminationDate() {
+		return terminationDate != null;
+	}
+
+	public LocalDate getTerminationDate() {
+		return terminationDate;
+	}
+
+	public void setTerminationDate(ZonedDateTime terminationDate) {
+		this.terminationDate = terminationDate.toLocalDate();
+	}
+
+	public void setTerminationDate(LocalDateTime terminationDate) {
+		this.terminationDate = terminationDate.toLocalDate();
+	}
+
+	public void setTerminationDate(LocalDate terminationDate) {
+		this.terminationDate = terminationDate;
+	}
+
+	public void unsetTerminationDate() {
+		terminationDate = null;
+	}
+
 	public boolean isSetAttributes() {
 		return attributes != null;
 	}

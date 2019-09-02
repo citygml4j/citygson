@@ -30,6 +30,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Attributes {
+	private String description;
+	private String name;
 	@JsonAdapter(DateAdapter.class)
 	private LocalDate creationDate;
 	@JsonAdapter(DateAdapter.class)
@@ -39,6 +41,38 @@ public class Attributes {
 	private String function;
 	private String usage;
 	private transient Map<String, Object> extensionAttributes;
+
+	public boolean isSetDescription() {
+		return description != null;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public void unsetDescription() {
+		description = null;
+	}
+
+	public boolean isSetName() {
+		return name != null;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void unsetName() {
+		name = null;
+	}
 
 	public boolean isSetCreationDate() {
 		return creationDate != null;
