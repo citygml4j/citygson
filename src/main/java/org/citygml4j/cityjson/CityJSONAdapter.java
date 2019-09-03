@@ -38,11 +38,13 @@ import org.citygml4j.cityjson.metadata.MetadataType;
 import org.citygml4j.cityjson.util.PropertyHelper;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 
 public class CityJSONAdapter extends TypeAdapter<CityJSON> {
     private final Gson gson;
+    private final CityJSONRegistry registry = CityJSONRegistry.getInstance();
     private final PropertyHelper propertyHelper = new PropertyHelper();
 
     private List<String> predefinedProperties;
@@ -149,7 +151,11 @@ public class CityJSONAdapter extends TypeAdapter<CityJSON> {
                     default:
                         // deserialize extension properties
                         if (!predefinedProperties.contains(key)) {
-                            Object value = propertyHelper.deserialize(Streams.parse(in));
+                            Type extensionAttributeType = registry.getExtensionPropertyClass(key, cityJSON);
+                            Object value = extensionAttributeType != null ?
+                                    gson.fromJson(in, extensionAttributeType) :
+                                    propertyHelper.deserialize(Streams.parse(in));
+
                             if (value != null)
                                 cityJSON.addExtensionProperty(key, value);
                         } else
