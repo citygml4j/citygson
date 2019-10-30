@@ -1,6 +1,15 @@
 Change Log
 ==========
 
+### 1.1.1 - 2019-10-30
+
+##### Additions
+* Updated Gson to [2.8.6](https://github.com/google/gson/blob/master/CHANGELOG.md#version-286).
+
+##### Fixes
+* Added missing attributes to city objects and semantic surfaces.
+* Fixed `CityJSONAdapter` to correctly use registered extension property classes.
+
 ### 1.1.0 - 2019-07-08
 
 ##### Breaking changes
