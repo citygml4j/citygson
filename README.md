@@ -9,9 +9,9 @@ citygson is licensed under the [Apache License, Version 2.0](http://www.apache.o
 
 Latest release
 --------------
-The latest stable release of citygson is 1.1.1.
+The latest stable release of citygson is 1.1.2.
 
-Download the citygson 1.1.1 release binaries [here](https://github.com/citygml4j/citygson/releases/download/v1.1.1/citygson-1.1.1.zip). Previous releases are available from the [releases section](https://github.com/citygml4j/citygson/releases).
+Download the citygson 1.1.2 release binaries [here](https://github.com/citygml4j/citygson/releases/download/v1.1.2/citygson-1.1.2.zip). Previous releases are available from the [releases section](https://github.com/citygml4j/citygson/releases).
 
 Contributing
 ------------
@@ -35,7 +35,7 @@ citygson is also available as [Maven](http://maven.apache.org/) artifact from th
 <dependency>
   <groupId>org.citygml4j</groupId>
   <artifactId>citygson</artifactId>
-  <version>1.1.1</version>
+  <version>1.1.2</version>
 </dependency>
 ```
 
@@ -47,7 +47,7 @@ repositories {
 }
 
 dependencies {
-  compile 'org.citygml4j:citygson:1.1.1'
+  compile 'org.citygml4j:citygson:1.1.2'
 }
 ```
 

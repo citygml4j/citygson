@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+### 1.1.2 - 2019-11-01
+
+##### Fixes
+* Fixed marshalling of empty `"attributes"` property.
+
 ### 1.1.1 - 2019-10-30
 
 ##### Additions
