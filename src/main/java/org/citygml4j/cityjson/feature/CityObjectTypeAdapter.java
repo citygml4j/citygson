@@ -87,7 +87,7 @@ public class CityObjectTypeAdapter extends TypeAdapter<AbstractCityObjectType> {
 				}
 
 				if (value.attributes != null) {
-					JsonObject object = result.getAsJsonObject().getAsJsonObject("attributes");
+					JsonObject object = result.getAsJsonObject("attributes");
 
 					// serialize extension attributes
 					if (value.attributes.isSetExtensionAttributes()) {
@@ -97,7 +97,7 @@ public class CityObjectTypeAdapter extends TypeAdapter<AbstractCityObjectType> {
 					}
 
 					// remove empty attributes
-					if (object.entrySet().isEmpty())
+					if (object.entrySet().isEmpty() || object.entrySet().stream().allMatch(e -> e.getValue().isJsonNull()))
 						result.getAsJsonObject().remove("attributes");
 				}
 			}
