@@ -261,8 +261,9 @@ public class CityJSON implements ExtensibleType {
 	}
 
 	public List<Double> calcBoundingBox() {
-		List<Double> bbox = Arrays.asList(Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE,
-				-Double.MAX_VALUE, -Double.MAX_VALUE, -Double.MAX_VALUE);
+		Double[] bbox = new Double[]{
+				Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE,
+				-Double.MAX_VALUE, -Double.MAX_VALUE, -Double.MAX_VALUE};
 		
 		for (List<Double> vertex : vertices.getVertices()) {
 			if (vertex.size() > 2) {
@@ -270,16 +271,22 @@ public class CityJSON implements ExtensibleType {
 				double y = vertex.get(1);
 				double z = vertex.get(2);
 				
-				if (x < bbox.get(0)) bbox.set(0, x);
-				if (y < bbox.get(1)) bbox.set(1, y);
-				if (z < bbox.get(2)) bbox.set(2, z);
-				if (x > bbox.get(3)) bbox.set(3, x);
-				if (y > bbox.get(4)) bbox.set(4, y);
-				if (z > bbox.get(5)) bbox.set(5, z);
+				if (x < bbox[0]) bbox[0] = x;
+				if (y < bbox[1]) bbox[1] = y;
+				if (z < bbox[2]) bbox[2] = z;
+				if (x > bbox[3]) bbox[3] = x;
+				if (y > bbox[4]) bbox[4] = y;
+				if (z > bbox[5]) bbox[5] = z;
 			}
 		}
 
-		return bbox;
+		if (transform != null) {
+			for (int i = 0; i < bbox.length; i++) {
+				bbox[i] = bbox[i] * transform.getScale().get(i % 3) + transform.getTranslate().get(i % 3);
+			}
+		}
+
+		return Arrays.asList(bbox);
 	}
 	
 	public Map<LoDType, Integer> calcPresentLoDs() {
