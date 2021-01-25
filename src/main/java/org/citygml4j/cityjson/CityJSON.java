@@ -334,7 +334,7 @@ public class CityJSON implements ExtensibleType {
 			oldIndex++;
 		}
 
-		indexes = null;
+		indexes.clear();
 		if (getVertices().size() != indexMap.size()) {
 			for (AbstractCityObjectType cityObject : getCityObjects()) {
 				for (AbstractGeometryType geometry : cityObject.getGeometry())
@@ -342,7 +342,7 @@ public class CityJSON implements ExtensibleType {
 			}
 		}
 
-		indexMap = null;
+		indexMap.clear();
 	}
 
 }
