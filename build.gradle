@@ -4,14 +4,18 @@ plugins {
     id 'java-library'
     id 'distribution'
     id 'maven-publish'
-    id 'com.jfrog.bintray' version '1.8.4'
+    id 'com.jfrog.bintray' version '1.8.5'
 }
 
 group 'org.citygml4j'
 version '1.1.2'
 description 'A Gson based library for parsing and serializing CityJSON'
 
-sourceCompatibility = 1.8
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    withJavadocJar()
+    withSourcesJar()
+}
 
 ext {
     date = new Date()
@@ -37,6 +41,10 @@ javadoc {
             Claus Nagel &lt;claus.nagel@gmail.com&gt;
             """.replaceAll("[\r|\n]+", "")
         addStringOption('doctitle', project.name + ' - ' + project.description)
+    }
+
+    if (JavaVersion.current().isJava9Compatible()) {
+        options.addBooleanOption('html5', true)
     }
 
     doFirst {
@@ -85,22 +93,10 @@ distributions.main.contents {
     }
 }
 
-task sourcesJar(type: Jar, dependsOn: classes) {
-    archiveClassifier = 'sources'
-    from sourceSets.main.allSource
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    archiveClassifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
 publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
-            artifact sourcesJar
-            artifact javadocJar
             pom {
                 name = project.name
                 description = project.description
