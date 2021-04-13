@@ -1,6 +1,15 @@
 Change Log
 ==========
 
+### 1.1.3 - 2021-04-13
+
+##### Changes
+* Dropped usage of Bintray and JCenter.
+
+##### Fixes
+* Use real-world coordinates for `"geographicalExtent"` in case the extent is automatically calculated
+  and the city objects use compressed coordinate values.
+
 ### 1.1.2 - 2019-11-01
 
 ##### Fixes
