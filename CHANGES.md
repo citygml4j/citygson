@@ -1,6 +1,20 @@
 Change Log
 ==========
 
+### 1.1.4 - 2021-09-24
+
+##### Breaking changes
+- Added support for CityJSON 1.0.3.
+- Adapted the `"metadata"` property to reflect the changes introduced with CityJSON 1.0.3 (see CityJSON
+  [changelog](https://github.com/cityjson/specs/blob/master/changelog.md)).
+
+  Note that these changes in CityJSON 1.0.3 *break backwards compatability* with previous minor versions.
+  For this reason, this version of **citygson** only supports metadata based on CityJSON 1.0.3 but no previous
+  versions anymore.
+
+##### Miscellaneous
+* Updated Gson to 2.8.8.
+
 ### 1.1.3 - 2021-04-13
 
 ##### Changes
