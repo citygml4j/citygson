@@ -17,9 +17,9 @@ See the `LICENSE` file for more details.
 
 Latest release
 --------------
-The latest stable release of citygson is 1.1.3.
+The latest stable release of citygson is 1.1.4.
 
-Download the citygson 1.1.3 release binaries [here](https://github.com/citygml4j/citygson/releases/download/v1.1.3/citygson-1.1.3.zip).
+Download the citygson 1.1.4 release binaries [here](https://github.com/citygml4j/citygson/releases/download/v1.1.4/citygson-1.1.4.zip).
 Previous releases are available from the [releases section](https://github.com/citygml4j/citygson/releases).
 
 Contributing
@@ -49,7 +49,7 @@ You may need to adapt the citygson version number.
 <dependency>
   <groupId>org.citygml4j</groupId>
   <artifactId>citygson</artifactId>
-  <version>1.1.3</version>
+  <version>1.1.4</version>
 </dependency>
 ```
 
@@ -61,7 +61,7 @@ repositories {
 }
 
 dependencies {
-  compile 'org.citygml4j:citygson:1.1.3'
+  compile 'org.citygml4j:citygson:1.1.4'
 }
 ```
 
