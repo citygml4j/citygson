@@ -25,22 +25,10 @@ import org.citygml4j.cityjson.appearance.AppearanceType;
 import org.citygml4j.cityjson.extension.ExtensibleType;
 import org.citygml4j.cityjson.extension.ExtensionType;
 import org.citygml4j.cityjson.feature.AbstractCityObjectType;
-import org.citygml4j.cityjson.geometry.AbstractGeometryObjectType;
-import org.citygml4j.cityjson.geometry.AbstractGeometryType;
-import org.citygml4j.cityjson.geometry.GeometryTemplatesType;
-import org.citygml4j.cityjson.geometry.TransformType;
-import org.citygml4j.cityjson.geometry.VerticesList;
-import org.citygml4j.cityjson.metadata.LoDType;
+import org.citygml4j.cityjson.geometry.*;
 import org.citygml4j.cityjson.metadata.MetadataType;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class CityJSON implements ExtensibleType {
@@ -289,23 +277,25 @@ public class CityJSON implements ExtensibleType {
 		return Arrays.asList(bbox);
 	}
 	
-	public Map<LoDType, Integer> calcPresentLoDs() {
-		Map<LoDType, Integer> lods = new HashMap<>();
+	public Map<String, Integer> calcPresentLoDs() {
+		Map<String, Integer> lods = new HashMap<>();
 		for (AbstractCityObjectType cityObject : cityObjects.values()) {
 			for (AbstractGeometryType geometry : cityObject.getGeometry()) {
 				if (geometry instanceof AbstractGeometryObjectType) {
-					LoDType lod = LoDType.fromLoD(((AbstractGeometryObjectType) geometry).getLod());
-					if (lod != null)
+					String lod = String.valueOf(((AbstractGeometryObjectType) geometry).getLod());
+					if (lod != null) {
 						lods.merge(lod, 1, Integer::sum);
+					}
 				}
 			}
 		}
 
 		if (geometryTemplates != null) {
 			for (AbstractGeometryObjectType geometry : geometryTemplates.getTemplates()) {
-				LoDType lod = LoDType.fromLoD(geometry.getLod());
-				if (lod != null)
+				String lod = String.valueOf(geometry.getLod());
+				if (lod != null) {
 					lods.merge(lod, 1, Integer::sum);
+				}
 			}
 		}
 		

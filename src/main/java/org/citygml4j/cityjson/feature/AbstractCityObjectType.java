@@ -25,13 +25,7 @@ import org.citygml4j.cityjson.extension.Extension;
 import org.citygml4j.cityjson.geometry.AbstractGeometryType;
 import org.citygml4j.cityjson.geometry.GeometryTypeName;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public abstract class AbstractCityObjectType implements ExtensibleType, Extension {
 	String type;

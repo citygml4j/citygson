@@ -23,29 +23,12 @@ import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
-import org.citygml4j.cityjson.appearance.MaterialAdapter;
-import org.citygml4j.cityjson.appearance.SolidCollectionMaterialObject;
-import org.citygml4j.cityjson.appearance.SolidCollectionTextureObject;
-import org.citygml4j.cityjson.appearance.SolidMaterialObject;
-import org.citygml4j.cityjson.appearance.SolidTextureObject;
-import org.citygml4j.cityjson.appearance.SurfaceCollectionMaterialObject;
-import org.citygml4j.cityjson.appearance.SurfaceCollectionTextureObject;
-import org.citygml4j.cityjson.appearance.TextureAdapter;
+import org.citygml4j.cityjson.appearance.*;
 import org.citygml4j.cityjson.feature.AbstractCityObjectType;
 import org.citygml4j.cityjson.feature.CityObjectTypeAdapter;
 import org.citygml4j.cityjson.feature.CityObjectTypeFilter;
 import org.citygml4j.cityjson.feature.CityObjectsAdapter;
-import org.citygml4j.cityjson.geometry.AbstractGeometryType;
-import org.citygml4j.cityjson.geometry.GeometryTypeAdapter;
-import org.citygml4j.cityjson.geometry.SemanticsType;
-import org.citygml4j.cityjson.geometry.SemanticsTypeAdapter;
-import org.citygml4j.cityjson.geometry.VerticesList;
-import org.citygml4j.cityjson.geometry.VerticesListAdapter;
-import org.citygml4j.cityjson.metadata.ThematicModelType;
-import org.citygml4j.cityjson.metadata.feature.AbstractFeatureDataType;
-import org.citygml4j.cityjson.metadata.feature.CityObjectGroupDataType;
-import org.citygml4j.cityjson.metadata.feature.CityObjectGroupDataTypeAdapter;
-import org.citygml4j.cityjson.metadata.feature.FeatureDataTypeAdapter;
+import org.citygml4j.cityjson.geometry.*;
 
 import java.util.Map;
 
@@ -58,7 +41,6 @@ public class CityJSONTypeAdapterFactory implements TypeAdapterFactory {
     private TypeToken<?> solidMaterial = new TypeToken<Map<String, SolidMaterialObject>>() {};
     private TypeToken<?> surfaceCollectionMaterial = new TypeToken<Map<String, SurfaceCollectionMaterialObject>>() {};
     private TypeToken<?> solidCollectionMaterial = new TypeToken<Map<String, SolidCollectionMaterialObject>>() {};
-    private TypeToken<?> featureMetaData = new TypeToken<Map<ThematicModelType, AbstractFeatureDataType>>() {};
 
     private CityObjectTypeFilter typeFilter;
     private boolean processUnknownExtensions;
@@ -117,12 +99,6 @@ public class CityJSONTypeAdapterFactory implements TypeAdapterFactory {
 
         else if (type.equals(cityObjects))
             return (TypeAdapter<T>) new CityObjectsAdapter(gson);
-
-        else if (type.equals(featureMetaData))
-            return (TypeAdapter<T>) new FeatureDataTypeAdapter(gson);
-
-        else if (CityObjectGroupDataType.class.isAssignableFrom(type.getRawType()))
-            return (TypeAdapter<T>) new CityObjectGroupDataTypeAdapter(gson);
 
         return null;
     }

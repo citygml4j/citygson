@@ -23,11 +23,7 @@ package org.citygml4j.cityjson.geometry;
 import org.citygml4j.cityjson.appearance.SurfaceCollectionMaterialObject;
 import org.citygml4j.cityjson.appearance.SurfaceCollectionTextureObject;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public abstract class AbstractSurfaceCollectionType extends AbstractGeometryObjectType
 implements GeometryWithSemantics, GeometryWithAppearance<SurfaceCollectionMaterialObject, SurfaceCollectionTextureObject> {

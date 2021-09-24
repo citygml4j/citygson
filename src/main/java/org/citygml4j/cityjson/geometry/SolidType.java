@@ -23,11 +23,7 @@ package org.citygml4j.cityjson.geometry;
 import org.citygml4j.cityjson.appearance.SolidMaterialObject;
 import org.citygml4j.cityjson.appearance.SolidTextureObject;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SolidType extends AbstractSolidType
 implements GeometryWithAppearance<SolidMaterialObject, SolidTextureObject> {

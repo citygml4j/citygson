@@ -19,20 +19,15 @@
  * limitations under the License.
  */
 
-package org.citygml4j.cityjson.metadata.feature;
-
-import org.citygml4j.cityjson.metadata.LoDType;
-import org.citygml4j.cityjson.metadata.ThematicModelType;
+package org.citygml4j.cityjson.metadata;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class AbstractFeatureDataType {
+public class FeatureDataType {
     private Integer uniqueFeatureCount;
     private Integer aggregateFeatureCount;
-    private Map<LoDType, Integer> presentLoDs;
-
-    public abstract ThematicModelType getType();
+    private Map<String, Integer> presentLoDs;
 
     public boolean isSetUniqueFeatureCount() {
         return uniqueFeatureCount != null;
@@ -70,20 +65,26 @@ public abstract class AbstractFeatureDataType {
         return presentLoDs != null;
     }
 
-    public void addPresentLoD(LoDType lod) {
-        if (presentLoDs == null)
-            presentLoDs = new HashMap<>();
+    public void addPresentLoD(String lod) {
+        if (lod != null && lod.matches("^[0-9](\\.[0-9])?$")) {
+            if (presentLoDs == null) {
+                presentLoDs = new HashMap<>();
+            }
 
-        presentLoDs.merge(lod, 1, Integer::sum);
+            presentLoDs.merge(lod, 1, Integer::sum);
+        }
     }
 
-    public Map<LoDType, Integer> getPresentLoDs() {
+    public void addPresentLoD(Number lod) {
+        addPresentLoD(String.valueOf(lod));
+    }
+
+    public Map<String, Integer> getPresentLoDs() {
         return presentLoDs;
     }
 
-    public void setPresentLoDs(Map<LoDType, Integer> presentLoDs) {
-        if (presentLoDs != null && !presentLoDs.isEmpty())
-            this.presentLoDs = presentLoDs;
+    public void setPresentLoDs(Map<String, Integer> presentLoDs) {
+        this.presentLoDs = presentLoDs;
     }
 
     public void unsetPresentLoDs() {

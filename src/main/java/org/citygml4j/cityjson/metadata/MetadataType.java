@@ -23,7 +23,6 @@ package org.citygml4j.cityjson.metadata;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import org.citygml4j.cityjson.feature.DateAdapter;
-import org.citygml4j.cityjson.metadata.feature.AbstractFeatureDataType;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -64,11 +63,11 @@ public class MetadataType {
 	private String specificUsage;
 	private List<String> keywords;
 	private ConstraintsType constraints;
-	private List<ThematicModelType> thematicModels;
+	private List<String> thematicModels;
 	private PresenceType textures;
 	private PresenceType materials;
-	private Map<LoDType, Integer> presentLoDs;
-	private Map<ThematicModelType, AbstractFeatureDataType> cityfeatureMetadata;
+	private Map<String, Integer> presentLoDs;
+	private Map<String, FeatureDataType> cityfeatureMetadata;
 
 	public boolean isSetCitymodelIdentifier() {
 		return citymodelIdentifier != null;
@@ -79,8 +78,7 @@ public class MetadataType {
 	}
 
 	public void setCitymodelIdentifier(String citymodelIdentifier) {
-		if (citymodelIdentifier != null && citymodelIdentifier.matches("^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"))
-			this.citymodelIdentifier = citymodelIdentifier;
+		this.citymodelIdentifier = citymodelIdentifier;
 	}
 
 	public void unsetCitymodelIdentifier() {
@@ -200,7 +198,7 @@ public class MetadataType {
 	}
 
 	public void setDistributionFormatVersion(String distributionFormatVersion) {
-		if (distributionFormatVersion != null && distributionFormatVersion.matches("\\d\\.\\d"))
+		if (distributionFormatVersion != null && distributionFormatVersion.matches("^(\\d\\.)(\\d)$"))
 			this.distributionFormatVersion = distributionFormatVersion;
 	}
 
@@ -315,8 +313,7 @@ public class MetadataType {
 	}
 
 	public void setMetadataStandardVersion(String metadataStandardVersion) {
-		if (metadataStandardVersion != null && metadataStandardVersion.matches("\\d\\.\\d"))
-			this.metadataStandardVersion = metadataStandardVersion;
+		this.metadataStandardVersion = metadataStandardVersion;
 	}
 
 	public void unsetMetadataStandardVersion() {
@@ -533,18 +530,19 @@ public class MetadataType {
 		return thematicModels != null;
 	}
 
-	public List<ThematicModelType> getThematicModels() {
+	public List<String> getThematicModels() {
 		return thematicModels;
 	}
 
-	public void addThematicModel(ThematicModelType thematicModel) {
-		if (thematicModels == null)
+	public void addThematicModel(String thematicModel) {
+		if (thematicModels == null) {
 			thematicModels = new ArrayList<>();
+		}
 
 		thematicModels.add(thematicModel);
 	}
 
-	public void setThematicModels(List<ThematicModelType> thematicModels) {
+	public void setThematicModels(List<String> thematicModels) {
 		this.thematicModels = thematicModels;
 	}
 
@@ -588,18 +586,25 @@ public class MetadataType {
 		return presentLoDs != null && !presentLoDs.isEmpty();
 	}
 
-	public void addPresentLoD(LoDType lod) {
-		if (presentLoDs == null)
-			presentLoDs = new HashMap<>();
+	public void addPresentLoD(String lod) {
+		if (lod != null && lod.matches("^[0-9](\\.[0-9])?$")) {
+			if (presentLoDs == null) {
+				presentLoDs = new HashMap<>();
+			}
 
-		presentLoDs.merge(lod, 1, Integer::sum);
+			presentLoDs.merge(lod, 1, Integer::sum);
+		}
 	}
 
-	public Map<LoDType, Integer> getPresentLoDs() {
+	public void addPresentLoD(Number lod) {
+		addPresentLoD(String.valueOf(lod));
+	}
+
+	public Map<String, Integer> getPresentLoDs() {
 		return presentLoDs;
 	}
 
-	public void setPresentLoDs(Map<LoDType, Integer> presentLoDs) {
+	public void setPresentLoDs(Map<String, Integer> presentLoDs) {
 		this.presentLoDs = presentLoDs;
 	}
 	
@@ -611,18 +616,19 @@ public class MetadataType {
 		return cityfeatureMetadata != null && !cityfeatureMetadata.isEmpty();
 	}
 
-	public void addCityFeatureMetadata(AbstractFeatureDataType featureMetadata) {
-		if (cityfeatureMetadata == null)
+	public void addCityFeatureMetadata(String type, FeatureDataType featureMetadata) {
+		if (cityfeatureMetadata == null) {
 			cityfeatureMetadata = new HashMap<>();
+		}
 
-		cityfeatureMetadata.put(featureMetadata.getType(), featureMetadata);
+		cityfeatureMetadata.put(type, featureMetadata);
 	}
 
-	public Map<ThematicModelType, AbstractFeatureDataType> getCityFeatureMetadata() {
+	public Map<String, FeatureDataType> getCityFeatureMetadata() {
 		return cityfeatureMetadata;
 	}
 
-	public void setCityFeatureMetadata(Map<ThematicModelType, AbstractFeatureDataType> cityfeatureMetadata) {
+	public void setCityFeatureMetadata(Map<String, FeatureDataType> cityfeatureMetadata) {
 		this.cityfeatureMetadata = cityfeatureMetadata;
 	}
 

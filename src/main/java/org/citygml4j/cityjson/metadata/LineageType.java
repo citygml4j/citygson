@@ -31,7 +31,7 @@ public class LineageType {
     private String scope;
     private String additionalDocumentation;
     private List<String> featureIDs;
-    private List<ThematicModelType> thematicModels;
+    private List<String> thematicModels;
     @SerializedName("source")
     private List<SourceType> sources;
     private ProcessStepType processStep;
@@ -112,18 +112,19 @@ public class LineageType {
         return thematicModels != null;
     }
 
-    public List<ThematicModelType> getThematicModels() {
+    public List<String> getThematicModels() {
         return thematicModels;
     }
 
-    public void addThematicModel(ThematicModelType thematicModel) {
-        if (thematicModels == null)
+    public void addThematicModel(String thematicModel) {
+        if (thematicModels == null) {
             thematicModels = new ArrayList<>();
+        }
 
         thematicModels.add(thematicModel);
     }
 
-    public void setThematicModels(List<ThematicModelType> thematicModels) {
+    public void setThematicModels(List<String> thematicModels) {
         this.thematicModels = thematicModels;
     }
 
