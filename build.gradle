@@ -9,7 +9,7 @@ plugins {
 }
 
 group 'org.citygml4j'
-version '1.1.4'
+version '1.1.5-SNAPSHOT'
 description 'A Gson based library for parsing and serializing CityJSON'
 
 java {
@@ -32,7 +32,7 @@ repositories {
 }
 
 dependencies {
-    api 'com.google.code.gson:gson:2.8.8'
+    api 'com.google.code.gson:gson:2.9.0'
 }
 
 javadoc {
