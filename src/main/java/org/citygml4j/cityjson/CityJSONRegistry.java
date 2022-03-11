@@ -28,6 +28,7 @@ import org.citygml4j.cityjson.geometry.InternalSemanticsType;
 import org.citygml4j.cityjson.geometry.SemanticsType;
 
 import java.lang.reflect.Type;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -208,6 +209,10 @@ public class CityJSONRegistry {
 
     public boolean hasExtensionProperty(String propertyName, ExtensibleType target) {
         return getExtensionPropertyClass(propertyName, target) != null;
+    }
+
+    public boolean hasExtensionProperty(String propertyName, Class<? extends ExtensibleType> targetClass) {
+        return properties.getOrDefault(targetClass, Collections.emptyMap()).containsKey(propertyName);
     }
 
     public void registerExtensionProperty(String name, Type attributeType, Class<? extends ExtensibleType> targetClass) throws ExtensionException {
