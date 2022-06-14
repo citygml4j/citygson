@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+### 1.1.5 - 2022-06-14
+
+##### Changes
+* Added possibility to search the `CityJSONRegistry` for extension properties based on their property name and
+  class type.
+* Updated Gson to 2.9.0.
+
 ### 1.1.4 - 2021-09-24
 
 ##### Breaking changes
