@@ -1,8 +1,10 @@
 /*
- * citygml4j - The Open Source Java API for CityGML
- * https://github.com/citygml4j
+ * citygson - A Gson based library for parsing and serializing CityJSON
+ * https://github.com/citygml4j/citygson
  *
- * Copyright 2013-2019 Claus Nagel <claus.nagel@gmail.com>
+ * citygson is part of the citygml4j project
+ *
+ * Copyright 2018-2022 Claus Nagel <claus.nagel@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
