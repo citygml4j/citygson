@@ -4,8 +4,8 @@ citygson is a [Gson](https://github.com/google/gson) based library for parsing a
 interface to CityJSON data by defining Java objects for all JSON elements in CityJSON. Moreover, it offers
 a simple mechanism to register additional user-defined Java objects for mapping CityJSON Extensions.
 
-**NOTE:** citygson is in **maintenance mode** with no significant active development planned. It is not updated
-with new features but at most receives critical bug fixes. citygson was mainly developed for citygml4j v2.
+:information_source: citygson is in **maintenance mode** with no significant active development planned. Existing
+bugs will be fixed, but large new features will likely not be added. citygson was mainly developed for citygml4j v2.
 The latest [citygml4j v3](https://github.com/citygml4j/citygml4j) brings its own serialization module for the
 CityJSON encoding and, thus, is not dependent on citygson anymore.
 
