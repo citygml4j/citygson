@@ -4,11 +4,10 @@ citygson is a [Gson](https://github.com/google/gson) based library for parsing a
 interface to CityJSON data by defining Java objects for all JSON elements in CityJSON. Moreover, it offers
 a simple mechanism to register additional user-defined Java objects for mapping CityJSON Extensions.
 
-citygson has been developed in the context of the [CityGML](http://www.opengeospatial.org/standards/citygml)
-Java API [citygml4j](https://github.com/citygml4j/citygml4j) and is used as CityJSON parser in this project.
-citygml4j adds another data abstraction layer and object model that can be populated from both CityJSON data
-and GML-encoded CityGML data. This way, citygml4j users don't have to choose between the encodings but can
-write code that supports both of them.
+**NOTE:** citygson is in **maintenance mode** with no significant active development planned. It is not updated
+with new features but at most receives critical bug fixes. citygson was mainly developed for citygml4j v2.
+The latest [citygml4j v3](https://github.com/citygml4j/citygml4j) brings its own serialization module for the
+CityJSON encoding and, thus, is not dependent on citygson anymore.
 
 License
 -------
@@ -27,6 +26,10 @@ Contributing
 * To file bugs found in the software create a GitHub issue.
 * To contribute code for fixing filed issues create a pull request with the issue id.
 * To propose a new feature create a GitHub issue and open a discussion.
+
+Supported CityJSON versions
+---------------------------
+citygson only supports CityJSON 1.0. There are no plans to add support for more recent versions of CityJSON.
 
 Building
 --------
@@ -70,3 +73,9 @@ More information
 CityJSON is a data format for encoding a subset of the [OGC CityGML](http://www.opengeospatial.org/standards/citygml)
 data model using JSON instead of GML. The [CityJSON specification](https://github.com/tudelft3d/cityjson) is developed
 and maintained on GitHub by the [3D geoinformation group at TU Delft](https://3d.bk.tudelft.nl/).
+
+citygson has been developed in the context of the [CityGML](http://www.opengeospatial.org/standards/citygml)
+Java API [citygml4j](https://github.com/citygml4j/citygml4j) and is used as CityJSON parser in this project.
+citygml4j adds another data abstraction layer and object model that can be populated from both CityJSON data
+and GML-encoded CityGML data. This way, citygml4j users don't have to choose between the encodings but can
+write code that supports both of them.
