@@ -21,6 +21,7 @@
 package org.citygml4j.cityjson.geometry;
 
 import com.google.gson.annotations.JsonAdapter;
+import org.citygml4j.cityjson.extension.ExtensibleType;
 import org.citygml4j.cityjson.feature.DateAdapter;
 
 import java.time.LocalDate;
@@ -31,7 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SemanticsType {
+public class SemanticsType implements ExtensibleType {
 	String type;
 	private Integer parent;
 	private List<Integer> children;
@@ -194,28 +195,28 @@ public class SemanticsType {
 	public boolean isSetAttributes() {
 		return attributes != null;
 	}
-	
+
 	public void addAttribute(String name, Object value) {
 		if (attributes == null)
 			attributes = new HashMap<>();
-		
+
 		attributes.put(name, value);
 	}
-	
+
 	public Map<String, Object> getAttributes() {
 		return attributes;
 	}
-	
+
 	public void setAttributes(Map<String, Object> properties) {
 		if (type != null)
 			this.attributes = properties;
 	}
-	
+
 	public void removeAttribute(String name) {
 		if (attributes != null)
 			attributes.remove(name);
 	}
-	
+
 	public void unsetAttributes() {
 		attributes = null;
 	}

@@ -24,5 +24,6 @@ package org.citygml4j.cityjson.extension;
 import org.citygml4j.cityjson.feature.AbstractCityObjectType;
 
 public interface ExtensibleType {
-    void addChild(AbstractCityObjectType child);
+    default void addChild(AbstractCityObjectType child) {
+    }
 }

@@ -30,6 +30,7 @@ import org.citygml4j.cityjson.CityJSONRegistry;
 import org.citygml4j.cityjson.util.PropertyHelper;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,7 +62,7 @@ public class SemanticsTypeAdapter extends TypeAdapter<SemanticsType> {
 			if (element != null && element.isJsonObject()) {
 				JsonObject object = element.getAsJsonObject();
 
-				// serialize extension properties
+				// serialize extension attributes
 				if (value.isSetAttributes()) {
 					JsonObject properties = gson.toJsonTree(value.getAttributes()).getAsJsonObject();
 					for (Map.Entry<String, JsonElement> entry : properties.entrySet())
@@ -85,7 +86,7 @@ public class SemanticsTypeAdapter extends TypeAdapter<SemanticsType> {
 				if (typeOf != null) {
 					SemanticsType semantics = gson.getDelegateAdapter(factory, TypeToken.get(typeOf)).fromJsonTree(object);
 
-					// deserialize extension properties
+					// deserialize extension attributes
 					List<String> predefined = predefinedAttributes.computeIfAbsent(semantics.getClass().getTypeName(),
 							v -> propertyHelper.getDeclaredProperties(semantics.getClass()));
 
@@ -94,7 +95,12 @@ public class SemanticsTypeAdapter extends TypeAdapter<SemanticsType> {
 						if (predefined.contains(key))
 							continue;
 
-						Object value = propertyHelper.deserialize(entry.getValue());
+						// check whether we found a registered extension property
+						Type extensionAttributeType = registry.getExtensionPropertyClass(entry.getKey(), semantics);
+						Object value = extensionAttributeType != null ?
+								gson.fromJson(entry.getValue(), extensionAttributeType) :
+								propertyHelper.deserialize(entry.getValue());
+
 						if (value != null)
 							semantics.addAttribute(key, value);
 					}
