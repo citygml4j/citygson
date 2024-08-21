@@ -22,11 +22,11 @@ package org.citygml4j.cityjson.feature;
 
 public class RoadType extends AbstractTransportationComplexType {
 
-	public RoadType() {
-	}
-	
-	public RoadType(String gmlId) {
-		super(gmlId);
-	}
+    public RoadType() {
+    }
+
+    public RoadType(String gmlId) {
+        super(gmlId);
+    }
 
 }

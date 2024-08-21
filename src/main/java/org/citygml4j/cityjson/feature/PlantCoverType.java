@@ -24,27 +24,27 @@ import org.citygml4j.cityjson.geometry.GeometryTypeName;
 
 public class PlantCoverType extends AbstractVegetationObjectType {
 
-	public PlantCoverType() {
-	}
-	
-	public PlantCoverType(String gmlId) {
-		super(gmlId);
-	}
+    public PlantCoverType() {
+    }
 
-	@Override
-	public PlantCoverAttributes newAttributes() {
-		return super.newAttributes(new PlantCoverAttributes());
-	}
+    public PlantCoverType(String gmlId) {
+        super(gmlId);
+    }
 
-	@Override
-	public PlantCoverAttributes getAttributes() {
-		return (PlantCoverAttributes) super.getAttributes();
-	}
+    @Override
+    public PlantCoverAttributes newAttributes() {
+        return super.newAttributes(new PlantCoverAttributes());
+    }
 
-	@Override
-	public boolean isValidGeometryType(GeometryTypeName type) {
-		return type == GeometryTypeName.MULTI_SURFACE
-				|| type == GeometryTypeName.MULTI_SOLID;
-	}
+    @Override
+    public PlantCoverAttributes getAttributes() {
+        return (PlantCoverAttributes) super.getAttributes();
+    }
+
+    @Override
+    public boolean isValidGeometryType(GeometryTypeName type) {
+        return type == GeometryTypeName.MULTI_SURFACE
+                || type == GeometryTypeName.MULTI_SOLID;
+    }
 
 }

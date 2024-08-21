@@ -24,21 +24,21 @@ import org.citygml4j.cityjson.geometry.GeometryTypeName;
 
 public class TunnelInstallationType extends AbstractCityObjectType {
 
-	public TunnelInstallationType() {
-	}
-	
-	public TunnelInstallationType(String gmlId) {
-		super(gmlId);
-	}
+    public TunnelInstallationType() {
+    }
 
-	@Override
-	public Attributes newAttributes() {
-		return super.newAttributes(new Attributes());
-	}
+    public TunnelInstallationType(String gmlId) {
+        super(gmlId);
+    }
 
-	@Override
-	public boolean isValidGeometryType(GeometryTypeName type) {
-		return true;
-	}
+    @Override
+    public Attributes newAttributes() {
+        return super.newAttributes(new Attributes());
+    }
+
+    @Override
+    public boolean isValidGeometryType(GeometryTypeName type) {
+        return true;
+    }
 
 }

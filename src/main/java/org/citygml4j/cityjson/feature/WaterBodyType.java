@@ -24,25 +24,25 @@ import org.citygml4j.cityjson.geometry.GeometryTypeName;
 
 public class WaterBodyType extends AbstractCityObjectType {
 
-	public WaterBodyType() {
-	}
-	
-	public WaterBodyType(String gmlId) {
-		super(gmlId);
-	}
+    public WaterBodyType() {
+    }
 
-	@Override
-	public Attributes newAttributes() {
-		return super.newAttributes(new Attributes());
-	}
+    public WaterBodyType(String gmlId) {
+        super(gmlId);
+    }
 
-	@Override
-	public boolean isValidGeometryType(GeometryTypeName type) {
-		return type == GeometryTypeName.MULTI_LINE_STRING
-				|| type == GeometryTypeName.MULTI_SURFACE
-				|| type == GeometryTypeName.COMPOSITE_SURFACE
-				|| type == GeometryTypeName.SOLID
-				|| type == GeometryTypeName.COMPOSITE_SOLID;
-	}
+    @Override
+    public Attributes newAttributes() {
+        return super.newAttributes(new Attributes());
+    }
+
+    @Override
+    public boolean isValidGeometryType(GeometryTypeName type) {
+        return type == GeometryTypeName.MULTI_LINE_STRING
+                || type == GeometryTypeName.MULTI_SURFACE
+                || type == GeometryTypeName.COMPOSITE_SURFACE
+                || type == GeometryTypeName.SOLID
+                || type == GeometryTypeName.COMPOSITE_SOLID;
+    }
 
 }

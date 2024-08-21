@@ -21,19 +21,19 @@
 package org.citygml4j.cityjson.geometry;
 
 public abstract class AbstractGeometryObjectType extends AbstractGeometryType {
-	private Number lod = 0;
+    private Number lod = 0;
 
-	public boolean isSetLod() {
-		return lod != null;
-	}
-	
-	public Number getLod() {
-		return lod;
-	}
+    public boolean isSetLod() {
+        return lod != null;
+    }
 
-	public void setLod(Number lod) {
-		if (lod.doubleValue() >= 0 && lod.doubleValue() < 4)
-			this.lod = lod;
-	}
+    public Number getLod() {
+        return lod;
+    }
+
+    public void setLod(Number lod) {
+        if (lod.doubleValue() >= 0 && lod.doubleValue() < 4)
+            this.lod = lod;
+    }
 
 }

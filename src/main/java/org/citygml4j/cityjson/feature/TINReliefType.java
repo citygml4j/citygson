@@ -24,21 +24,21 @@ import org.citygml4j.cityjson.geometry.GeometryTypeName;
 
 public class TINReliefType extends AbstractCityObjectType {
 
-	public TINReliefType() {
-	}
-	
-	public TINReliefType(String gmlId) {
-		super(gmlId);
-	}
+    public TINReliefType() {
+    }
 
-	@Override
-	public Attributes newAttributes() {
-		return super.newAttributes(new Attributes());
-	}
+    public TINReliefType(String gmlId) {
+        super(gmlId);
+    }
 
-	@Override
-	public boolean isValidGeometryType(GeometryTypeName type) {
-		return type == GeometryTypeName.COMPOSITE_SURFACE;
-	}
+    @Override
+    public Attributes newAttributes() {
+        return super.newAttributes(new Attributes());
+    }
+
+    @Override
+    public boolean isValidGeometryType(GeometryTypeName type) {
+        return type == GeometryTypeName.COMPOSITE_SURFACE;
+    }
 
 }

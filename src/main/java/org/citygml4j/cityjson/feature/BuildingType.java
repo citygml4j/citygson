@@ -22,11 +22,11 @@ package org.citygml4j.cityjson.feature;
 
 public class BuildingType extends AbstractBuildingType {
 
-	public BuildingType() {
-	}
+    public BuildingType() {
+    }
 
-	public BuildingType(String gmlId) {
-		super(gmlId);
-	}
-		
+    public BuildingType(String gmlId) {
+        super(gmlId);
+    }
+
 }

@@ -73,7 +73,8 @@ public class CityJSONAdapter extends TypeAdapter<CityJSON> {
 
             if (value.extensions != null) {
                 out.name("extensions");
-                Streams.write(gson.toJsonTree(value.extensions, new TypeToken<Map<String, ExtensionType>>() {}.getType()), out);
+                Streams.write(gson.toJsonTree(value.extensions, new TypeToken<Map<String, ExtensionType>>() {
+                }.getType()), out);
             }
 
             // serialize extension properties
@@ -87,7 +88,8 @@ public class CityJSONAdapter extends TypeAdapter<CityJSON> {
 
             if (value.cityObjects != null) {
                 out.name("CityObjects");
-                Streams.write(gson.toJsonTree(value.cityObjects, new TypeToken<Map<String, AbstractCityObjectType>>() {}.getType()), out);
+                Streams.write(gson.toJsonTree(value.cityObjects, new TypeToken<Map<String, AbstractCityObjectType>>() {
+                }.getType()), out);
             }
 
             if (value.vertices != null) {
@@ -133,10 +135,12 @@ public class CityJSONAdapter extends TypeAdapter<CityJSON> {
                         cityJSON.metadata = gson.fromJson(in, MetadataType.class);
                         break;
                     case "extensions":
-                        cityJSON.extensions = gson.fromJson(in, new TypeToken<Map<String, ExtensionType>>() {}.getType());
+                        cityJSON.extensions = gson.fromJson(in, new TypeToken<Map<String, ExtensionType>>() {
+                        }.getType());
                         break;
                     case "CityObjects":
-                        cityJSON.cityObjects = gson.fromJson(in, new TypeToken<Map<String, AbstractCityObjectType>>() {}.getType());
+                        cityJSON.cityObjects = gson.fromJson(in, new TypeToken<Map<String, AbstractCityObjectType>>() {
+                        }.getType());
                         break;
                     case "vertices":
                         cityJSON.vertices = gson.fromJson(in, VerticesList.class);

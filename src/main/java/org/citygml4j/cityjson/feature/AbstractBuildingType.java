@@ -23,41 +23,41 @@ package org.citygml4j.cityjson.feature;
 import org.citygml4j.cityjson.geometry.GeometryTypeName;
 
 public abstract class AbstractBuildingType extends AbstractCityObjectType {
-	private AddressType address;
+    private AddressType address;
 
-	public AbstractBuildingType() {
-	}
-	
-	public AbstractBuildingType(String gmlId) {
-		super(gmlId);
-	}
-	
-	@Override
-	public BuildingAttributes newAttributes() {
-		return super.newAttributes(new BuildingAttributes());
-	}
+    public AbstractBuildingType() {
+    }
 
-	@Override
-	public BuildingAttributes getAttributes() {
-		return (BuildingAttributes) super.getAttributes();
-	}
-	
-	public boolean isSetAddress() {
-		return address != null;
-	}
-	
-	public AddressType getAddress() {
-		return address;
-	}
+    public AbstractBuildingType(String gmlId) {
+        super(gmlId);
+    }
 
-	public void setAddress(AddressType address) {
-		this.address = address;
-	}
+    @Override
+    public BuildingAttributes newAttributes() {
+        return super.newAttributes(new BuildingAttributes());
+    }
 
-	@Override
-	public boolean isValidGeometryType(GeometryTypeName type) {
-		return type == GeometryTypeName.MULTI_SURFACE
-				|| type == GeometryTypeName.SOLID
-				|| type == GeometryTypeName.COMPOSITE_SOLID;
-	}
+    @Override
+    public BuildingAttributes getAttributes() {
+        return (BuildingAttributes) super.getAttributes();
+    }
+
+    public boolean isSetAddress() {
+        return address != null;
+    }
+
+    public AddressType getAddress() {
+        return address;
+    }
+
+    public void setAddress(AddressType address) {
+        this.address = address;
+    }
+
+    @Override
+    public boolean isValidGeometryType(GeometryTypeName type) {
+        return type == GeometryTypeName.MULTI_SURFACE
+                || type == GeometryTypeName.SOLID
+                || type == GeometryTypeName.COMPOSITE_SOLID;
+    }
 }

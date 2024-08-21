@@ -25,30 +25,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VerticesList {
-	private transient List<List<Double>> vertices;
-		
-	public VerticesList(List<List<Double>> vertices) {
-		this.vertices = vertices != null ? vertices : new ArrayList<>();
-	}
-	
-	public VerticesList() {
-		this(new ArrayList<>());
-	}
-	
-	public void addVertex(List<Double> vertex)  {
-		vertices.add(vertex);
-	}
+    private transient List<List<Double>> vertices;
 
-	public List<List<Double>> getVertices() {
-		return vertices;
-	}
+    public VerticesList(List<List<Double>> vertices) {
+        this.vertices = vertices != null ? vertices : new ArrayList<>();
+    }
 
-	public void setVertices(List<List<Double>> vertices) {
-		this.vertices = vertices;
-	}
-	
-	public void clear() {
-		vertices.clear();
-	}
-	
+    public VerticesList() {
+        this(new ArrayList<>());
+    }
+
+    public void addVertex(List<Double> vertex) {
+        vertices.add(vertex);
+    }
+
+    public List<List<Double>> getVertices() {
+        return vertices;
+    }
+
+    public void setVertices(List<List<Double>> vertices) {
+        this.vertices = vertices;
+    }
+
+    public void clear() {
+        vertices.clear();
+    }
+
 }

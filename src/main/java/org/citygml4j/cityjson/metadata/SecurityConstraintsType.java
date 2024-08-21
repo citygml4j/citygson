@@ -23,47 +23,47 @@ package org.citygml4j.cityjson.metadata;
 import com.google.gson.annotations.SerializedName;
 
 public enum SecurityConstraintsType {
-	@SerializedName("unclassified")
-	UNCLASSIFIED("unclassified"),
-	@SerializedName("restricted")
-	RESTRICTED("restricted"),
-	@SerializedName("confidential")
-	CONFIDENTIAL("confidential"),
-	@SerializedName("secret")
-	SECRET("secret"),
-	@SerializedName("topSecret")
-	TOP_SECRET("topSecret"),
-	@SerializedName("sensitiveButUnclassified")
-	SENSITIVE_BUT_UNCLASSIFIED("sensitiveButUnclassified"),
-	@SerializedName("forOfficialUseOnly")
-	FOR_OFFICIAL_USE_ONLY("forOfficialUseOnly"),
-	@SerializedName("protected")
-	PROTECTED("protected"),
-	@SerializedName("limitedDistribution")
-	LIMITED_DISTRIBUTION("limitedDistribution");
+    @SerializedName("unclassified")
+    UNCLASSIFIED("unclassified"),
+    @SerializedName("restricted")
+    RESTRICTED("restricted"),
+    @SerializedName("confidential")
+    CONFIDENTIAL("confidential"),
+    @SerializedName("secret")
+    SECRET("secret"),
+    @SerializedName("topSecret")
+    TOP_SECRET("topSecret"),
+    @SerializedName("sensitiveButUnclassified")
+    SENSITIVE_BUT_UNCLASSIFIED("sensitiveButUnclassified"),
+    @SerializedName("forOfficialUseOnly")
+    FOR_OFFICIAL_USE_ONLY("forOfficialUseOnly"),
+    @SerializedName("protected")
+    PROTECTED("protected"),
+    @SerializedName("limitedDistribution")
+    LIMITED_DISTRIBUTION("limitedDistribution");
 
-	private final String value;
+    private final String value;
 
-	private SecurityConstraintsType(String value) {
-		this.value = value;
-	}
-	
-	public String getValue() {
-		return value;
-	}
-	
-	@Override
-	public String toString() {
-		return value;
-	}
-	
-	public static SecurityConstraintsType fromValue(String value) {
-		for (SecurityConstraintsType type : SecurityConstraintsType.values()) {
-			if (type.value.equals(value))
-				return type;
-		}
-		
-		return null;
-	}
-	
+    private SecurityConstraintsType(String value) {
+        this.value = value;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    @Override
+    public String toString() {
+        return value;
+    }
+
+    public static SecurityConstraintsType fromValue(String value) {
+        for (SecurityConstraintsType type : SecurityConstraintsType.values()) {
+            if (type.value.equals(value))
+                return type;
+        }
+
+        return null;
+    }
+
 }

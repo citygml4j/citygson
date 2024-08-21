@@ -24,27 +24,27 @@ import org.citygml4j.cityjson.geometry.GeometryTypeName;
 
 public abstract class AbstractTransportationComplexType extends AbstractCityObjectType {
 
-	public AbstractTransportationComplexType() {
-	}
+    public AbstractTransportationComplexType() {
+    }
 
-	public AbstractTransportationComplexType(String gmlId) {
-		super(gmlId);
-	}
-	
-	@Override
-	public TransportationComplexAttributes newAttributes() {
-		return super.newAttributes(new TransportationComplexAttributes());
-	}
+    public AbstractTransportationComplexType(String gmlId) {
+        super(gmlId);
+    }
 
-	@Override
-	public TransportationComplexAttributes getAttributes() {
-		return (TransportationComplexAttributes) super.getAttributes();
-	}
-	
-	@Override
-	public boolean isValidGeometryType(GeometryTypeName type) {
-		return type == GeometryTypeName.MULTI_LINE_STRING
-				|| type == GeometryTypeName.MULTI_SURFACE
-				|| type == GeometryTypeName.COMPOSITE_SURFACE;
-	}
+    @Override
+    public TransportationComplexAttributes newAttributes() {
+        return super.newAttributes(new TransportationComplexAttributes());
+    }
+
+    @Override
+    public TransportationComplexAttributes getAttributes() {
+        return (TransportationComplexAttributes) super.getAttributes();
+    }
+
+    @Override
+    public boolean isValidGeometryType(GeometryTypeName type) {
+        return type == GeometryTypeName.MULTI_LINE_STRING
+                || type == GeometryTypeName.MULTI_SURFACE
+                || type == GeometryTypeName.COMPOSITE_SURFACE;
+    }
 }

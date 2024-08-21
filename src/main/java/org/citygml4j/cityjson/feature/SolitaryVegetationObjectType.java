@@ -24,26 +24,26 @@ import org.citygml4j.cityjson.geometry.GeometryTypeName;
 
 public class SolitaryVegetationObjectType extends AbstractVegetationObjectType {
 
-	public SolitaryVegetationObjectType() {
-	}
-	
-	public SolitaryVegetationObjectType(String gmlId) {
-		super(gmlId);
-	}
-	
-	@Override
-	public SolitaryVegetationObjectAttributes newAttributes() {
-		return super.newAttributes(new SolitaryVegetationObjectAttributes());
-	}
+    public SolitaryVegetationObjectType() {
+    }
 
-	@Override
-	public SolitaryVegetationObjectAttributes getAttributes() {
-		return (SolitaryVegetationObjectAttributes) super.getAttributes();
-	}
+    public SolitaryVegetationObjectType(String gmlId) {
+        super(gmlId);
+    }
 
-	@Override
-	public boolean isValidGeometryType(GeometryTypeName type) {
-		return true;
-	}
+    @Override
+    public SolitaryVegetationObjectAttributes newAttributes() {
+        return super.newAttributes(new SolitaryVegetationObjectAttributes());
+    }
+
+    @Override
+    public SolitaryVegetationObjectAttributes getAttributes() {
+        return (SolitaryVegetationObjectAttributes) super.getAttributes();
+    }
+
+    @Override
+    public boolean isValidGeometryType(GeometryTypeName type) {
+        return true;
+    }
 
 }

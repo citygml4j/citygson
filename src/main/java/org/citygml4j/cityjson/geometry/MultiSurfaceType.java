@@ -21,9 +21,9 @@
 package org.citygml4j.cityjson.geometry;
 
 public class MultiSurfaceType extends AbstractSurfaceCollectionType {
-	
-	public MultiSurfaceType() {
-		super(GeometryTypeName.MULTI_SURFACE);
-	}
-		
+
+    public MultiSurfaceType() {
+        super(GeometryTypeName.MULTI_SURFACE);
+    }
+
 }

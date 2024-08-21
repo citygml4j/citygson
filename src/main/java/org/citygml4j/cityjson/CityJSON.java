@@ -32,307 +32,307 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class CityJSON implements ExtensibleType {
-	private final String type = "CityJSON";
-	private final String version = "1.0";
-	MetadataType metadata;
-	Map<String, ExtensionType> extensions;
-	@SerializedName("CityObjects")
-	Map<String, AbstractCityObjectType> cityObjects = new LinkedHashMap<>();
-	VerticesList vertices = new VerticesList();
-	TransformType transform;
-	AppearanceType appearance;
-	@SerializedName("geometry-templates")
-	GeometryTemplatesType geometryTemplates;
+    private final String type = "CityJSON";
+    private final String version = "1.0";
+    MetadataType metadata;
+    Map<String, ExtensionType> extensions;
+    @SerializedName("CityObjects")
+    Map<String, AbstractCityObjectType> cityObjects = new LinkedHashMap<>();
+    VerticesList vertices = new VerticesList();
+    TransformType transform;
+    AppearanceType appearance;
+    @SerializedName("geometry-templates")
+    GeometryTemplatesType geometryTemplates;
 
-	private transient Map<String, Object> extensionProperties;
+    private transient Map<String, Object> extensionProperties;
 
-	public String getType() {
-		return type;
-	}
+    public String getType() {
+        return type;
+    }
 
-	public boolean isSetVersion() {
-		return version != null;
-	}
+    public boolean isSetVersion() {
+        return version != null;
+    }
 
-	public String getVersion() {
-		return version;
-	}
+    public String getVersion() {
+        return version;
+    }
 
-	public boolean isSetMetadata() {
-		return metadata != null;
-	}
+    public boolean isSetMetadata() {
+        return metadata != null;
+    }
 
-	public MetadataType getMetadata() {
-		return metadata;
-	}
+    public MetadataType getMetadata() {
+        return metadata;
+    }
 
-	public void setMetadata(MetadataType metadata) {
-		this.metadata = metadata;
-	}
-	
-	public void unsetMetadata() {
-		metadata = null;
-	}
+    public void setMetadata(MetadataType metadata) {
+        this.metadata = metadata;
+    }
 
-	public boolean hasExtensions() {
-		return extensions != null && !extensions.isEmpty();
-	}
+    public void unsetMetadata() {
+        metadata = null;
+    }
 
-	public void addExtension(String identifier, ExtensionType extension) {
-		if (extensions == null)
-			extensions = new HashMap<>();
+    public boolean hasExtensions() {
+        return extensions != null && !extensions.isEmpty();
+    }
 
-		extensions.put(identifier, extension);
-	}
+    public void addExtension(String identifier, ExtensionType extension) {
+        if (extensions == null)
+            extensions = new HashMap<>();
 
-	public Map<String, ExtensionType> getExtensions() {
-		return extensions;
-	}
+        extensions.put(identifier, extension);
+    }
 
-	public void setExtensions(Map<String, ExtensionType> extensions) {
-		if (extensions != null && !extensions.isEmpty())
-			this.extensions = extensions;
-	}
+    public Map<String, ExtensionType> getExtensions() {
+        return extensions;
+    }
 
-	public void unsetExtensions() {
-		extensions = null;
-	}
-	
-	public boolean hasCityObjects() {
-		return !cityObjects.isEmpty();
-	}
-	
-	public void addCityObject(AbstractCityObjectType cityObject) {
-		if (!cityObject.isSetGmlId())
-			cityObject.setGmlId("UUID_" + UUID.randomUUID().toString());
+    public void setExtensions(Map<String, ExtensionType> extensions) {
+        if (extensions != null && !extensions.isEmpty())
+            this.extensions = extensions;
+    }
 
-		cityObjects.put(cityObject.getGmlId(), cityObject);
-	}
+    public void unsetExtensions() {
+        extensions = null;
+    }
 
-	@Override
-	public void addChild(AbstractCityObjectType child) {
-		addCityObject(child);
-	}
+    public boolean hasCityObjects() {
+        return !cityObjects.isEmpty();
+    }
 
-	public AbstractCityObjectType getCityObject(String gmlId) {
-		return cityObjects.get(gmlId);
-	}
+    public void addCityObject(AbstractCityObjectType cityObject) {
+        if (!cityObject.isSetGmlId())
+            cityObject.setGmlId("UUID_" + UUID.randomUUID().toString());
 
-	public boolean hasCityObject(String gmlId) {
-		return cityObjects.containsKey(gmlId);
-	}
+        cityObjects.put(cityObject.getGmlId(), cityObject);
+    }
 
-	public <T extends AbstractCityObjectType> List<T> getCityObjects(Class<T> type) {
-		return cityObjects.values().stream().filter(type::isInstance).map(type::cast).collect(Collectors.toList());
-	}
-	
-	public <T extends AbstractCityObjectType> T getCityObject(String gmlId, Class<T> type) {
-		AbstractCityObjectType cityObject = cityObjects.get(gmlId);
-		return type.isInstance(cityObject) ? type.cast(cityObject) : null;
-	}
+    @Override
+    public void addChild(AbstractCityObjectType child) {
+        addCityObject(child);
+    }
 
-	public Collection<AbstractCityObjectType> getCityObjects() {
-		return cityObjects.values();
-	}
+    public AbstractCityObjectType getCityObject(String gmlId) {
+        return cityObjects.get(gmlId);
+    }
 
-	public void setCityObjects(List<AbstractCityObjectType> cityObjects) {
-		if (cityObjects != null) {
-			for (AbstractCityObjectType cityObject : cityObjects)
-				addCityObject(cityObject);
-		}
-	}
-	
-	public void removeCityObject(AbstractCityObjectType cityObject) {
-		cityObjects.remove(cityObject.getGmlId());
-	}
-	
-	public void removeCityObject(String gmlId) {
-		cityObjects.remove(gmlId);
-	}
-	
-	public void unsetCityObjects() {
-		cityObjects.clear();
-	}
+    public boolean hasCityObject(String gmlId) {
+        return cityObjects.containsKey(gmlId);
+    }
 
-	public void addVertex(List<Double> vertex) {
-		if (vertex != null && vertex.size() == 3)
-			vertices.addVertex(vertex);
-	}
+    public <T extends AbstractCityObjectType> List<T> getCityObjects(Class<T> type) {
+        return cityObjects.values().stream().filter(type::isInstance).map(type::cast).collect(Collectors.toList());
+    }
 
-	public List<List<Double>> getVertices() {
-		return vertices.getVertices();
-	}
+    public <T extends AbstractCityObjectType> T getCityObject(String gmlId, Class<T> type) {
+        AbstractCityObjectType cityObject = cityObjects.get(gmlId);
+        return type.isInstance(cityObject) ? type.cast(cityObject) : null;
+    }
 
-	public void setVertices(List<List<Double>> vertices) {
-		if (vertices != null)
-			this.vertices.setVertices(vertices);
-	}
-	
-	public void unsetVertices() {
-		vertices.clear();
-	}
+    public Collection<AbstractCityObjectType> getCityObjects() {
+        return cityObjects.values();
+    }
 
-	public boolean isSetTransform() {
-		return transform != null;
-	}
+    public void setCityObjects(List<AbstractCityObjectType> cityObjects) {
+        if (cityObjects != null) {
+            for (AbstractCityObjectType cityObject : cityObjects)
+                addCityObject(cityObject);
+        }
+    }
 
-	public TransformType getTransform() {
-		return transform;
-	}
+    public void removeCityObject(AbstractCityObjectType cityObject) {
+        cityObjects.remove(cityObject.getGmlId());
+    }
 
-	public void setTransform(TransformType transform) {
-		this.transform = transform;
-	}
-	
-	public void unsetTransform() {
-		transform = null;
-	}
+    public void removeCityObject(String gmlId) {
+        cityObjects.remove(gmlId);
+    }
 
-	public boolean isSetAppearance() {
-		return appearance != null;
-	}
+    public void unsetCityObjects() {
+        cityObjects.clear();
+    }
 
-	public AppearanceType getAppearance() {
-		return appearance;
-	}
+    public void addVertex(List<Double> vertex) {
+        if (vertex != null && vertex.size() == 3)
+            vertices.addVertex(vertex);
+    }
 
-	public void setAppearance(AppearanceType appearance) {
-		this.appearance = appearance;
-	}
-	
-	public void unsetAppearance() {
-		appearance = null;
-	}
+    public List<List<Double>> getVertices() {
+        return vertices.getVertices();
+    }
 
-	public boolean isSetGeometryTemplates() {
-		return geometryTemplates != null;
-	}
+    public void setVertices(List<List<Double>> vertices) {
+        if (vertices != null)
+            this.vertices.setVertices(vertices);
+    }
 
-	public GeometryTemplatesType getGeometryTemplates() {
-		return geometryTemplates;
-	}
+    public void unsetVertices() {
+        vertices.clear();
+    }
 
-	public void setGeometryTemplates(GeometryTemplatesType geometryTemplates) {
-		this.geometryTemplates = geometryTemplates;
-	}
+    public boolean isSetTransform() {
+        return transform != null;
+    }
 
-	public void unsetGeometryTemplates() {
-		geometryTemplates = null;
-	}
+    public TransformType getTransform() {
+        return transform;
+    }
 
-	public boolean isSetExtensionProperties() {
-		return extensionProperties != null;
-	}
+    public void setTransform(TransformType transform) {
+        this.transform = transform;
+    }
 
-	public void addExtensionProperty(String name, Object value) {
-		if (extensionProperties == null)
-			extensionProperties = new HashMap<>();
+    public void unsetTransform() {
+        transform = null;
+    }
 
-		extensionProperties.put(name, value);
-	}
+    public boolean isSetAppearance() {
+        return appearance != null;
+    }
 
-	public Map<String, Object> getExtensionProperties() {
-		return extensionProperties;
-	}
+    public AppearanceType getAppearance() {
+        return appearance;
+    }
 
-	public void setExtensionProperties(Map<String, Object> extensionProperties) {
-		this.extensionProperties = extensionProperties;
-	}
+    public void setAppearance(AppearanceType appearance) {
+        this.appearance = appearance;
+    }
 
-	public void removeExtensionProperty(String name) {
-		if (extensionProperties != null)
-			extensionProperties.remove(name);
-	}
+    public void unsetAppearance() {
+        appearance = null;
+    }
 
-	public void unsetExtensionProperties() {
-		extensionProperties = null;
-	}
+    public boolean isSetGeometryTemplates() {
+        return geometryTemplates != null;
+    }
 
-	public List<Double> calcBoundingBox() {
-		Double[] bbox = new Double[]{
-				Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE,
-				-Double.MAX_VALUE, -Double.MAX_VALUE, -Double.MAX_VALUE};
-		
-		for (List<Double> vertex : vertices.getVertices()) {
-			if (vertex.size() > 2) {
-				double x = vertex.get(0);
-				double y = vertex.get(1);
-				double z = vertex.get(2);
-				
-				if (x < bbox[0]) bbox[0] = x;
-				if (y < bbox[1]) bbox[1] = y;
-				if (z < bbox[2]) bbox[2] = z;
-				if (x > bbox[3]) bbox[3] = x;
-				if (y > bbox[4]) bbox[4] = y;
-				if (z > bbox[5]) bbox[5] = z;
-			}
-		}
+    public GeometryTemplatesType getGeometryTemplates() {
+        return geometryTemplates;
+    }
 
-		if (transform != null) {
-			for (int i = 0; i < bbox.length; i++) {
-				bbox[i] = bbox[i] * transform.getScale().get(i % 3) + transform.getTranslate().get(i % 3);
-			}
-		}
+    public void setGeometryTemplates(GeometryTemplatesType geometryTemplates) {
+        this.geometryTemplates = geometryTemplates;
+    }
 
-		return Arrays.asList(bbox);
-	}
-	
-	public Map<String, Integer> calcPresentLoDs() {
-		Map<String, Integer> lods = new HashMap<>();
-		for (AbstractCityObjectType cityObject : cityObjects.values()) {
-			for (AbstractGeometryType geometry : cityObject.getGeometry()) {
-				if (geometry instanceof AbstractGeometryObjectType) {
-					String lod = String.valueOf(((AbstractGeometryObjectType) geometry).getLod());
-					if (lod != null) {
-						lods.merge(lod, 1, Integer::sum);
-					}
-				}
-			}
-		}
+    public void unsetGeometryTemplates() {
+        geometryTemplates = null;
+    }
 
-		if (geometryTemplates != null) {
-			for (AbstractGeometryObjectType geometry : geometryTemplates.getTemplates()) {
-				String lod = String.valueOf(geometry.getLod());
-				if (lod != null) {
-					lods.merge(lod, 1, Integer::sum);
-				}
-			}
-		}
-		
-		return lods;
-	}
+    public boolean isSetExtensionProperties() {
+        return extensionProperties != null;
+    }
 
-	public void removeDuplicateVertices() {
-		Map<String, Integer> indexes = new HashMap<>();
-		Map<Integer, Integer> indexMap = new HashMap<>();
-		int oldIndex = 0, newIndex = 0;
+    public void addExtensionProperty(String name, Object value) {
+        if (extensionProperties == null)
+            extensionProperties = new HashMap<>();
 
-		for (Iterator<List<Double>> iter = getVertices().iterator(); iter.hasNext(); ) {
-			List<Double> vertex = iter.next();
-			String key = vertex.get(0).intValue() + " " + vertex.get(1).intValue() + " " + vertex.get(2).intValue();
+        extensionProperties.put(name, value);
+    }
 
-			Integer index = indexes.get(key);
-			if (index == null) {
-				indexes.put(key, newIndex);
-				indexMap.put(oldIndex, newIndex);
-				newIndex++;
-			} else {
-				iter.remove();
-				indexMap.put(oldIndex, index);
-			}
+    public Map<String, Object> getExtensionProperties() {
+        return extensionProperties;
+    }
 
-			oldIndex++;
-		}
+    public void setExtensionProperties(Map<String, Object> extensionProperties) {
+        this.extensionProperties = extensionProperties;
+    }
 
-		indexes.clear();
-		if (getVertices().size() != indexMap.size()) {
-			for (AbstractCityObjectType cityObject : getCityObjects()) {
-				for (AbstractGeometryType geometry : cityObject.getGeometry())
-					geometry.updateIndexes(indexMap);
-			}
-		}
+    public void removeExtensionProperty(String name) {
+        if (extensionProperties != null)
+            extensionProperties.remove(name);
+    }
 
-		indexMap.clear();
-	}
+    public void unsetExtensionProperties() {
+        extensionProperties = null;
+    }
+
+    public List<Double> calcBoundingBox() {
+        Double[] bbox = new Double[]{
+                Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE,
+                -Double.MAX_VALUE, -Double.MAX_VALUE, -Double.MAX_VALUE};
+
+        for (List<Double> vertex : vertices.getVertices()) {
+            if (vertex.size() > 2) {
+                double x = vertex.get(0);
+                double y = vertex.get(1);
+                double z = vertex.get(2);
+
+                if (x < bbox[0]) bbox[0] = x;
+                if (y < bbox[1]) bbox[1] = y;
+                if (z < bbox[2]) bbox[2] = z;
+                if (x > bbox[3]) bbox[3] = x;
+                if (y > bbox[4]) bbox[4] = y;
+                if (z > bbox[5]) bbox[5] = z;
+            }
+        }
+
+        if (transform != null) {
+            for (int i = 0; i < bbox.length; i++) {
+                bbox[i] = bbox[i] * transform.getScale().get(i % 3) + transform.getTranslate().get(i % 3);
+            }
+        }
+
+        return Arrays.asList(bbox);
+    }
+
+    public Map<String, Integer> calcPresentLoDs() {
+        Map<String, Integer> lods = new HashMap<>();
+        for (AbstractCityObjectType cityObject : cityObjects.values()) {
+            for (AbstractGeometryType geometry : cityObject.getGeometry()) {
+                if (geometry instanceof AbstractGeometryObjectType) {
+                    String lod = String.valueOf(((AbstractGeometryObjectType) geometry).getLod());
+                    if (lod != null) {
+                        lods.merge(lod, 1, Integer::sum);
+                    }
+                }
+            }
+        }
+
+        if (geometryTemplates != null) {
+            for (AbstractGeometryObjectType geometry : geometryTemplates.getTemplates()) {
+                String lod = String.valueOf(geometry.getLod());
+                if (lod != null) {
+                    lods.merge(lod, 1, Integer::sum);
+                }
+            }
+        }
+
+        return lods;
+    }
+
+    public void removeDuplicateVertices() {
+        Map<String, Integer> indexes = new HashMap<>();
+        Map<Integer, Integer> indexMap = new HashMap<>();
+        int oldIndex = 0, newIndex = 0;
+
+        for (Iterator<List<Double>> iter = getVertices().iterator(); iter.hasNext(); ) {
+            List<Double> vertex = iter.next();
+            String key = vertex.get(0).intValue() + " " + vertex.get(1).intValue() + " " + vertex.get(2).intValue();
+
+            Integer index = indexes.get(key);
+            if (index == null) {
+                indexes.put(key, newIndex);
+                indexMap.put(oldIndex, newIndex);
+                newIndex++;
+            } else {
+                iter.remove();
+                indexMap.put(oldIndex, index);
+            }
+
+            oldIndex++;
+        }
+
+        indexes.clear();
+        if (getVertices().size() != indexMap.size()) {
+            for (AbstractCityObjectType cityObject : getCityObjects()) {
+                for (AbstractGeometryType geometry : cityObject.getGeometry())
+                    geometry.updateIndexes(indexMap);
+            }
+        }
+
+        indexMap.clear();
+    }
 
 }

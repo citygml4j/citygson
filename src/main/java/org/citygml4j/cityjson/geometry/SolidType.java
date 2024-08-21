@@ -26,169 +26,169 @@ import org.citygml4j.cityjson.appearance.SolidTextureObject;
 import java.util.*;
 
 public class SolidType extends AbstractSolidType
-implements GeometryWithAppearance<SolidMaterialObject, SolidTextureObject> {
-	private final GeometryTypeName type = GeometryTypeName.SOLID;
-	private List<List<List<List<Integer>>>> boundaries = new ArrayList<>();	
-	private SolidSemanticsObject semantics;
-	private Map<String, SolidMaterialObject> material;
-	private Map<String, SolidTextureObject> texture;
-	
-	@Override
-	public GeometryTypeName getType() {
-		return type;
-	}
-	
-	public void addShell(List<List<List<Integer>>> shell) {
-		if (shell != null && shell.size() > 0)
-			boundaries.add(shell);
-	}
+        implements GeometryWithAppearance<SolidMaterialObject, SolidTextureObject> {
+    private final GeometryTypeName type = GeometryTypeName.SOLID;
+    private List<List<List<List<Integer>>>> boundaries = new ArrayList<>();
+    private SolidSemanticsObject semantics;
+    private Map<String, SolidMaterialObject> material;
+    private Map<String, SolidTextureObject> texture;
 
-	public List<List<List<List<Integer>>>> getShells() {
-		return boundaries;
-	}
+    @Override
+    public GeometryTypeName getType() {
+        return type;
+    }
 
-	public void setShells(List<List<List<List<Integer>>>> shells) {
-		if (shells != null)
-			boundaries = shells;
-	}
-	
-	public void unsetShells() {
-		boundaries.clear();
-	}
-	
-	@Override
-	public boolean isSetSemantics() {
-		return semantics != null;
-	}
+    public void addShell(List<List<List<Integer>>> shell) {
+        if (shell != null && shell.size() > 0)
+            boundaries.add(shell);
+    }
 
-	@Override
-	public SolidSemanticsObject getSemantics() {
-		return semantics;
-	}
+    public List<List<List<List<Integer>>>> getShells() {
+        return boundaries;
+    }
 
-	public void setSemantics(SolidSemanticsObject semantics) {
-		this.semantics = semantics;
-	}
-	
-	@Override
-	public void unsetSemantics() {
-		semantics = null;
-	}
-	
-	@Override
-	public boolean isSetMaterial() {
-		return material != null;
-	}
-	
-	public void addMaterial(SolidMaterialObject materialObject) {
-		if (material == null)
-			material = new HashMap<>();
-		
-		material.put(materialObject.getTheme(), materialObject);
-	}
-	
-	@Override
-	public Collection<SolidMaterialObject> getMaterial() {
-		return material.values();
-	}
-	
-	@Override
-	public SolidMaterialObject getMaterial(String theme) {
-		return material != null ? material.get(theme) : null;
-	}
+    public void setShells(List<List<List<List<Integer>>>> shells) {
+        if (shells != null)
+            boundaries = shells;
+    }
 
-	public void setMaterial(List<SolidMaterialObject> material) {
-		if (material == null)
-			this.material = null;
-		else {
-			for (SolidMaterialObject object : material)
-				this.material.put(object.getTheme(), object);
-		}
-	}
-	
-	@Override
-	public void removeMaterial(SolidMaterialObject materialObject) {
-		if (this.material != null)
-			this.material.remove(materialObject.getTheme());
-	}
-	
-	@Override
-	public void removeMaterial(String theme) {
-		if (this.material != null)
-			this.material.remove(theme);
-	}
-	
-	@Override
-	public void unsetMaterial() {
-		material = null;
-	}
+    public void unsetShells() {
+        boundaries.clear();
+    }
 
-	@Override
-	public boolean isSetTexture() {
-		return texture != null;
-	}
-	
-	public void addTexture(SolidTextureObject textureObject) {
-		if (texture == null)
-			texture = new HashMap<>();
-		
-		texture.put(textureObject.getTheme(), textureObject);
-	}
-	
-	@Override
-	public Collection<SolidTextureObject> getTexture() {
-		return texture.values();
-	}
-	
-	@Override
-	public SolidTextureObject getTexture(String theme) {
-		return texture != null ? texture.get(theme) : null;
-	}
+    @Override
+    public boolean isSetSemantics() {
+        return semantics != null;
+    }
 
-	public void setTexture(List<SolidTextureObject> texture) {
-		if (texture == null)
-			this.texture = null;
-		else {
-			for (SolidTextureObject object : texture)
-				this.texture.put(object.getTheme(), object);
-		}
-	}
-	
-	@Override
-	public void removeTexture(SolidTextureObject textureObject) {
-		if (texture != null)
-			texture.remove(textureObject.getTheme());
-	}
-	
-	@Override
-	public void removeTexture(String theme) {
-		if (texture != null)
-			texture.remove(theme);
-	}
-	
-	@Override
-	public void unsetTexture() {
-		texture = null;
-	}
-	
-	@Override
-	public void unsetAppearance() {
-		material = null;
-		texture = null;
-	}
+    @Override
+    public SolidSemanticsObject getSemantics() {
+        return semantics;
+    }
 
-	@Override
-	public void updateIndexes(Map<Integer, Integer> indexMap) {
-		for (List<List<List<Integer>>> shell : boundaries) {
-			for (List<List<Integer>> surface : shell) {
-				for (List<Integer> ring : surface) {
-					for (int index = 0; index < ring.size(); index++) {
-						Integer update = indexMap.get(ring.get(index));
-						if (update != null)
-							ring.set(index, update);
-					}
-				}
-			}
-		}
-	}
+    public void setSemantics(SolidSemanticsObject semantics) {
+        this.semantics = semantics;
+    }
+
+    @Override
+    public void unsetSemantics() {
+        semantics = null;
+    }
+
+    @Override
+    public boolean isSetMaterial() {
+        return material != null;
+    }
+
+    public void addMaterial(SolidMaterialObject materialObject) {
+        if (material == null)
+            material = new HashMap<>();
+
+        material.put(materialObject.getTheme(), materialObject);
+    }
+
+    @Override
+    public Collection<SolidMaterialObject> getMaterial() {
+        return material.values();
+    }
+
+    @Override
+    public SolidMaterialObject getMaterial(String theme) {
+        return material != null ? material.get(theme) : null;
+    }
+
+    public void setMaterial(List<SolidMaterialObject> material) {
+        if (material == null)
+            this.material = null;
+        else {
+            for (SolidMaterialObject object : material)
+                this.material.put(object.getTheme(), object);
+        }
+    }
+
+    @Override
+    public void removeMaterial(SolidMaterialObject materialObject) {
+        if (this.material != null)
+            this.material.remove(materialObject.getTheme());
+    }
+
+    @Override
+    public void removeMaterial(String theme) {
+        if (this.material != null)
+            this.material.remove(theme);
+    }
+
+    @Override
+    public void unsetMaterial() {
+        material = null;
+    }
+
+    @Override
+    public boolean isSetTexture() {
+        return texture != null;
+    }
+
+    public void addTexture(SolidTextureObject textureObject) {
+        if (texture == null)
+            texture = new HashMap<>();
+
+        texture.put(textureObject.getTheme(), textureObject);
+    }
+
+    @Override
+    public Collection<SolidTextureObject> getTexture() {
+        return texture.values();
+    }
+
+    @Override
+    public SolidTextureObject getTexture(String theme) {
+        return texture != null ? texture.get(theme) : null;
+    }
+
+    public void setTexture(List<SolidTextureObject> texture) {
+        if (texture == null)
+            this.texture = null;
+        else {
+            for (SolidTextureObject object : texture)
+                this.texture.put(object.getTheme(), object);
+        }
+    }
+
+    @Override
+    public void removeTexture(SolidTextureObject textureObject) {
+        if (texture != null)
+            texture.remove(textureObject.getTheme());
+    }
+
+    @Override
+    public void removeTexture(String theme) {
+        if (texture != null)
+            texture.remove(theme);
+    }
+
+    @Override
+    public void unsetTexture() {
+        texture = null;
+    }
+
+    @Override
+    public void unsetAppearance() {
+        material = null;
+        texture = null;
+    }
+
+    @Override
+    public void updateIndexes(Map<Integer, Integer> indexMap) {
+        for (List<List<List<Integer>>> shell : boundaries) {
+            for (List<List<Integer>> surface : shell) {
+                for (List<Integer> ring : surface) {
+                    for (int index = 0; index < ring.size(); index++) {
+                        Integer update = indexMap.get(ring.get(index));
+                        if (update != null)
+                            ring.set(index, update);
+                    }
+                }
+            }
+        }
+    }
 }

@@ -22,8 +22,8 @@ package org.citygml4j.cityjson.geometry;
 
 public class MultiSolidType extends AbstractSolidCollectionType {
 
-	public MultiSolidType() {
-		super(GeometryTypeName.MULTI_SOLID);
-	}
-	
+    public MultiSolidType() {
+        super(GeometryTypeName.MULTI_SOLID);
+    }
+
 }

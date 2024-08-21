@@ -33,191 +33,191 @@ import java.util.List;
 import java.util.Map;
 
 public class SemanticsType implements ExtensibleType {
-	String type;
-	private Integer parent;
-	private List<Integer> children;
-	private String id;
-	private String description;
-	private String name;
-	@JsonAdapter(DateAdapter.class)
-	private LocalDate creationDate;
-	@JsonAdapter(DateAdapter.class)
-	private LocalDate terminationDate;
-	private transient Map<String, Object> attributes;
+    String type;
+    private Integer parent;
+    private List<Integer> children;
+    private String id;
+    private String description;
+    private String name;
+    @JsonAdapter(DateAdapter.class)
+    private LocalDate creationDate;
+    @JsonAdapter(DateAdapter.class)
+    private LocalDate terminationDate;
+    private transient Map<String, Object> attributes;
 
-	public SemanticsType() {
-		type = null;
-	}
-	
-	public SemanticsType(String type) {
-		this.type = type;
-	}
-	
-	public final String getType() {
-		return type;
-	}
+    public SemanticsType() {
+        type = null;
+    }
 
-	public boolean isSetParent() {
-		return parent != null;
-	}
+    public SemanticsType(String type) {
+        this.type = type;
+    }
 
-	public Integer getParent() {
-		return parent;
-	}
+    public final String getType() {
+        return type;
+    }
 
-	public void setParent(int parent) {
-		this.parent = parent;
-	}
+    public boolean isSetParent() {
+        return parent != null;
+    }
 
-	public void unsetParent() {
-		parent = null;
-	}
+    public Integer getParent() {
+        return parent;
+    }
 
-	public boolean isSetChildren() {
-		return children != null && !children.isEmpty();
-	}
+    public void setParent(int parent) {
+        this.parent = parent;
+    }
 
-	public void addChild(int child) {
-		if (children == null)
-			children = new ArrayList<>();
+    public void unsetParent() {
+        parent = null;
+    }
 
-		children.add(child);
-	}
+    public boolean isSetChildren() {
+        return children != null && !children.isEmpty();
+    }
 
-	public List<Integer> getChildren() {
-		return children;
-	}
+    public void addChild(int child) {
+        if (children == null)
+            children = new ArrayList<>();
 
-	public void setChildren(List<Integer> Children) {
-		this.children = Children;
-	}
+        children.add(child);
+    }
 
-	public void unsetChildren() {
-		children = null;
-	}
+    public List<Integer> getChildren() {
+        return children;
+    }
 
-	public boolean isSetId() {
-		return id != null;
-	}
+    public void setChildren(List<Integer> Children) {
+        this.children = Children;
+    }
 
-	public String getId() {
-		return id;
-	}
+    public void unsetChildren() {
+        children = null;
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public boolean isSetId() {
+        return id != null;
+    }
 
-	public void unsetId() {
-		id = null;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public boolean isSetDescription() {
-		return description != null;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public void unsetId() {
+        id = null;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public boolean isSetDescription() {
+        return description != null;
+    }
 
-	public void unsetDescription() {
-		description = null;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public boolean isSetName() {
-		return name != null;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void unsetDescription() {
+        description = null;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public boolean isSetName() {
+        return name != null;
+    }
 
-	public void unsetName() {
-		name = null;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public boolean isSetCreationDate() {
-		return creationDate != null;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public LocalDate getCreationDate() {
-		return creationDate;
-	}
+    public void unsetName() {
+        name = null;
+    }
 
-	public void setCreationDate(ZonedDateTime creationDate) {
-		this.creationDate = creationDate.toLocalDate();
-	}
+    public boolean isSetCreationDate() {
+        return creationDate != null;
+    }
 
-	public void setCreationDate(LocalDateTime creationDate) {
-		this.creationDate = creationDate.toLocalDate();
-	}
+    public LocalDate getCreationDate() {
+        return creationDate;
+    }
 
-	public void setCreationDate(LocalDate creationDate) {
-		this.creationDate = creationDate;
-	}
+    public void setCreationDate(ZonedDateTime creationDate) {
+        this.creationDate = creationDate.toLocalDate();
+    }
 
-	public void unsetCreationDate() {
-		creationDate = null;
-	}
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate.toLocalDate();
+    }
 
-	public boolean isSetTerminationDate() {
-		return terminationDate != null;
-	}
+    public void setCreationDate(LocalDate creationDate) {
+        this.creationDate = creationDate;
+    }
 
-	public LocalDate getTerminationDate() {
-		return terminationDate;
-	}
+    public void unsetCreationDate() {
+        creationDate = null;
+    }
 
-	public void setTerminationDate(ZonedDateTime terminationDate) {
-		this.terminationDate = terminationDate.toLocalDate();
-	}
+    public boolean isSetTerminationDate() {
+        return terminationDate != null;
+    }
 
-	public void setTerminationDate(LocalDateTime terminationDate) {
-		this.terminationDate = terminationDate.toLocalDate();
-	}
+    public LocalDate getTerminationDate() {
+        return terminationDate;
+    }
 
-	public void setTerminationDate(LocalDate terminationDate) {
-		this.terminationDate = terminationDate;
-	}
+    public void setTerminationDate(ZonedDateTime terminationDate) {
+        this.terminationDate = terminationDate.toLocalDate();
+    }
 
-	public void unsetTerminationDate() {
-		terminationDate = null;
-	}
+    public void setTerminationDate(LocalDateTime terminationDate) {
+        this.terminationDate = terminationDate.toLocalDate();
+    }
 
-	public boolean isSetAttributes() {
-		return attributes != null;
-	}
+    public void setTerminationDate(LocalDate terminationDate) {
+        this.terminationDate = terminationDate;
+    }
 
-	public void addAttribute(String name, Object value) {
-		if (attributes == null)
-			attributes = new HashMap<>();
+    public void unsetTerminationDate() {
+        terminationDate = null;
+    }
 
-		attributes.put(name, value);
-	}
+    public boolean isSetAttributes() {
+        return attributes != null;
+    }
 
-	public Map<String, Object> getAttributes() {
-		return attributes;
-	}
+    public void addAttribute(String name, Object value) {
+        if (attributes == null)
+            attributes = new HashMap<>();
 
-	public void setAttributes(Map<String, Object> properties) {
-		if (type != null)
-			this.attributes = properties;
-	}
+        attributes.put(name, value);
+    }
 
-	public void removeAttribute(String name) {
-		if (attributes != null)
-			attributes.remove(name);
-	}
+    public Map<String, Object> getAttributes() {
+        return attributes;
+    }
 
-	public void unsetAttributes() {
-		attributes = null;
-	}
+    public void setAttributes(Map<String, Object> properties) {
+        if (type != null)
+            this.attributes = properties;
+    }
+
+    public void removeAttribute(String name) {
+        if (attributes != null)
+            attributes.remove(name);
+    }
+
+    public void unsetAttributes() {
+        attributes = null;
+    }
 }

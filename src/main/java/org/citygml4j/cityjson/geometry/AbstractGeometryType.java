@@ -25,5 +25,6 @@ import java.util.Map;
 
 public abstract class AbstractGeometryType {
     public abstract GeometryTypeName getType();
+
     public abstract void updateIndexes(Map<Integer, Integer> indexMap);
 }

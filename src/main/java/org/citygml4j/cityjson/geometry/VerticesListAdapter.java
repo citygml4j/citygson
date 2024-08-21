@@ -31,71 +31,71 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VerticesListAdapter extends TypeAdapter<VerticesList> {
-	private boolean asInteger;
+    private boolean asInteger;
 
-	public VerticesListAdapter(boolean asInteger) {
-		this.asInteger = asInteger;
-	}
+    public VerticesListAdapter(boolean asInteger) {
+        this.asInteger = asInteger;
+    }
 
-	public VerticesListAdapter() {
-		this(false);
-	}
+    public VerticesListAdapter() {
+        this(false);
+    }
 
-	@Override
-	public void write(JsonWriter out, VerticesList value) throws IOException {
-		if (value != null) {
-			out.beginArray();
+    @Override
+    public void write(JsonWriter out, VerticesList value) throws IOException {
+        if (value != null) {
+            out.beginArray();
 
-			for (List<Double> vertex : value.getVertices()) {
-				if (vertex != null) {
-					out.beginArray();
-					for (double coordinate : vertex) {
-						if (asInteger)
-							out.value((int) coordinate);
-						else
-							out.value(coordinate);
-					}
+            for (List<Double> vertex : value.getVertices()) {
+                if (vertex != null) {
+                    out.beginArray();
+                    for (double coordinate : vertex) {
+                        if (asInteger)
+                            out.value((int) coordinate);
+                        else
+                            out.value(coordinate);
+                    }
 
-					out.endArray();
-				} else
-					out.nullValue();
-			}
+                    out.endArray();
+                } else
+                    out.nullValue();
+            }
 
-			out.endArray();
-		} else
-			out.nullValue();
-	}
+            out.endArray();
+        } else
+            out.nullValue();
+    }
 
-	@Override
-	public VerticesList read(JsonReader in) throws IOException {
-		VerticesList vertices = null;
+    @Override
+    public VerticesList read(JsonReader in) throws IOException {
+        VerticesList vertices = null;
 
-		if (in.peek() != JsonToken.NULL) {
-			vertices = new VerticesList();
-			in.beginArray();
+        if (in.peek() != JsonToken.NULL) {
+            vertices = new VerticesList();
+            in.beginArray();
 
-			while (in.hasNext()) {
-				if (in.peek() == JsonToken.NULL) {
-					vertices.addVertex(null);
-					in.nextNull();
-					continue;
-				}
+            while (in.hasNext()) {
+                if (in.peek() == JsonToken.NULL) {
+                    vertices.addVertex(null);
+                    in.nextNull();
+                    continue;
+                }
 
-				List<Double> vertex = new ArrayList<>(3);
-				in.beginArray();
-				if (in.peek() == JsonToken.NUMBER) {
-					vertex.add(in.nextDouble());
-					vertex.add(in.nextDouble());
-					vertex.add(in.nextDouble());
-				}
+                List<Double> vertex = new ArrayList<>(3);
+                in.beginArray();
+                if (in.peek() == JsonToken.NUMBER) {
+                    vertex.add(in.nextDouble());
+                    vertex.add(in.nextDouble());
+                    vertex.add(in.nextDouble());
+                }
 
-				vertices.addVertex(vertex);
-				in.endArray();
-			}
+                vertices.addVertex(vertex);
+                in.endArray();
+            }
 
-			in.endArray();
-		}
+            in.endArray();
+        }
 
-		return vertices;
-	}
+        return vertices;
+    }
 }

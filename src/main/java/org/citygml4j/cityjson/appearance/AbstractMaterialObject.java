@@ -23,58 +23,62 @@ package org.citygml4j.cityjson.appearance;
 import java.util.List;
 
 public abstract class AbstractMaterialObject {
-	protected transient String theme;
-	private Integer value;
+    protected transient String theme;
+    private Integer value;
 
-	public abstract boolean isSetValues();
-	public abstract void addNullValue();
-	public abstract int getNumValues();
-	public abstract List<Integer> flatValues();
-	public abstract void unsetValues();
+    public abstract boolean isSetValues();
 
-	AbstractMaterialObject() {
-	}
+    public abstract void addNullValue();
 
-	public AbstractMaterialObject(String theme) {
-		this.theme = theme != null ? theme : "";
-	}
+    public abstract int getNumValues();
 
-	public String getTheme() {
-		return theme;
-	}
+    public abstract List<Integer> flatValues();
 
-	public boolean isSetValue() {
-		return value != null;
-	}
+    public abstract void unsetValues();
 
-	public Integer getValue() {
-		return value;
-	}
+    AbstractMaterialObject() {
+    }
 
-	public void setValue(int value) {
-		this.value = value;
-	}
+    public AbstractMaterialObject(String theme) {
+        this.theme = theme != null ? theme : "";
+    }
 
-	public void unsetValue() {
-		value = null;
-	}
+    public String getTheme() {
+        return theme;
+    }
 
-	public boolean collapseValues() {
-		List<Integer> values = flatValues();
-		if (values == null || values.isEmpty())
-			return false;
+    public boolean isSetValue() {
+        return value != null;
+    }
 
-		Integer compareTo = values.get(0);
-		for (int i = 1 ; i < values.size(); i++) {
-			if (values.get(i) != compareTo)
-				return false;
-		}
+    public Integer getValue() {
+        return value;
+    }
 
-		unsetValues();
-		if (compareTo != null)
-			setValue(compareTo);
+    public void setValue(int value) {
+        this.value = value;
+    }
 
-		return true;
-	}
+    public void unsetValue() {
+        value = null;
+    }
+
+    public boolean collapseValues() {
+        List<Integer> values = flatValues();
+        if (values == null || values.isEmpty())
+            return false;
+
+        Integer compareTo = values.get(0);
+        for (int i = 1; i < values.size(); i++) {
+            if (values.get(i) != compareTo)
+                return false;
+        }
+
+        unsetValues();
+        if (compareTo != null)
+            setValue(compareTo);
+
+        return true;
+    }
 
 }

@@ -21,7 +21,9 @@
 package org.citygml4j.cityjson.geometry;
 
 public interface GeometryWithSemantics {
-	public boolean isSetSemantics();
-	public AbstractSemanticsObject getSemantics();
-	public void unsetSemantics();
+    public boolean isSetSemantics();
+
+    public AbstractSemanticsObject getSemantics();
+
+    public void unsetSemantics();
 }

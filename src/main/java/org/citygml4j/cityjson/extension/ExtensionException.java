@@ -22,22 +22,22 @@
 package org.citygml4j.cityjson.extension;
 
 public class ExtensionException extends Exception {
-	private static final long serialVersionUID = -3716015045363231263L;
-	
-	public ExtensionException() {
-		super();
-	}
-	
-	public ExtensionException(String message) {
-		super(message);
-	}
-	
-	public ExtensionException(Throwable cause) {
-		super(cause);
-	}
-	
-	public ExtensionException(String message, Throwable cause) {
-		super(message, cause);
-	}
-	
+    private static final long serialVersionUID = -3716015045363231263L;
+
+    public ExtensionException() {
+        super();
+    }
+
+    public ExtensionException(String message) {
+        super(message);
+    }
+
+    public ExtensionException(Throwable cause) {
+        super(cause);
+    }
+
+    public ExtensionException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
 }

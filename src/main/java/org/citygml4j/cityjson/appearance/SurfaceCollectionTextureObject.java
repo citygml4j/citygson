@@ -26,54 +26,54 @@ import java.util.Collections;
 import java.util.List;
 
 public class SurfaceCollectionTextureObject extends AbstractTextureObject {
-	public static final List<List<Integer>> NULL_VALUE = Collections.singletonList(Arrays.asList(new Integer[]{null}));
-	private List<List<List<Integer>>> values;
-	
-	SurfaceCollectionTextureObject() {
-	}
-	
-	public SurfaceCollectionTextureObject(String theme) {
-		super(theme);
-	}
+    public static final List<List<Integer>> NULL_VALUE = Collections.singletonList(Arrays.asList(new Integer[]{null}));
+    private List<List<List<Integer>>> values;
 
-	@Override
-	public boolean isSetValues() {
-		return values != null;
-	}
+    SurfaceCollectionTextureObject() {
+    }
 
-	public void addValue(List<List<Integer>> value) {
-		if (values == null)
-			values = new ArrayList<>();
+    public SurfaceCollectionTextureObject(String theme) {
+        super(theme);
+    }
 
-		values.add(value);
-	}
-	
-	@Override
-	public void addNullValue() {
-		addValue(NULL_VALUE);
-	}
+    @Override
+    public boolean isSetValues() {
+        return values != null;
+    }
 
-	public List<List<List<Integer>>> getValues() {
-		return values;
-	}
+    public void addValue(List<List<Integer>> value) {
+        if (values == null)
+            values = new ArrayList<>();
 
-	public void setValues(List<List<List<Integer>>> values) {
-		this.values = values;
-	}
-	
-	@Override
-	public int getNumValues() {
-		return values != null ? values.size() : 0;
-	}
+        values.add(value);
+    }
 
-	@Override
-	public List<List<List<Integer>>> flatValues() {
-		return values;
-	}
-	
-	@Override
-	public void unsetValues() {
-		values = null;
-	}
+    @Override
+    public void addNullValue() {
+        addValue(NULL_VALUE);
+    }
+
+    public List<List<List<Integer>>> getValues() {
+        return values;
+    }
+
+    public void setValues(List<List<List<Integer>>> values) {
+        this.values = values;
+    }
+
+    @Override
+    public int getNumValues() {
+        return values != null ? values.size() : 0;
+    }
+
+    @Override
+    public List<List<List<Integer>>> flatValues() {
+        return values;
+    }
+
+    @Override
+    public void unsetValues() {
+        values = null;
+    }
 
 }

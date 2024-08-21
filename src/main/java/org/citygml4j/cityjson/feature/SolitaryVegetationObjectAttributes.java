@@ -21,55 +21,55 @@
 package org.citygml4j.cityjson.feature;
 
 public class SolitaryVegetationObjectAttributes extends Attributes {
-	private String species;
-	private Double trunkDiameter;
-	private Double crownDiameter;
-	
-	public boolean isSetSpecies() {
-		return species != null;
-	}
-	
-	public String getSpecies() {
-		return species;
-	}
+    private String species;
+    private Double trunkDiameter;
+    private Double crownDiameter;
 
-	public void setSpecies(String species) {
-		this.species = species;
-	}
-	
-	public void unsetSpecies() {
-		species = null;
-	}
+    public boolean isSetSpecies() {
+        return species != null;
+    }
 
-	public boolean isSetTrunkDiameter() {
-		return trunkDiameter != null;
-	}
-	
-	public Double getTrunkDiameter() {
-		return trunkDiameter;
-	}
+    public String getSpecies() {
+        return species;
+    }
 
-	public void setTrunkDiameter(Double trunkDiameter) {
-		this.trunkDiameter = trunkDiameter;
-	}
-	
-	public void unsetTrunkDiameter() {
-		trunkDiameter = null;
-	}
+    public void setSpecies(String species) {
+        this.species = species;
+    }
 
-	public boolean isSetCrownDiameter() {
-		return crownDiameter != null;
-	}
-	
-	public Double getCrownDiameter() {
-		return crownDiameter;
-	}
+    public void unsetSpecies() {
+        species = null;
+    }
 
-	public void setCrownDiameter(Double crownDiameter) {
-		this.crownDiameter = crownDiameter;
-	}
-	
-	public void unsetCrownDiameter() {
-		crownDiameter = null;
-	}
+    public boolean isSetTrunkDiameter() {
+        return trunkDiameter != null;
+    }
+
+    public Double getTrunkDiameter() {
+        return trunkDiameter;
+    }
+
+    public void setTrunkDiameter(Double trunkDiameter) {
+        this.trunkDiameter = trunkDiameter;
+    }
+
+    public void unsetTrunkDiameter() {
+        trunkDiameter = null;
+    }
+
+    public boolean isSetCrownDiameter() {
+        return crownDiameter != null;
+    }
+
+    public Double getCrownDiameter() {
+        return crownDiameter;
+    }
+
+    public void setCrownDiameter(Double crownDiameter) {
+        this.crownDiameter = crownDiameter;
+    }
+
+    public void unsetCrownDiameter() {
+        crownDiameter = null;
+    }
 }

@@ -36,80 +36,80 @@ import java.util.List;
 import java.util.Map;
 
 public class SemanticsTypeAdapter extends TypeAdapter<SemanticsType> {
-	private final Gson gson;
-	private final TypeAdapterFactory factory;
+    private final Gson gson;
+    private final TypeAdapterFactory factory;
 
-	private final CityJSONRegistry registry = CityJSONRegistry.getInstance();
-	private final Map<String, List<String>> predefinedAttributes = new HashMap<>();
-	private final PropertyHelper propertyHelper = new PropertyHelper();
+    private final CityJSONRegistry registry = CityJSONRegistry.getInstance();
+    private final Map<String, List<String>> predefinedAttributes = new HashMap<>();
+    private final PropertyHelper propertyHelper = new PropertyHelper();
 
-	public SemanticsTypeAdapter(Gson gson, TypeAdapterFactory factory) {
-		this.gson = gson;
-		this.factory = factory;
-	}
+    public SemanticsTypeAdapter(Gson gson, TypeAdapterFactory factory) {
+        this.gson = gson;
+        this.factory = factory;
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public void write(JsonWriter out, SemanticsType value) throws IOException {
-		if (value != null) {
-			if (value.type == null)
-				value.type = registry.getSemanticSurfaceType(value);
+    @SuppressWarnings("unchecked")
+    @Override
+    public void write(JsonWriter out, SemanticsType value) throws IOException {
+        if (value != null) {
+            if (value.type == null)
+                value.type = registry.getSemanticSurfaceType(value);
 
-			Class<?> typeOf = registry.getSemanticSurfaceClass(value.type);
-			TypeAdapter<SemanticsType> delegate = (TypeAdapter<SemanticsType>) gson.getDelegateAdapter(factory, TypeToken.get(typeOf));
+            Class<?> typeOf = registry.getSemanticSurfaceClass(value.type);
+            TypeAdapter<SemanticsType> delegate = (TypeAdapter<SemanticsType>) gson.getDelegateAdapter(factory, TypeToken.get(typeOf));
 
-			JsonElement element = delegate.toJsonTree(value);
-			if (element != null && element.isJsonObject()) {
-				JsonObject object = element.getAsJsonObject();
+            JsonElement element = delegate.toJsonTree(value);
+            if (element != null && element.isJsonObject()) {
+                JsonObject object = element.getAsJsonObject();
 
-				// serialize extension attributes
-				if (value.isSetAttributes()) {
-					JsonObject properties = gson.toJsonTree(value.getAttributes()).getAsJsonObject();
-					for (Map.Entry<String, JsonElement> entry : properties.entrySet())
-						object.add(entry.getKey(), entry.getValue());
-				}
-			}
+                // serialize extension attributes
+                if (value.isSetAttributes()) {
+                    JsonObject properties = gson.toJsonTree(value.getAttributes()).getAsJsonObject();
+                    for (Map.Entry<String, JsonElement> entry : properties.entrySet())
+                        object.add(entry.getKey(), entry.getValue());
+                }
+            }
 
-			Streams.write(element, out);
-		} else
-			out.nullValue();
-	}
+            Streams.write(element, out);
+        } else
+            out.nullValue();
+    }
 
-	@Override
-	public SemanticsType read(JsonReader in) throws IOException {
-		if (in.peek() != JsonToken.NULL) {
-			JsonObject object = Streams.parse(in).getAsJsonObject();
-			JsonPrimitive type = object.getAsJsonPrimitive("type");
+    @Override
+    public SemanticsType read(JsonReader in) throws IOException {
+        if (in.peek() != JsonToken.NULL) {
+            JsonObject object = Streams.parse(in).getAsJsonObject();
+            JsonPrimitive type = object.getAsJsonPrimitive("type");
 
-			if (type != null) {
-				Class<? extends SemanticsType> typeOf = registry.getSemanticSurfaceClass(type.getAsString());
-				if (typeOf != null) {
-					SemanticsType semantics = gson.getDelegateAdapter(factory, TypeToken.get(typeOf)).fromJsonTree(object);
+            if (type != null) {
+                Class<? extends SemanticsType> typeOf = registry.getSemanticSurfaceClass(type.getAsString());
+                if (typeOf != null) {
+                    SemanticsType semantics = gson.getDelegateAdapter(factory, TypeToken.get(typeOf)).fromJsonTree(object);
 
-					// deserialize extension attributes
-					List<String> predefined = predefinedAttributes.computeIfAbsent(semantics.getClass().getTypeName(),
-							v -> propertyHelper.getDeclaredProperties(semantics.getClass()));
+                    // deserialize extension attributes
+                    List<String> predefined = predefinedAttributes.computeIfAbsent(semantics.getClass().getTypeName(),
+                            v -> propertyHelper.getDeclaredProperties(semantics.getClass()));
 
-					for (Map.Entry<String, JsonElement> entry : object.entrySet()) {
-						String key = entry.getKey();
-						if (predefined.contains(key))
-							continue;
+                    for (Map.Entry<String, JsonElement> entry : object.entrySet()) {
+                        String key = entry.getKey();
+                        if (predefined.contains(key))
+                            continue;
 
-						// check whether we found a registered extension property
-						Type extensionAttributeType = registry.getExtensionPropertyClass(entry.getKey(), semantics);
-						Object value = extensionAttributeType != null ?
-								gson.fromJson(entry.getValue(), extensionAttributeType) :
-								propertyHelper.deserialize(entry.getValue());
+                        // check whether we found a registered extension property
+                        Type extensionAttributeType = registry.getExtensionPropertyClass(entry.getKey(), semantics);
+                        Object value = extensionAttributeType != null ?
+                                gson.fromJson(entry.getValue(), extensionAttributeType) :
+                                propertyHelper.deserialize(entry.getValue());
 
-						if (value != null)
-							semantics.addAttribute(key, value);
-					}
+                        if (value != null)
+                            semantics.addAttribute(key, value);
+                    }
 
-					return semantics;
-				}
-			}
-		}
+                    return semantics;
+                }
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 }

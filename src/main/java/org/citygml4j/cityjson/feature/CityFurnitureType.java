@@ -24,21 +24,21 @@ import org.citygml4j.cityjson.geometry.GeometryTypeName;
 
 public class CityFurnitureType extends AbstractCityObjectType {
 
-	public CityFurnitureType() {
-	}
-	
-	public CityFurnitureType(String gmlId) {
-		super(gmlId);
-	}
+    public CityFurnitureType() {
+    }
 
-	@Override
-	public Attributes newAttributes() {
-		return super.newAttributes(new Attributes());
-	}
+    public CityFurnitureType(String gmlId) {
+        super(gmlId);
+    }
 
-	@Override
-	public boolean isValidGeometryType(GeometryTypeName type) {
-		return true;
-	}
+    @Override
+    public Attributes newAttributes() {
+        return super.newAttributes(new Attributes());
+    }
+
+    @Override
+    public boolean isValidGeometryType(GeometryTypeName type) {
+        return true;
+    }
 
 }

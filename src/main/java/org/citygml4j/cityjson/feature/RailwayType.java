@@ -22,11 +22,11 @@ package org.citygml4j.cityjson.feature;
 
 public class RailwayType extends AbstractTransportationComplexType {
 
-	public RailwayType() {
-	}
-	
-	public RailwayType(String gmlId) {
-		super(gmlId);
-	}
+    public RailwayType() {
+    }
+
+    public RailwayType(String gmlId) {
+        super(gmlId);
+    }
 
 }

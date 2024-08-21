@@ -24,22 +24,22 @@ import org.citygml4j.cityjson.geometry.GeometryTypeName;
 
 public class LandUseType extends AbstractCityObjectType {
 
-	public LandUseType() {
-	}
-	
-	public LandUseType(String gmlId) {
-		super(gmlId);
-	}
+    public LandUseType() {
+    }
 
-	@Override
-	public Attributes newAttributes() {
-		return super.newAttributes(new Attributes());
-	}
+    public LandUseType(String gmlId) {
+        super(gmlId);
+    }
 
-	@Override
-	public boolean isValidGeometryType(GeometryTypeName type) {
-		return type == GeometryTypeName.MULTI_SURFACE
-				|| type == GeometryTypeName.COMPOSITE_SURFACE;
-	}
+    @Override
+    public Attributes newAttributes() {
+        return super.newAttributes(new Attributes());
+    }
+
+    @Override
+    public boolean isValidGeometryType(GeometryTypeName type) {
+        return type == GeometryTypeName.MULTI_SURFACE
+                || type == GeometryTypeName.COMPOSITE_SURFACE;
+    }
 
 }

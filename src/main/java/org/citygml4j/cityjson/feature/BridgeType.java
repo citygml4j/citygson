@@ -22,11 +22,11 @@ package org.citygml4j.cityjson.feature;
 
 public class BridgeType extends AbstractBridgeType {
 
-	public BridgeType() {
-	}
-	
-	public BridgeType(String gmlId) {
-		super(gmlId);
-	}
+    public BridgeType() {
+    }
+
+    public BridgeType(String gmlId) {
+        super(gmlId);
+    }
 
 }

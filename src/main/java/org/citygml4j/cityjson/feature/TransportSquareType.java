@@ -24,17 +24,17 @@ import org.citygml4j.cityjson.geometry.GeometryTypeName;
 
 public class TransportSquareType extends AbstractTransportationComplexType {
 
-	public TransportSquareType() {
-	}
-	
-	public TransportSquareType(String gmlId) {
-		super(gmlId);
-	}
+    public TransportSquareType() {
+    }
 
-	@Override
-	public boolean isValidGeometryType(GeometryTypeName type) {
-		return super.isValidGeometryType(type)
-				|| type == GeometryTypeName.GEOMETRY_INSTANCE;
-	}
+    public TransportSquareType(String gmlId) {
+        super(gmlId);
+    }
+
+    @Override
+    public boolean isValidGeometryType(GeometryTypeName type) {
+        return super.isValidGeometryType(type)
+                || type == GeometryTypeName.GEOMETRY_INSTANCE;
+    }
 
 }

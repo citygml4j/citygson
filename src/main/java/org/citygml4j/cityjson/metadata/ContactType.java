@@ -23,33 +23,33 @@ package org.citygml4j.cityjson.metadata;
 import com.google.gson.annotations.SerializedName;
 
 public enum ContactType {
-	@SerializedName("individual")
-	INDIVIDUAL("individual"),
-	@SerializedName("organization")
-	ORGANIZATION("organization");
+    @SerializedName("individual")
+    INDIVIDUAL("individual"),
+    @SerializedName("organization")
+    ORGANIZATION("organization");
 
-	private final String value;
+    private final String value;
 
-	private ContactType(String value) {
-		this.value = value;
-	}
-	
-	public String getValue() {
-		return value;
-	}
-	
-	@Override
-	public String toString() {
-		return value;
-	}
-	
-	public static ContactType fromValue(String value) {
-		for (ContactType type : ContactType.values()) {
-			if (type.value.equals(value))
-				return type;
-		}
-		
-		return null;
-	}
-	
+    private ContactType(String value) {
+        this.value = value;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    @Override
+    public String toString() {
+        return value;
+    }
+
+    public static ContactType fromValue(String value) {
+        for (ContactType type : ContactType.values()) {
+            if (type.value.equals(value))
+                return type;
+        }
+
+        return null;
+    }
+
 }

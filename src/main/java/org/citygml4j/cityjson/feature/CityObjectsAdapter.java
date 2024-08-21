@@ -32,53 +32,53 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CityObjectsAdapter extends TypeAdapter<Map<String, AbstractCityObjectType>> {
-	private final Gson gson;
+    private final Gson gson;
 
-	public CityObjectsAdapter(Gson gson) {
-		this.gson = gson;
-	}
+    public CityObjectsAdapter(Gson gson) {
+        this.gson = gson;
+    }
 
-	@Override
-	public void write(JsonWriter out, Map<String, AbstractCityObjectType> value) throws IOException {
-		if (value != null) {
-			out.beginObject();
+    @Override
+    public void write(JsonWriter out, Map<String, AbstractCityObjectType> value) throws IOException {
+        if (value != null) {
+            out.beginObject();
 
-			for (Map.Entry<String, AbstractCityObjectType> entry : value.entrySet()) {
-				out.name(entry.getKey());
-				Streams.write(gson.toJsonTree(entry.getValue(), AbstractCityObjectType.class), out);
-			}
+            for (Map.Entry<String, AbstractCityObjectType> entry : value.entrySet()) {
+                out.name(entry.getKey());
+                Streams.write(gson.toJsonTree(entry.getValue(), AbstractCityObjectType.class), out);
+            }
 
-			out.endObject();
-		} else
-			out.nullValue();
-	}
+            out.endObject();
+        } else
+            out.nullValue();
+    }
 
-	@Override
-	public Map<String, AbstractCityObjectType> read(JsonReader in) throws IOException {
-		Map<String, AbstractCityObjectType> cityObjects = null;
+    @Override
+    public Map<String, AbstractCityObjectType> read(JsonReader in) throws IOException {
+        Map<String, AbstractCityObjectType> cityObjects = null;
 
-		if (in.peek() != JsonToken.NULL) {
-			cityObjects = new HashMap<>();
-			in.beginObject();
+        if (in.peek() != JsonToken.NULL) {
+            cityObjects = new HashMap<>();
+            in.beginObject();
 
-			while (in.hasNext()) {
-				String gmlId = in.nextName();
+            while (in.hasNext()) {
+                String gmlId = in.nextName();
 
-				if (in.peek() == JsonToken.NULL) {
-					in.nextNull();
-					continue;
-				}
+                if (in.peek() == JsonToken.NULL) {
+                    in.nextNull();
+                    continue;
+                }
 
-				AbstractCityObjectType cityObject = gson.fromJson(in, AbstractCityObjectType.class);
-				if (cityObject != null) {
-					cityObject.setGmlId(gmlId);
-					cityObjects.put(gmlId, cityObject);
-				}
-			}
+                AbstractCityObjectType cityObject = gson.fromJson(in, AbstractCityObjectType.class);
+                if (cityObject != null) {
+                    cityObject.setGmlId(gmlId);
+                    cityObjects.put(gmlId, cityObject);
+                }
+            }
 
-			in.endObject();
-		}
+            in.endObject();
+        }
 
-		return cityObjects;
-	}
+        return cityObjects;
+    }
 }

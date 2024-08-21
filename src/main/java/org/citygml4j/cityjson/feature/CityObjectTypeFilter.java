@@ -21,5 +21,5 @@
 package org.citygml4j.cityjson.feature;
 
 public interface CityObjectTypeFilter {
-	boolean accept(String type);
+    boolean accept(String type);
 }

@@ -24,43 +24,46 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractSemanticsObject {
-	private List<SemanticsType> surfaces;
+    private List<SemanticsType> surfaces;
 
-	public abstract void addNullValue();
-	public abstract int getNumValues();
-	public abstract List<Integer> flatValues();
-	public abstract void unsetValues();
+    public abstract void addNullValue();
 
-	public boolean isSetSurfaces() {
-		return surfaces != null;
-	}
+    public abstract int getNumValues();
 
-	public void addSurface(SemanticsType surface) {
-		if (surfaces == null)
-			surfaces = new ArrayList<>();
+    public abstract List<Integer> flatValues();
 
-		surfaces.add(surface);
-	}
+    public abstract void unsetValues();
 
-	public List<SemanticsType> getSurfaces() {
-		return surfaces;
-	}
+    public boolean isSetSurfaces() {
+        return surfaces != null;
+    }
 
-	public void setSurfaces(List<SemanticsType> surfaces) {
-		this.surfaces = surfaces;
-	}
-	
-	public void removeSurface(SemanticsType surface) {
-		if (surfaces != null)
-			surfaces.remove(surface);
-	}
+    public void addSurface(SemanticsType surface) {
+        if (surfaces == null)
+            surfaces = new ArrayList<>();
 
-	public void unsetSurfaces() {
-		surfaces = null;
-	}
-	
-	public int getNumSurfaces() {
-		return surfaces != null ? surfaces.size() : 0;
-	}
+        surfaces.add(surface);
+    }
+
+    public List<SemanticsType> getSurfaces() {
+        return surfaces;
+    }
+
+    public void setSurfaces(List<SemanticsType> surfaces) {
+        this.surfaces = surfaces;
+    }
+
+    public void removeSurface(SemanticsType surface) {
+        if (surfaces != null)
+            surfaces.remove(surface);
+    }
+
+    public void unsetSurfaces() {
+        surfaces = null;
+    }
+
+    public int getNumSurfaces() {
+        return surfaces != null ? surfaces.size() : 0;
+    }
 
 }

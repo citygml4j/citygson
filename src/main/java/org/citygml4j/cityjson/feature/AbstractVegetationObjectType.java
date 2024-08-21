@@ -22,11 +22,11 @@ package org.citygml4j.cityjson.feature;
 
 public abstract class AbstractVegetationObjectType extends AbstractCityObjectType {
 
-	public AbstractVegetationObjectType() {
-	}
+    public AbstractVegetationObjectType() {
+    }
 
-	public AbstractVegetationObjectType(String gmlId) {
-		super(gmlId);
-	}
-	
+    public AbstractVegetationObjectType(String gmlId) {
+        super(gmlId);
+    }
+
 }

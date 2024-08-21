@@ -25,40 +25,40 @@ import java.util.List;
 import java.util.Map;
 
 public class MultiLineStringType extends AbstractGeometryObjectType {
-	private final GeometryTypeName type = GeometryTypeName.MULTI_LINE_STRING;
-	private List<List<Integer>> boundaries = new ArrayList<>();
-	
-	@Override
-	public GeometryTypeName getType() {
-		return type;
-	}
-	
-	public void addLineString(List<Integer> lineString) {
-		if (lineString != null && lineString.size() > 0)
-			boundaries.add(lineString);
-	}
+    private final GeometryTypeName type = GeometryTypeName.MULTI_LINE_STRING;
+    private List<List<Integer>> boundaries = new ArrayList<>();
 
-	public List<List<Integer>> getLineStrings() {
-		return boundaries;
-	}
+    @Override
+    public GeometryTypeName getType() {
+        return type;
+    }
 
-	public void setLineStrings(List<List<Integer>> lineStrings) {
-		if (lineStrings != null)
-			boundaries = lineStrings;
-	}
-	
-	public void unsetLineStrings() {
-		boundaries.clear();
-	}
+    public void addLineString(List<Integer> lineString) {
+        if (lineString != null && lineString.size() > 0)
+            boundaries.add(lineString);
+    }
 
-	@Override
-	public void updateIndexes(Map<Integer, Integer> indexMap) {
-		for (List<Integer> lineString : boundaries) {
-			for (int index = 0; index < lineString.size(); index++) {
-				Integer update = indexMap.get(lineString.get(index));
-				if (update != null)
-					lineString.set(index, update);
-			}
-		}
-	}
+    public List<List<Integer>> getLineStrings() {
+        return boundaries;
+    }
+
+    public void setLineStrings(List<List<Integer>> lineStrings) {
+        if (lineStrings != null)
+            boundaries = lineStrings;
+    }
+
+    public void unsetLineStrings() {
+        boundaries.clear();
+    }
+
+    @Override
+    public void updateIndexes(Map<Integer, Integer> indexMap) {
+        for (List<Integer> lineString : boundaries) {
+            for (int index = 0; index < lineString.size(); index++) {
+                Integer update = indexMap.get(lineString.get(index));
+                if (update != null)
+                    lineString.set(index, update);
+            }
+        }
+    }
 }

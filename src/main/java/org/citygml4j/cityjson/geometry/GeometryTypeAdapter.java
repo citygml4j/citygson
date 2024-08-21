@@ -30,37 +30,37 @@ import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
 
 public class GeometryTypeAdapter extends TypeAdapter<AbstractGeometryType> {
-	private final Gson gson;
-	private final TypeAdapterFactory factory;
+    private final Gson gson;
+    private final TypeAdapterFactory factory;
 
-	public GeometryTypeAdapter(Gson gson, TypeAdapterFactory factory) {
-		this.gson = gson;
-		this.factory = factory;
-	}
+    public GeometryTypeAdapter(Gson gson, TypeAdapterFactory factory) {
+        this.gson = gson;
+        this.factory = factory;
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public void write(JsonWriter out, AbstractGeometryType value) throws IOException {
-		if (value != null) {
-			TypeAdapter<AbstractGeometryType> delegate = (TypeAdapter<AbstractGeometryType>) gson.getDelegateAdapter(factory, TypeToken.get(value.getClass()));
-			Streams.write(delegate.toJsonTree(value), out);
-		} else
-			out.nullValue();
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public void write(JsonWriter out, AbstractGeometryType value) throws IOException {
+        if (value != null) {
+            TypeAdapter<AbstractGeometryType> delegate = (TypeAdapter<AbstractGeometryType>) gson.getDelegateAdapter(factory, TypeToken.get(value.getClass()));
+            Streams.write(delegate.toJsonTree(value), out);
+        } else
+            out.nullValue();
+    }
 
-	@Override
-	public AbstractGeometryType read(JsonReader in) throws IOException {
-		if (in.peek() != JsonToken.NULL) {
-			JsonObject object = Streams.parse(in).getAsJsonObject();
-			JsonElement type = object.get("type");
+    @Override
+    public AbstractGeometryType read(JsonReader in) throws IOException {
+        if (in.peek() != JsonToken.NULL) {
+            JsonObject object = Streams.parse(in).getAsJsonObject();
+            JsonElement type = object.get("type");
 
-			if (type != null) {
-				GeometryTypeName name = GeometryTypeName.fromValue(type.getAsString());
-				if (name != null)
-					return gson.getDelegateAdapter(factory, TypeToken.get(name.getTypeClass())).fromJsonTree(object);
-			}
-		}
+            if (type != null) {
+                GeometryTypeName name = GeometryTypeName.fromValue(type.getAsString());
+                if (name != null)
+                    return gson.getDelegateAdapter(factory, TypeToken.get(name.getTypeClass())).fromJsonTree(object);
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 }

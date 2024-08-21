@@ -21,21 +21,21 @@
 package org.citygml4j.cityjson.feature;
 
 public class PlantCoverAttributes extends Attributes {
-	private Double averageHeight;
+    private Double averageHeight;
 
-	public boolean isSetAverageHeight() {
-		return averageHeight != null;
-	}
-	
-	public Double getAverageHeight() {
-		return averageHeight;
-	}
+    public boolean isSetAverageHeight() {
+        return averageHeight != null;
+    }
 
-	public void setAverageHeight(Double averageHeight) {
-		this.averageHeight = averageHeight;
-	}
-	
-	public void unsetAverageHeight() {
-		averageHeight = null;
-	}
+    public Double getAverageHeight() {
+        return averageHeight;
+    }
+
+    public void setAverageHeight(Double averageHeight) {
+        this.averageHeight = averageHeight;
+    }
+
+    public void unsetAverageHeight() {
+        averageHeight = null;
+    }
 }

@@ -24,21 +24,21 @@ import org.citygml4j.cityjson.geometry.GeometryTypeName;
 
 public class BridgeInstallationType extends AbstractCityObjectType {
 
-	public BridgeInstallationType() {
-	}
-	
-	public BridgeInstallationType(String gmlId) {
-		super(gmlId);
-	}
+    public BridgeInstallationType() {
+    }
 
-	@Override
-	public Attributes newAttributes() {
-		return super.newAttributes(new Attributes());
-	}
+    public BridgeInstallationType(String gmlId) {
+        super(gmlId);
+    }
 
-	@Override
-	public boolean isValidGeometryType(GeometryTypeName type) {
-		return true;
-	}
+    @Override
+    public Attributes newAttributes() {
+        return super.newAttributes(new Attributes());
+    }
+
+    @Override
+    public boolean isValidGeometryType(GeometryTypeName type) {
+        return true;
+    }
 
 }

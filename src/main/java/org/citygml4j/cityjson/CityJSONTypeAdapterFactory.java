@@ -35,14 +35,21 @@ import org.citygml4j.cityjson.geometry.*;
 import java.util.Map;
 
 public class CityJSONTypeAdapterFactory implements TypeAdapterFactory {
-    private TypeToken<?> cityObjects = new TypeToken<Map<String, AbstractCityObjectType>>() {};
+    private TypeToken<?> cityObjects = new TypeToken<Map<String, AbstractCityObjectType>>() {
+    };
     private TypeToken<?> semantics = TypeToken.get(SemanticsType.class);
-    private TypeToken<?> solidTexture = new TypeToken<Map<String, SolidTextureObject>>() {};
-    private TypeToken<?> surfaceCollectionTexture = new TypeToken<Map<String, SurfaceCollectionTextureObject>>() {};
-    private TypeToken<?> solidCollectionTexture = new TypeToken<Map<String, SolidCollectionTextureObject>>() {};
-    private TypeToken<?> solidMaterial = new TypeToken<Map<String, SolidMaterialObject>>() {};
-    private TypeToken<?> surfaceCollectionMaterial = new TypeToken<Map<String, SurfaceCollectionMaterialObject>>() {};
-    private TypeToken<?> solidCollectionMaterial = new TypeToken<Map<String, SolidCollectionMaterialObject>>() {};
+    private TypeToken<?> solidTexture = new TypeToken<Map<String, SolidTextureObject>>() {
+    };
+    private TypeToken<?> surfaceCollectionTexture = new TypeToken<Map<String, SurfaceCollectionTextureObject>>() {
+    };
+    private TypeToken<?> solidCollectionTexture = new TypeToken<Map<String, SolidCollectionTextureObject>>() {
+    };
+    private TypeToken<?> solidMaterial = new TypeToken<Map<String, SolidMaterialObject>>() {
+    };
+    private TypeToken<?> surfaceCollectionMaterial = new TypeToken<Map<String, SurfaceCollectionMaterialObject>>() {
+    };
+    private TypeToken<?> solidCollectionMaterial = new TypeToken<Map<String, SolidCollectionMaterialObject>>() {
+    };
 
     private CityObjectTypeFilter typeFilter;
     private boolean processUnknownExtensions;

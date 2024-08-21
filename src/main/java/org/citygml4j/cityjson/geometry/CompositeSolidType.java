@@ -21,9 +21,9 @@
 package org.citygml4j.cityjson.geometry;
 
 public class CompositeSolidType extends AbstractSolidCollectionType {
-	 
-	public CompositeSolidType() {
-		super(GeometryTypeName.COMPOSITE_SOLID);
-	}
-		
+
+    public CompositeSolidType() {
+        super(GeometryTypeName.COMPOSITE_SOLID);
+    }
+
 }

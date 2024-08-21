@@ -23,63 +23,63 @@ package org.citygml4j.cityjson.metadata;
 import com.google.gson.annotations.SerializedName;
 
 public enum LegalConstraintsType {
-	@SerializedName("copyright")
-	COPYRIGHT("copyright"),
-	@SerializedName("patent")
-	PATENT("patent"),
-	@SerializedName("patentPending")
-	PATENT_PENDING("patentPending"),
-	@SerializedName("trademark")
-	TRADEMARK("trademark"),
-	@SerializedName("licence")
-	LICENSE("licence"),
-	@SerializedName("intellectualPropertyRights")
-	INTELLECTUAL_PROPERTY_RIGHTS("intellectualPropertyRights"),
-	@SerializedName("restricted")
-	RESTRICTED("restricted"),
-	@SerializedName("otherRestrictions")
-	OTHER_RESTRICTIONS("otherRestrictions"),
-	@SerializedName("unrestricted")
-	UNRESTRICTED("unrestricted"),
-	@SerializedName("licenseUnrestricted")
-	LICENSE_UNRESTRICTED("licenseUnrestricted"),
-	@SerializedName("licenseEndUser")
-	LICENSE_END_USER("licenseEndUser"),
-	@SerializedName("licenseDistributor")
-	LICENSE_DISTRIBUTOR("licenseDistributor"),
-	@SerializedName("private")
-	PRIVATE("private"),
-	@SerializedName("statutory")
-	STATUTORY("statutory"),
-	@SerializedName("confidential")
-	CONFIDENTIAL("confidential"),
-	@SerializedName("sensitiveButUnclassified")
-	SENSITIVE_BUT_UNCLASSIFIED("sensitiveButUnclassified"),
-	@SerializedName("in-confidence")
-	IN_CONFIDENCE("in-confidence");
+    @SerializedName("copyright")
+    COPYRIGHT("copyright"),
+    @SerializedName("patent")
+    PATENT("patent"),
+    @SerializedName("patentPending")
+    PATENT_PENDING("patentPending"),
+    @SerializedName("trademark")
+    TRADEMARK("trademark"),
+    @SerializedName("licence")
+    LICENSE("licence"),
+    @SerializedName("intellectualPropertyRights")
+    INTELLECTUAL_PROPERTY_RIGHTS("intellectualPropertyRights"),
+    @SerializedName("restricted")
+    RESTRICTED("restricted"),
+    @SerializedName("otherRestrictions")
+    OTHER_RESTRICTIONS("otherRestrictions"),
+    @SerializedName("unrestricted")
+    UNRESTRICTED("unrestricted"),
+    @SerializedName("licenseUnrestricted")
+    LICENSE_UNRESTRICTED("licenseUnrestricted"),
+    @SerializedName("licenseEndUser")
+    LICENSE_END_USER("licenseEndUser"),
+    @SerializedName("licenseDistributor")
+    LICENSE_DISTRIBUTOR("licenseDistributor"),
+    @SerializedName("private")
+    PRIVATE("private"),
+    @SerializedName("statutory")
+    STATUTORY("statutory"),
+    @SerializedName("confidential")
+    CONFIDENTIAL("confidential"),
+    @SerializedName("sensitiveButUnclassified")
+    SENSITIVE_BUT_UNCLASSIFIED("sensitiveButUnclassified"),
+    @SerializedName("in-confidence")
+    IN_CONFIDENCE("in-confidence");
 
-	private final String value;
+    private final String value;
 
-	private LegalConstraintsType(String value) {
-		this.value = value;
-	}
-	
-	public String getValue() {
-		return value;
-	}
-	
-	@Override
-	public String toString() {
-		return value;
-	}
-	
-	public static LegalConstraintsType fromValue(String value) {
-		for (LegalConstraintsType type : LegalConstraintsType.values()) {
-			if (type.value.equals(value))
-				return type;
-		}
-		
-		return null;
-	}
-	
+    private LegalConstraintsType(String value) {
+        this.value = value;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    @Override
+    public String toString() {
+        return value;
+    }
+
+    public static LegalConstraintsType fromValue(String value) {
+        for (LegalConstraintsType type : LegalConstraintsType.values()) {
+            if (type.value.equals(value))
+                return type;
+        }
+
+        return null;
+    }
+
 }

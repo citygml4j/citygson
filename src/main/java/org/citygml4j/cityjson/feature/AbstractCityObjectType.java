@@ -28,224 +28,225 @@ import org.citygml4j.cityjson.geometry.GeometryTypeName;
 import java.util.*;
 
 public abstract class AbstractCityObjectType implements ExtensibleType, Extension {
-	String type;
-	Attributes attributes;
-	private List<Double> geographicalExtent;
-	private Set<String> children;
-	private Set<String> parents;
-	private List<AbstractGeometryType> geometry = new ArrayList<>();
+    String type;
+    Attributes attributes;
+    private List<Double> geographicalExtent;
+    private Set<String> children;
+    private Set<String> parents;
+    private List<AbstractGeometryType> geometry = new ArrayList<>();
 
-	private transient String gmlId;
-	private transient Map<String, Object> extensionProperties;
-	private transient HashMap<String, Object> localProperties;
+    private transient String gmlId;
+    private transient Map<String, Object> extensionProperties;
+    private transient HashMap<String, Object> localProperties;
 
-	public AbstractCityObjectType() {
-	}
+    public AbstractCityObjectType() {
+    }
 
-	public AbstractCityObjectType(String gmlId) {
-		setGmlId(gmlId);
-	}
+    public AbstractCityObjectType(String gmlId) {
+        setGmlId(gmlId);
+    }
 
-	public abstract Attributes newAttributes();
-	public abstract boolean isValidGeometryType(GeometryTypeName type);
+    public abstract Attributes newAttributes();
 
-	protected final <T extends Attributes> T newAttributes(T attributes) {
-		this.attributes = attributes != null ? attributes : new Attributes();
-		return attributes;
-	}
+    public abstract boolean isValidGeometryType(GeometryTypeName type);
 
-	public Attributes getAttributes() {
-		return attributes != null ? attributes : newAttributes();
-	}
+    protected final <T extends Attributes> T newAttributes(T attributes) {
+        this.attributes = attributes != null ? attributes : new Attributes();
+        return attributes;
+    }
 
-	public final boolean isSetAttributes() {
-		return attributes != null;
-	}
+    public Attributes getAttributes() {
+        return attributes != null ? attributes : newAttributes();
+    }
 
-	public final void unsetAttributes() {
-		attributes = null;
-	}
+    public final boolean isSetAttributes() {
+        return attributes != null;
+    }
 
-	public boolean isSetGmlId() {
-		return gmlId != null;
-	}
+    public final void unsetAttributes() {
+        attributes = null;
+    }
 
-	public String getGmlId() {
-		return gmlId;
-	}
+    public boolean isSetGmlId() {
+        return gmlId != null;
+    }
 
-	public void setGmlId(String gmlId) {
-		this.gmlId = gmlId != null && !gmlId.isEmpty() ? gmlId : "UUID_" + UUID.randomUUID().toString();
-	}
+    public String getGmlId() {
+        return gmlId;
+    }
 
-	public final String getType() {
-		return type;
-	}
+    public void setGmlId(String gmlId) {
+        this.gmlId = gmlId != null && !gmlId.isEmpty() ? gmlId : "UUID_" + UUID.randomUUID().toString();
+    }
 
-	public boolean isSetGeographicalExtent() {
-		return geographicalExtent != null && geographicalExtent.size() >= 6;
-	}
+    public final String getType() {
+        return type;
+    }
 
-	public List<Double> getGeographicalExtent() {
-		return isSetGeographicalExtent() ? geographicalExtent.subList(0, 6) : null;
-	}
+    public boolean isSetGeographicalExtent() {
+        return geographicalExtent != null && geographicalExtent.size() >= 6;
+    }
 
-	public void setGeographicalExtent(List<Double> geographicalExtent) {
-		if (geographicalExtent == null)
-			this.geographicalExtent = null;
-		else if (geographicalExtent.size() >= 6)
-			this.geographicalExtent = geographicalExtent.subList(0, 6);
-	}
+    public List<Double> getGeographicalExtent() {
+        return isSetGeographicalExtent() ? geographicalExtent.subList(0, 6) : null;
+    }
 
-	public void unsetGeographicalExtent() {
-		geographicalExtent = null;
-	}
+    public void setGeographicalExtent(List<Double> geographicalExtent) {
+        if (geographicalExtent == null)
+            this.geographicalExtent = null;
+        else if (geographicalExtent.size() >= 6)
+            this.geographicalExtent = geographicalExtent.subList(0, 6);
+    }
 
-	public boolean isSetChildren() {
-		return children != null && !children.isEmpty();
-	}
+    public void unsetGeographicalExtent() {
+        geographicalExtent = null;
+    }
 
-	public void addChild(String child) {
-		if (children == null)
-			children = new HashSet<>();
+    public boolean isSetChildren() {
+        return children != null && !children.isEmpty();
+    }
 
-		children.add(child);
-	}
+    public void addChild(String child) {
+        if (children == null)
+            children = new HashSet<>();
 
-	@Override
-	public void addChild(AbstractCityObjectType child) {
-		addChild(child.gmlId);
-		child.addParent(gmlId);
-	}
+        children.add(child);
+    }
 
-	public Set<String> getChildren() {
-		return children;
-	}
+    @Override
+    public void addChild(AbstractCityObjectType child) {
+        addChild(child.gmlId);
+        child.addParent(gmlId);
+    }
 
-	public void setChildren(Set<String> children) {
-		this.children = children;
-	}
+    public Set<String> getChildren() {
+        return children;
+    }
 
-	public void unsetChildren() {
-		children = null;
-	}
+    public void setChildren(Set<String> children) {
+        this.children = children;
+    }
 
-	public boolean isSetParents() {
-		return parents != null && !parents.isEmpty();
-	}
+    public void unsetChildren() {
+        children = null;
+    }
 
-	public void addParent(String parent) {
-		if (parents == null)
-			parents = new HashSet<>();
+    public boolean isSetParents() {
+        return parents != null && !parents.isEmpty();
+    }
 
-		parents.add(parent);
-	}
+    public void addParent(String parent) {
+        if (parents == null)
+            parents = new HashSet<>();
 
-	public void addParent(AbstractCityObjectType parent) {
-		addParent(parent.gmlId);
-		parent.addChild(gmlId);
-	}
+        parents.add(parent);
+    }
 
-	public Set<String> getParents() {
-		return parents;
-	}
+    public void addParent(AbstractCityObjectType parent) {
+        addParent(parent.gmlId);
+        parent.addChild(gmlId);
+    }
 
-	public void setParents(Set<String> parents) {
-		this.parents = parents;
-	}
+    public Set<String> getParents() {
+        return parents;
+    }
 
-	public void unsetParents() {
-		parents = null;
-	}
+    public void setParents(Set<String> parents) {
+        this.parents = parents;
+    }
 
-	public boolean isSetGeometry() {
-		return !geometry.isEmpty();
-	}
-		
-	public void addGeometry(AbstractGeometryType geometry) {
-		if (geometry != null && isValidGeometryType(geometry.getType()))
-			this.geometry.add(geometry);
-	}
+    public void unsetParents() {
+        parents = null;
+    }
 
-	public List<AbstractGeometryType> getGeometry() {
-		return geometry;
-	}
+    public boolean isSetGeometry() {
+        return !geometry.isEmpty();
+    }
 
-	public void setGeometry(List<AbstractGeometryType> geometry) {
-		if (geometry != null) {
-			this.geometry = new ArrayList<>(geometry);
-			this.geometry.removeIf(g -> !isValidGeometryType(g.getType()));
-		}
-	}
-	
-	public void removeGeometry(AbstractGeometryType geometry) {
-		this.geometry.remove(geometry);
-	}
-	
-	public void unsetGeometry() {
-		geometry.clear();
-	}
+    public void addGeometry(AbstractGeometryType geometry) {
+        if (geometry != null && isValidGeometryType(geometry.getType()))
+            this.geometry.add(geometry);
+    }
 
-	public boolean isSetExtensionProperties() {
-		return extensionProperties != null;
-	}
+    public List<AbstractGeometryType> getGeometry() {
+        return geometry;
+    }
 
-	public void addExtensionProperty(String name, Object value) {
-		if (extensionProperties == null)
-			extensionProperties = new HashMap<>();
+    public void setGeometry(List<AbstractGeometryType> geometry) {
+        if (geometry != null) {
+            this.geometry = new ArrayList<>(geometry);
+            this.geometry.removeIf(g -> !isValidGeometryType(g.getType()));
+        }
+    }
 
-		extensionProperties.put(name, value);
-	}
+    public void removeGeometry(AbstractGeometryType geometry) {
+        this.geometry.remove(geometry);
+    }
 
-	public Map<String, Object> getExtensionProperties() {
-		return extensionProperties;
-	}
+    public void unsetGeometry() {
+        geometry.clear();
+    }
 
-	public void setExtensionProperties(Map<String, Object> extensionProperties) {
-		this.extensionProperties = extensionProperties;
-	}
+    public boolean isSetExtensionProperties() {
+        return extensionProperties != null;
+    }
 
-	public void removeExtensionProperty(String name) {
-		if (extensionProperties != null)
-			extensionProperties.remove(name);
-	}
+    public void addExtensionProperty(String name, Object value) {
+        if (extensionProperties == null)
+            extensionProperties = new HashMap<>();
 
-	public void unsetExtensionProperties() {
-		extensionProperties = null;
-	}
+        extensionProperties.put(name, value);
+    }
 
-	public Object getLocalProperty(String name) {
-		if (localProperties != null)
-			return localProperties.get(name);
+    public Map<String, Object> getExtensionProperties() {
+        return extensionProperties;
+    }
 
-		return null;
-	}
+    public void setExtensionProperties(Map<String, Object> extensionProperties) {
+        this.extensionProperties = extensionProperties;
+    }
 
-	public void setLocalProperty(String name, Object value) {
-		if (localProperties == null)
-			localProperties = new HashMap<String, Object>();
+    public void removeExtensionProperty(String name) {
+        if (extensionProperties != null)
+            extensionProperties.remove(name);
+    }
 
-		localProperties.put(name, value);
-	}
+    public void unsetExtensionProperties() {
+        extensionProperties = null;
+    }
 
-	public boolean hasLocalProperty(String name) {
-		return localProperties != null && localProperties.containsKey(name);
-	}
+    public Object getLocalProperty(String name) {
+        if (localProperties != null)
+            return localProperties.get(name);
 
-	public Object unsetLocalProperty(String name) {
-		if (localProperties != null)
-			return localProperties.remove(name);
+        return null;
+    }
 
-		return null;
-	}
+    public void setLocalProperty(String name, Object value) {
+        if (localProperties == null)
+            localProperties = new HashMap<String, Object>();
 
-	Class<? extends Attributes> getAttributesClass() {
-		Attributes tmp = attributes;
-		newAttributes();
-		Class<? extends Attributes> attributesClass = attributes != null ? attributes.getClass() : Attributes.class;
-		attributes = tmp;
+        localProperties.put(name, value);
+    }
 
-		return attributesClass;
-	}
+    public boolean hasLocalProperty(String name) {
+        return localProperties != null && localProperties.containsKey(name);
+    }
+
+    public Object unsetLocalProperty(String name) {
+        if (localProperties != null)
+            return localProperties.remove(name);
+
+        return null;
+    }
+
+    Class<? extends Attributes> getAttributesClass() {
+        Attributes tmp = attributes;
+        newAttributes();
+        Class<? extends Attributes> attributesClass = attributes != null ? attributes.getClass() : Attributes.class;
+        attributes = tmp;
+
+        return attributesClass;
+    }
 
 }

@@ -24,27 +24,27 @@ import org.citygml4j.cityjson.geometry.GeometryTypeName;
 
 public abstract class AbstractTunnelType extends AbstractCityObjectType {
 
-	public AbstractTunnelType() {
-	}
-	
-	public AbstractTunnelType(String gmlId) {
-		super(gmlId);
-	}
-	
-	@Override
-	public TunnelAttributes newAttributes() {
-		return super.newAttributes(new TunnelAttributes());
-	}
+    public AbstractTunnelType() {
+    }
 
-	@Override
-	public TunnelAttributes getAttributes() {
-		return (TunnelAttributes) super.getAttributes();
-	}
+    public AbstractTunnelType(String gmlId) {
+        super(gmlId);
+    }
 
-	@Override
-	public boolean isValidGeometryType(GeometryTypeName type) {
-		return type == GeometryTypeName.MULTI_SURFACE
-				|| type == GeometryTypeName.SOLID
-				|| type == GeometryTypeName.COMPOSITE_SOLID;
-	}
+    @Override
+    public TunnelAttributes newAttributes() {
+        return super.newAttributes(new TunnelAttributes());
+    }
+
+    @Override
+    public TunnelAttributes getAttributes() {
+        return (TunnelAttributes) super.getAttributes();
+    }
+
+    @Override
+    public boolean isValidGeometryType(GeometryTypeName type) {
+        return type == GeometryTypeName.MULTI_SURFACE
+                || type == GeometryTypeName.SOLID
+                || type == GeometryTypeName.COMPOSITE_SOLID;
+    }
 }

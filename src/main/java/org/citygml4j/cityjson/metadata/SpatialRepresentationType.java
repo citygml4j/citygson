@@ -23,41 +23,41 @@ package org.citygml4j.cityjson.metadata;
 import com.google.gson.annotations.SerializedName;
 
 public enum SpatialRepresentationType {
-	@SerializedName("vector")
-	VECTOR("vector"),
-	@SerializedName("grid")
-	GRID("grid"),
-	@SerializedName("TIN")
-	TIN("TIN"),
-	@SerializedName("textTable")
-	TEXT_TABLE("textTable"),
-	@SerializedName("stereoModel")
-	STEREO_MODEL("stereoModel"),
-	@SerializedName("video")
-	VIDEO("video");
+    @SerializedName("vector")
+    VECTOR("vector"),
+    @SerializedName("grid")
+    GRID("grid"),
+    @SerializedName("TIN")
+    TIN("TIN"),
+    @SerializedName("textTable")
+    TEXT_TABLE("textTable"),
+    @SerializedName("stereoModel")
+    STEREO_MODEL("stereoModel"),
+    @SerializedName("video")
+    VIDEO("video");
 
-	private final String value;
+    private final String value;
 
-	private SpatialRepresentationType(String value) {
-		this.value = value;
-	}
-	
-	public String getValue() {
-		return value;
-	}
-	
-	@Override
-	public String toString() {
-		return value;
-	}
-	
-	public static SpatialRepresentationType fromValue(String value) {
-		for (SpatialRepresentationType type : SpatialRepresentationType.values()) {
-			if (type.value.equals(value))
-				return type;
-		}
-		
-		return null;
-	}
-	
+    private SpatialRepresentationType(String value) {
+        this.value = value;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    @Override
+    public String toString() {
+        return value;
+    }
+
+    public static SpatialRepresentationType fromValue(String value) {
+        for (SpatialRepresentationType type : SpatialRepresentationType.values()) {
+            if (type.value.equals(value))
+                return type;
+        }
+
+        return null;
+    }
+
 }

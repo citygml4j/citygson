@@ -30,171 +30,171 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Attributes {
-	private String description;
-	private String name;
-	@JsonAdapter(DateAdapter.class)
-	private LocalDate creationDate;
-	@JsonAdapter(DateAdapter.class)
-	private LocalDate terminationDate;
-	@SerializedName("class")
-	private String clazz;
-	private String function;
-	private String usage;
-	private transient Map<String, Object> extensionAttributes;
+    private String description;
+    private String name;
+    @JsonAdapter(DateAdapter.class)
+    private LocalDate creationDate;
+    @JsonAdapter(DateAdapter.class)
+    private LocalDate terminationDate;
+    @SerializedName("class")
+    private String clazz;
+    private String function;
+    private String usage;
+    private transient Map<String, Object> extensionAttributes;
 
-	public boolean isSetDescription() {
-		return description != null;
-	}
+    public boolean isSetDescription() {
+        return description != null;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public void unsetDescription() {
-		description = null;
-	}
+    public void unsetDescription() {
+        description = null;
+    }
 
-	public boolean isSetName() {
-		return name != null;
-	}
+    public boolean isSetName() {
+        return name != null;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void unsetName() {
-		name = null;
-	}
+    public void unsetName() {
+        name = null;
+    }
 
-	public boolean isSetCreationDate() {
-		return creationDate != null;
-	}
+    public boolean isSetCreationDate() {
+        return creationDate != null;
+    }
 
-	public LocalDate getCreationDate() {
-		return creationDate;
-	}
+    public LocalDate getCreationDate() {
+        return creationDate;
+    }
 
-	public void setCreationDate(ZonedDateTime creationDate) {
-		this.creationDate = creationDate.toLocalDate();
-	}
+    public void setCreationDate(ZonedDateTime creationDate) {
+        this.creationDate = creationDate.toLocalDate();
+    }
 
-	public void setCreationDate(LocalDateTime creationDate) {
-		this.creationDate = creationDate.toLocalDate();
-	}
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate.toLocalDate();
+    }
 
-	public void setCreationDate(LocalDate creationDate) {
-		this.creationDate = creationDate;
-	}
-	
-	public void unsetCreationDate() {
-		creationDate = null;
-	}
+    public void setCreationDate(LocalDate creationDate) {
+        this.creationDate = creationDate;
+    }
 
-	public boolean isSetTerminationDate() {
-		return terminationDate != null;
-	}
+    public void unsetCreationDate() {
+        creationDate = null;
+    }
 
-	public LocalDate getTerminationDate() {
-		return terminationDate;
-	}
+    public boolean isSetTerminationDate() {
+        return terminationDate != null;
+    }
 
-	public void setTerminationDate(ZonedDateTime terminationDate) {
-		this.terminationDate = terminationDate.toLocalDate();
-	}
+    public LocalDate getTerminationDate() {
+        return terminationDate;
+    }
 
-	public void setTerminationDate(LocalDateTime terminationDate) {
-		this.terminationDate = terminationDate.toLocalDate();
-	}
+    public void setTerminationDate(ZonedDateTime terminationDate) {
+        this.terminationDate = terminationDate.toLocalDate();
+    }
 
-	public void setTerminationDate(LocalDate terminationDate) {
-		this.terminationDate = terminationDate;
-	}
+    public void setTerminationDate(LocalDateTime terminationDate) {
+        this.terminationDate = terminationDate.toLocalDate();
+    }
 
-	public void unsetTerminationDate() {
-		terminationDate = null;
-	}
+    public void setTerminationDate(LocalDate terminationDate) {
+        this.terminationDate = terminationDate;
+    }
 
-	public boolean isSetClazz() {
-		return clazz != null;
-	}
+    public void unsetTerminationDate() {
+        terminationDate = null;
+    }
 
-	public String getClazz() {
-		return clazz;
-	}
+    public boolean isSetClazz() {
+        return clazz != null;
+    }
 
-	public void setClazz(String clazz) {
-		this.clazz = clazz;
-	}
+    public String getClazz() {
+        return clazz;
+    }
 
-	public void unsetClazz() {
-		clazz = null;
-	}
-	
-	public boolean isSetFunction() {
-		return function != null;
-	}
+    public void setClazz(String clazz) {
+        this.clazz = clazz;
+    }
 
-	public String getFunction() {
-		return function;
-	}
+    public void unsetClazz() {
+        clazz = null;
+    }
 
-	public void setFunction(String function) {
-		this.function = function;
-	}
-	
-	public void unsetFunction() {
-		function = null;
-	}
+    public boolean isSetFunction() {
+        return function != null;
+    }
 
-	public boolean isSetUsage() {
-		return usage != null;
-	}
+    public String getFunction() {
+        return function;
+    }
 
-	public String getUsage() {
-		return usage;
-	}
+    public void setFunction(String function) {
+        this.function = function;
+    }
 
-	public void setUsage(String usage) {
-		this.usage = usage;
-	}
-	
-	public void unsetUsage() {
-		usage = null;
-	}
+    public void unsetFunction() {
+        function = null;
+    }
 
-	public boolean isSetExtensionAttributes() {
-		return extensionAttributes != null;
-	}
+    public boolean isSetUsage() {
+        return usage != null;
+    }
 
-	public void addExtensionAttribute(String name, Object value) {
-		if (extensionAttributes == null)
-			extensionAttributes = new HashMap<>();
+    public String getUsage() {
+        return usage;
+    }
 
-		extensionAttributes.put(name, value);
-	}
+    public void setUsage(String usage) {
+        this.usage = usage;
+    }
 
-	public Map<String, Object> getExtensionAttributes() {
-		return extensionAttributes;
-	}
+    public void unsetUsage() {
+        usage = null;
+    }
 
-	public void setExtensionAttributes(Map<String, Object> extensionAttributes) {
-		this.extensionAttributes = extensionAttributes;
-	}
+    public boolean isSetExtensionAttributes() {
+        return extensionAttributes != null;
+    }
 
-	public void removeExtensionAttribute(String name) {
-		if (extensionAttributes != null)
-			extensionAttributes.remove(name);
-	}
+    public void addExtensionAttribute(String name, Object value) {
+        if (extensionAttributes == null)
+            extensionAttributes = new HashMap<>();
 
-	public void unsetExtensionAttributes() {
-		extensionAttributes = null;
-	}
+        extensionAttributes.put(name, value);
+    }
+
+    public Map<String, Object> getExtensionAttributes() {
+        return extensionAttributes;
+    }
+
+    public void setExtensionAttributes(Map<String, Object> extensionAttributes) {
+        this.extensionAttributes = extensionAttributes;
+    }
+
+    public void removeExtensionAttribute(String name) {
+        if (extensionAttributes != null)
+            extensionAttributes.remove(name);
+    }
+
+    public void unsetExtensionAttributes() {
+        extensionAttributes = null;
+    }
 }

@@ -23,33 +23,33 @@ package org.citygml4j.cityjson.metadata;
 import com.google.gson.annotations.SerializedName;
 
 public enum PresenceType {
-	@SerializedName("present")
-	PRESENT("present"),
-	@SerializedName("absent")
-	ABSENT("absent");
+    @SerializedName("present")
+    PRESENT("present"),
+    @SerializedName("absent")
+    ABSENT("absent");
 
-	private final String value;
+    private final String value;
 
-	private PresenceType(String value) {
-		this.value = value;
-	}
-	
-	public String getValue() {
-		return value;
-	}
-	
-	@Override
-	public String toString() {
-		return value;
-	}
-	
-	public static PresenceType fromValue(String value) {
-		for (PresenceType type : PresenceType.values()) {
-			if (type.value.equals(value))
-				return type;
-		}
-		
-		return null;
-	}
-	
+    private PresenceType(String value) {
+        this.value = value;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    @Override
+    public String toString() {
+        return value;
+    }
+
+    public static PresenceType fromValue(String value) {
+        for (PresenceType type : PresenceType.values()) {
+            if (type.value.equals(value))
+                return type;
+        }
+
+        return null;
+    }
+
 }

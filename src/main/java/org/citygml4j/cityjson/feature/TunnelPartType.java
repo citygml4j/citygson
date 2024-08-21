@@ -22,11 +22,11 @@ package org.citygml4j.cityjson.feature;
 
 public class TunnelPartType extends AbstractTunnelType {
 
-	public TunnelPartType() {
-	}
-	
-	public TunnelPartType(String gmlId) {
-		super(gmlId);
-	}
+    public TunnelPartType() {
+    }
+
+    public TunnelPartType(String gmlId) {
+        super(gmlId);
+    }
 
 }

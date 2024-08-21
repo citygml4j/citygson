@@ -23,75 +23,75 @@ package org.citygml4j.cityjson.metadata;
 import com.google.gson.annotations.SerializedName;
 
 public enum DatasetTopicCategoryType {
-	@SerializedName("farming")
-	FARMING("farming"),
-	@SerializedName("bioata")
-	BIOATA("bioata"),
-	@SerializedName("boundaries")
-	BOUNDARIES("boundaries"),
-	@SerializedName("climatology")
-	CLIMATOLOGY("climatology"),
-	@SerializedName("meteorology")
-	METEOROLOGY("meteorology"),
-	@SerializedName("atmosphere")
-	ATMOSPHERE("atmosphere"),
-	@SerializedName("economy")
-	ECONOMY("economy"),
-	@SerializedName("elevation")
-	ELEVATION("elevation"),
-	@SerializedName("environment")
-	ENVIRONMENT("environment"),
-	@SerializedName("geoscientificInformation")
-	GEOSCIENTIFIC_INFORMATION("geoscientificInformation"),
-	@SerializedName("health")
-	HEALTH("health"),
-	@SerializedName("imageryBaseMapsEarthCover")
-	IMAGERY_BASED_MAPS_EARTH_COVER("imageryBaseMapsEarthCover"),
-	@SerializedName("intelligenceMilitary")
-	INTELLIGENCE_MILITARY("intelligenceMilitary"),
-	@SerializedName("inlandWaters")
-	INLAND_WATERS("inlandWaters"),
-	@SerializedName("location")
-	LOCATION("location"),
-	@SerializedName("oceans")
-	OCEANS("oceans"),
-	@SerializedName("planningCadastre")
-	PLANNING_CADASTRE("planningCadastre"),
-	@SerializedName("society")
-	SOCIETY("society"),
-	@SerializedName("structure")
-	STRCTURE("structure"),
-	@SerializedName("transportation")
-	TRANSPORTATION("transportation"),
-	@SerializedName("utilitiesCommunication")
-	UTILITIES_COMMUNICATION("utilitiesCommunication"),
-	@SerializedName("extraTerrestrial")
-	EXTRA_TERRESTRIAL("extraTerrestrial"),
-	@SerializedName("disaster")
-	DISASTER("disaster");
+    @SerializedName("farming")
+    FARMING("farming"),
+    @SerializedName("bioata")
+    BIOATA("bioata"),
+    @SerializedName("boundaries")
+    BOUNDARIES("boundaries"),
+    @SerializedName("climatology")
+    CLIMATOLOGY("climatology"),
+    @SerializedName("meteorology")
+    METEOROLOGY("meteorology"),
+    @SerializedName("atmosphere")
+    ATMOSPHERE("atmosphere"),
+    @SerializedName("economy")
+    ECONOMY("economy"),
+    @SerializedName("elevation")
+    ELEVATION("elevation"),
+    @SerializedName("environment")
+    ENVIRONMENT("environment"),
+    @SerializedName("geoscientificInformation")
+    GEOSCIENTIFIC_INFORMATION("geoscientificInformation"),
+    @SerializedName("health")
+    HEALTH("health"),
+    @SerializedName("imageryBaseMapsEarthCover")
+    IMAGERY_BASED_MAPS_EARTH_COVER("imageryBaseMapsEarthCover"),
+    @SerializedName("intelligenceMilitary")
+    INTELLIGENCE_MILITARY("intelligenceMilitary"),
+    @SerializedName("inlandWaters")
+    INLAND_WATERS("inlandWaters"),
+    @SerializedName("location")
+    LOCATION("location"),
+    @SerializedName("oceans")
+    OCEANS("oceans"),
+    @SerializedName("planningCadastre")
+    PLANNING_CADASTRE("planningCadastre"),
+    @SerializedName("society")
+    SOCIETY("society"),
+    @SerializedName("structure")
+    STRCTURE("structure"),
+    @SerializedName("transportation")
+    TRANSPORTATION("transportation"),
+    @SerializedName("utilitiesCommunication")
+    UTILITIES_COMMUNICATION("utilitiesCommunication"),
+    @SerializedName("extraTerrestrial")
+    EXTRA_TERRESTRIAL("extraTerrestrial"),
+    @SerializedName("disaster")
+    DISASTER("disaster");
 
-	private final String value;
+    private final String value;
 
-	private DatasetTopicCategoryType(String value) {
-		this.value = value;
-	}
-	
-	public String getValue() {
-		return value;
-	}
-	
-	@Override
-	public String toString() {
-		return value;
-	}
-	
-	public static DatasetTopicCategoryType fromValue(String value) {
-		for (DatasetTopicCategoryType type : DatasetTopicCategoryType.values()) {
-			if (type.value.equals(value))
-				return type;
-		}
-		
-		return null;
-	}
-	
+    private DatasetTopicCategoryType(String value) {
+        this.value = value;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    @Override
+    public String toString() {
+        return value;
+    }
+
+    public static DatasetTopicCategoryType fromValue(String value) {
+        for (DatasetTopicCategoryType type : DatasetTopicCategoryType.values()) {
+            if (type.value.equals(value))
+                return type;
+        }
+
+        return null;
+    }
+
 }
