@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+### 1.1.6 - 2024-08-21
+
+##### Changes
+* Extension properties are now also supported for `SemanticsType` in addition to `AbstractCityObjectType`.
+* Updated Gson to 2.11.0.
+
 ### 1.1.5 - 2022-06-14
 
 ##### Changes

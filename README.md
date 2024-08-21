@@ -16,9 +16,9 @@ See the `LICENSE` file for more details.
 
 Latest release
 --------------
-The latest stable release of citygson is 1.1.5.
+The latest stable release of citygson is 1.1.6.
 
-Download the citygson 1.1.5 release binaries [here](https://github.com/citygml4j/citygson/releases/download/v1.1.5/citygson-1.1.5.zip).
+Download the citygson 1.1.6 release binaries [here](https://github.com/citygml4j/citygson/releases/download/v1.1.6/citygson-1.1.5.zip).
 Previous releases are available from the [releases section](https://github.com/citygml4j/citygson/releases).
 
 Contributing
@@ -52,7 +52,7 @@ You may need to adapt the citygson version number.
 <dependency>
   <groupId>org.citygml4j</groupId>
   <artifactId>citygson</artifactId>
-  <version>1.1.5</version>
+  <version>1.1.6</version>
 </dependency>
 ```
 
@@ -64,14 +64,14 @@ repositories {
 }
 
 dependencies {
-  compile 'org.citygml4j:citygson:1.1.5'
+  compile 'org.citygml4j:citygson:1.1.6'
 }
 ```
 
 More information
 ----------------
 CityJSON is a data format for encoding a subset of the [OGC CityGML](http://www.opengeospatial.org/standards/citygml)
-data model using JSON instead of GML. The [CityJSON specification](https://github.com/tudelft3d/cityjson) is developed
+data model using JSON instead of GML. The [CityJSON specification](https://github.com/cityjson/specs) is developed
 and maintained on GitHub by the [3D geoinformation group at TU Delft](https://3d.bk.tudelft.nl/).
 
 citygson has been developed in the context of the [CityGML](http://www.opengeospatial.org/standards/citygml)
