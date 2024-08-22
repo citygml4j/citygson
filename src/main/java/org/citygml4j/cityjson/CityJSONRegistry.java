@@ -199,10 +199,13 @@ public class CityJSONRegistry {
     }
 
     public Type getExtensionPropertyClass(String propertyName, ExtensibleType target) {
-        for (Map.Entry<Class<? extends ExtensibleType>, Map<String, Type>> entry : properties.entrySet()) {
-            if (entry.getKey().isInstance(target))
-                return entry.getValue().get(propertyName);
-        }
+        Class<?> cls = target.getClass();
+        do {
+            Type type = properties.getOrDefault(cls, Collections.emptyMap()).get(propertyName);
+            if (type != null) {
+                return type;
+            }
+        } while ((cls = cls.getSuperclass()) != Object.class);
 
         return null;
     }
