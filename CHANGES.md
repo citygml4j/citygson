@@ -1,7 +1,7 @@
 Change Log
 ==========
 
-### 1.2.0 - tba
+### 1.2.0 - 2024-08-27
 
 ##### Changes
 * **Breaking:** Java 11 is now the minimum required version for using citygson.
