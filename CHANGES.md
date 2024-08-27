@@ -5,7 +5,7 @@ Change Log
 
 ##### Changes
 * **Breaking:** Java 11 is now the minimum required version for using citygson.
-* Extension properties are now also supported for `SemanticsType` in addition to `AbstractCityObjectType`.
+* Extension properties are also supported for `SemanticsType` in addition to `AbstractCityObjectType`.
 * Updated Gson to 2.11.0.
 
 ##### Fixes

@@ -16,9 +16,9 @@ See the `LICENSE` file for more details.
 
 Latest release
 --------------
-The latest stable release of citygson is 1.1.6.
+The latest stable release of citygson is 1.2.0.
 
-Download the citygson 1.1.6 release binaries [here](https://github.com/citygml4j/citygson/releases/download/v1.1.6/citygson-1.1.5.zip).
+Download the citygson 1.2.0 release binaries [here](https://github.com/citygml4j/citygson/releases/download/v1.2.0/citygson-1.2.0.zip).
 Previous releases are available from the [releases section](https://github.com/citygml4j/citygson/releases).
 
 Contributing
@@ -33,7 +33,7 @@ citygson only supports CityJSON 1.0. There are no plans to add support for more 
 
 Building
 --------
-citygson requires Java 8 or higher. The project uses [Gradle](https://gradle.org/) as build system.
+citygson requires Java 11 or higher. The project uses [Gradle](https://gradle.org/) as build system.
 To build the library from source, run the following command from the root of the repository.
 
     > gradlew installDist
@@ -52,7 +52,7 @@ You may need to adapt the citygson version number.
 <dependency>
   <groupId>org.citygml4j</groupId>
   <artifactId>citygson</artifactId>
-  <version>1.1.6</version>
+  <version>1.2.0</version>
 </dependency>
 ```
 
@@ -64,7 +64,7 @@ repositories {
 }
 
 dependencies {
-  compile 'org.citygml4j:citygson:1.1.6'
+  compile 'org.citygml4j:citygson:1.2.0'
 }
 ```
 
