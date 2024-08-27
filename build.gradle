@@ -16,9 +16,6 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(11)
     }
-    compileJava {
-        options.release = 8
-    }
     withJavadocJar()
     withSourcesJar()
 }
@@ -81,7 +78,7 @@ distributions.main.contents {
                 version: project.version,
                 date: date.format('yyyy-MM-dd'),
                 copyright: date.format('yyyy'),
-                javaCompatibility: compileJava.options.release.get().toString(),
+                javaCompatibility: '11',
                 jar: jar.archiveFileName.get(),
                 groupId: project.group,
                 artifactId: project.name
